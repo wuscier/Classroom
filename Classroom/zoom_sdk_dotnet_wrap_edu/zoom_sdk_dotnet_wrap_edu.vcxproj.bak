@@ -26,8 +26,7 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{91384504-B4FD-435D-8FFB-C44C3D3836AA}</ProjectGuid>
-	<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <Keyword>ManagedCProj</Keyword>
+    <Keyword>Win32Proj</Keyword>
     <RootNamespace>zoomsdkdotnetwrapedu</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
