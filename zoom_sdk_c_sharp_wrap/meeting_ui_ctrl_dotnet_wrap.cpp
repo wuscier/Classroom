@@ -156,6 +156,18 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		return err;
 	}
 
+	Hwnds CMeetingUIControllerDotNetWrap::GetMeetingUIWnds() {
+		HWND hFirstView_c(NULL), hSecondView_c(NULL);
+		SDKError err = (SDKError)ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().
+			GetUIController().GetMeetingUIWnd(hFirstView_c, hSecondView_c);
+
+		Hwnds hwnds;
+		hwnds.firstViewHandle = (IntPtr)hFirstView_c;
+		hwnds.secondViewHandle = (IntPtr)hSecondView_c;
+
+		return hwnds;
+	}
+
 	SDKError CMeetingUIControllerDotNetWrap::ShowJoinAudioDlg()
 	{
 		return (SDKError)ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().

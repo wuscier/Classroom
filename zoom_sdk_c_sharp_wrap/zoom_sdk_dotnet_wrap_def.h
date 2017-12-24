@@ -74,6 +74,13 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		UInt32 value;
 	};
 
+	public value class Hwnds sealed {
+	public:
+		IntPtr firstViewHandle;
+		IntPtr secondViewHandle;
+	};
+
+
 	public enum class SDKViewType : int
 	{
 		SDK_FIRST_VIEW,
