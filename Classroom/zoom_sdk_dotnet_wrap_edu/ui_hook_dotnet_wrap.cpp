@@ -1,8 +1,7 @@
-#include "stdafx.h"
+#include "Stdafx.h"
 #include "ui_hook_dotnet_wrap.h"
-//#include "../../zoom_sdk_c_sharp_wrap/zoom_sdk_dotnet_wrap_util.h"
-#include "../../zoom_sdk_c_sharp_wrap/h/ui_hook_interface.h"
-#include "../../zoom_sdk_c_sharp_wrap/wrap/sdk_wrap.h"
+#include "zoom_sdk_dotnet_wrap_util.h"
+#include "wrap\sdk_wrap.h"
 
 namespace ZOOM_SDK_DOTNET_WRAP {
 
@@ -32,9 +31,8 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 
 	SDKError CUIHookControllerDotNetWrap::MonitorWnd(String ^ className, bool bAdd)
 	{
-		return SDKError::SDKERR_SUCCESS;
-		//SDKError err = (SDKError)ZOOM_SDK_NAMESPACE::CSDKExtWrap::GetInst().GetUIHookerWrap().MonitorWnd(const_cast<wchar_t*>(PlatformString2WChar(className)), bAdd);
-		//return err;
+		SDKError err = (SDKError)ZOOM_SDK_NAMESPACE::CSDKExtWrap::GetInst().GetUIHookerWrap().MonitorWnd(const_cast<wchar_t*>(PlatformString2WChar(className)), bAdd);
+		return err;
 	}
 
 	SDKError CUIHookControllerDotNetWrap::Start()

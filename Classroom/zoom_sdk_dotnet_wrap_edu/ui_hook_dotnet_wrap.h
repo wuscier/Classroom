@@ -1,6 +1,6 @@
 #pragma once
-
 using namespace System;
+#include "zoom_sdk_dotnet_wrap_def.h"
 
 namespace ZOOM_SDK_DOTNET_WRAP {
 	public enum class UIHOOKHWNDTYPE {
