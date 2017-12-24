@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Classroom.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Height="400" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=username}">
+        Height="400" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=username}" >
     <Window.Background>
         <ImageBrush ImageSource="../Images/login.png"></ImageBrush>
     </Window.Background>
@@ -45,7 +45,7 @@
             <materialDesign:PackIcon  Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 15 10" Kind="Key" Grid.Row="2" Grid.Column="1" Foreground="{Binding ElementName=login,Path=Background}"/>
 
             <TextBox x:Name="username" Grid.Row="1" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom"   materialDesign:HintAssist.Hint="用户名" Foreground="White" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.HasTextFieldBox="True" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></TextBox>
-            <TextBox Grid.Row="2" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom" materialDesign:HintAssist.Hint="密   码" Foreground="White" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.HasTextFieldBox="True" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></TextBox>
+            <TextBox Grid.Row="2" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom" materialDesign:HintAssist.Hint="密   码" Foreground="White" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.HasTextFieldBox="True" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" PreviewKeyDown="TextBox_PreviewKeyDown"></TextBox>
 
             <Grid Grid.Row="3" Grid.Column="2">
                 <Grid.ColumnDefinitions>
@@ -53,8 +53,8 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox FontSize="20" Content="自动登录"></CheckBox>
-                <CheckBox FontSize="20" Grid.Column="1" Content="记住密码" HorizontalAlignment="Right"></CheckBox>
+                <CheckBox FontSize="18" Content="自动登录"></CheckBox>
+                <CheckBox FontSize="18" Grid.Column="1" Content="记住密码" HorizontalAlignment="Right"></CheckBox>
             </Grid>
 
             <Button x:Name="login" Grid.Row="4" Grid.Column="2" FontSize="25" Height="45" Content="登  录"></Button>

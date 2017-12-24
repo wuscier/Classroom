@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Classroom.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,6 +23,14 @@ namespace Classroom.Views
         public LoginView()
         {
             InitializeComponent();
+            DataContext = new LoginViewModel();
+        }
+
+        private void TextBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            Key key = e.Key;
+
+            Console.WriteLine(key);
         }
     }
 }
