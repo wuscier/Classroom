@@ -90,5 +90,7 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		{
 			CUIHookControllerDotNetWrap::Instance->BindEvent();
 		}
+
+		return CUIHookControllerDotNetWrap::Instance;
 	}
 }
