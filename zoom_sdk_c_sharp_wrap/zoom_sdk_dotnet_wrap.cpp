@@ -14,6 +14,8 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetCalenderServiceWrap().Init();
 		ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetNetworkConnectionHelperWrap().Init();
 		ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().Init();
+
+		ZOOM_SDK_NAMESPACE::CSDKExtWrap::GetInst().GetUIHookerWrap().Init();
 	}
 
 	void UninitAllService()
@@ -24,6 +26,8 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetCalenderServiceWrap().Uninit();
 		ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetNetworkConnectionHelperWrap().Uninit();
 		ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().Uninit();
+
+		ZOOM_SDK_NAMESPACE::CSDKExtWrap::GetInst().GetUIHookerWrap().Uninit();
 	}
 
 	SDKError CZoomSDKeDotNetWrap::Initialize(InitParam initInfo)
@@ -79,5 +83,12 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 			CSettingServiceDotNetWrap::Instance->BindEvent();
 
 		return CSettingServiceDotNetWrap::Instance;
+	}
+	IUIHookControllerDotNetWrap ^ CZoomSDKeDotNetWrap::GetUIHookControllerWrap()
+	{
+		if (CUIHookControllerDotNetWrap::Instance)
+		{
+			CUIHookControllerDotNetWrap::Instance->BindEvent();
+		}
 	}
 }
