@@ -38,12 +38,15 @@ namespace Classroom.Views
                          password.Focus();
                          break;
                  }
-             }, ThreadOption.UIThread, true, filter => { return filter.Source == Source.LoginViewModel; });
+             }, ThreadOption.UIThread, true, filter => { return filter.Target == Target.LoginView; });
 
             _windowCloseToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Subscribe((argument) =>
             {
+                App.MainView = new MainView();
+                App.MainView.Show();
+
                 Close();
-            }, ThreadOption.UIThread, true, filter => { return filter.Source == Source.LoginViewModel; });
+            }, ThreadOption.UIThread, true, filter => { return filter.Target == Target.LoginView; });
         }
 
         private void UnsubscribeEvents()

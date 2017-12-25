@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Classroom.Events
 {
-    public enum Source
+    public enum Target
     {
-        LoginViewModel,
-
+        LoginView,
+        MainView,
     }
 
     public enum Value
@@ -22,10 +22,12 @@ namespace Classroom.Events
 
     public class EventArgument
     {
-        public Source Source { get; set; }
+        public Target Target { get; set; }
         public Value Value { get; set; }
     }
 
     public class UIGotFocusEvent : PubSubEvent<EventArgument> { }
     public class WindowCloseEvent : PubSubEvent<EventArgument> { }
+    public class WindowShowEvent : PubSubEvent<EventArgument> { }
+    public class WindowHideEvent : PubSubEvent<EventArgument> { }
 }

@@ -1,4 +1,5 @@
 ﻿using Classroom.sdk_wrap;
+using Classroom.Views;
 using System.Windows;
 using ZOOM_SDK_DOTNET_WRAP;
 
@@ -9,6 +10,8 @@ namespace Classroom
     /// </summary>
     public partial class App : Application
     {
+        public static MainView MainView;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             SDKError err = SdkWrap.Instacne.Initialize();
@@ -23,7 +26,7 @@ namespace Classroom
         {
             SDKError err = SdkWrap.Instacne.CleanUp();
 
-            if (err!= SDKError.SDKERR_SUCCESS)
+            if (err != SDKError.SDKERR_SUCCESS)
             {
                 MessageBox.Show("清理服务失败！");
             }
