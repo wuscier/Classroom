@@ -5,11 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Classroom.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helper="clr-namespace:Classroom.Helpers"
         mc:Ignorable="d"
-        Height="400" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=username}" PreviewKeyDown="Window_PreviewKeyDown">
+        Height="400" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=username}">
 
     <Window.Resources>
-        <ResourceDictionary Source="../Themes/My.PasswordBox.xaml"></ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                 <ResourceDictionary Source="../Themes/My.PasswordBox.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <helper:ReverseConverter x:Key="ReverseBoolConverter"></helper:ReverseConverter>
+        </ResourceDictionary>
     </Window.Resources>
     
     <Window.Background>
@@ -41,16 +47,21 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition Width="70"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition Width="300"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <materialDesign:PackIcon Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 15 10" Kind="Account" Grid.Row="1" Grid.Column="1" Foreground="{Binding ElementName=login,Path=Background}"/>
-            <materialDesign:PackIcon  Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 15 10" Kind="Key" Grid.Row="2" Grid.Column="1" Foreground="{Binding ElementName=login,Path=Background}"/>
+            <!--<materialDesign:PackIcon Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 15 10" Kind="Account" Grid.Row="1" Grid.Column="1" Foreground="{Binding ElementName=login,Path=Background}"/>
+            <materialDesign:PackIcon  Width="50" Height="50" VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0 0 15 10" Kind="Key" Grid.Row="2" Grid.Column="1" Foreground="{Binding ElementName=login,Path=Background}"/>-->
 
-            <TextBox x:Name="username" Grid.Row="1" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom"   materialDesign:HintAssist.Hint="用户名" Foreground="White" Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.HasTextFieldBox="True" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></TextBox>
-            <PasswordBox x:Name="password" Grid.Row="2" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom" materialDesign:HintAssist.Hint="密   码" materialDesign:HintAssist.IsFloating="True" Foreground="White" Style="{StaticResource MyPasswordBox}"  materialDesign:TextFieldAssist.HasTextFieldBox="True" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed"></PasswordBox>
+            <TextBox x:Name="username" Grid.Row="1" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom"   materialDesign:HintAssist.Hint="用户名" Foreground="White" 
+                     Style="{StaticResource MaterialDesignFloatingHintTextBox}" materialDesign:TextFieldAssist.HasTextFieldBox="True" materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" 
+                     Text="{Binding LoginModel.UserName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding LoginModel.Logging,Converter={StaticResource InverseBoolToVisConverter}}"></TextBox>
+            <PasswordBox x:Name="password" Grid.Row="2" Grid.Column="2" FontSize="25" VerticalAlignment="Bottom" materialDesign:HintAssist.Hint="密   码" 
+                         materialDesign:HintAssist.IsFloating="True" Foreground="White" Style="{StaticResource MyPasswordBox}"  materialDesign:TextFieldAssist.HasTextFieldBox="True" 
+                         materialDesign:TextFieldAssist.DecorationVisibility="Collapsed" helper:PasswordBoxHelper.Attach="True" helper:PasswordBoxHelper.Password="{Binding LoginModel.Pwd,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding LoginModel.Logging,Converter={StaticResource InverseBoolToVisConverter}}"></PasswordBox>
 
             <Grid Grid.Row="3" Grid.Column="2">
                 <Grid.ColumnDefinitions>
@@ -58,12 +69,14 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox FontSize="18" Content="自动登录"></CheckBox>
-                <CheckBox FontSize="18" Grid.Column="1" Content="记住密码" HorizontalAlignment="Right"></CheckBox>
+                <CheckBox FontSize="18" Content="自动登录" HorizontalAlignment="Left" IsChecked="{Binding LoginModel.AutoLogin}"></CheckBox>
+                <CheckBox FontSize="18" Grid.Column="1" Content="记住密码" HorizontalAlignment="Right" IsChecked="{Binding LoginModel.RememberPwd}"></CheckBox>
             </Grid>
 
-            <Button x:Name="login" Grid.Row="4" Grid.Column="2" FontSize="25" Height="45" Content="登  录"></Button>
+            <Button x:Name="login" Grid.Row="4" Grid.Column="2" FontSize="25" Height="45" Content="登  录" IsDefault="True" Command="{Binding LoginModel.LoginCommand}"></Button>
         </Grid>
+
+        <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" FontSize="18" Text="{Binding LoginModel.Err,Mode=OneWay}"></TextBlock>
     </Grid>
     
 </Window>

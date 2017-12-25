@@ -73,9 +73,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Events\Events.cs" />
+    <Compile Include="Helpers\PasswordBoxHelper.cs" />
+    <Compile Include="Helpers\ReverseConverter.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="sdk_wrap\ISdkWrap.cs" />
     <Compile Include="sdk_wrap\SdkWrap.cs" />
+    <Compile Include="Services\EventAggregatorManager.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
