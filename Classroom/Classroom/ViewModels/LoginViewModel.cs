@@ -1,8 +1,10 @@
 ﻿using Classroom.Events;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using Prism.Commands;
 using Prism.Mvvm;
 using System.Windows.Input;
+using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -17,7 +19,17 @@ namespace Classroom.ViewModels
                     return;
                 }
 
-                //MessageBox.Show($"username：{UserName}， password：{Pwd}\r\n autologin：{AutoLogin}，remember pwd：{RememberPwd}\r\n err：{Err}");
+                Logging = true;
+
+                RegisterCallbacks();
+
+                if (!SDKAuth())
+                {
+                    Logging = false;
+                    return;
+                }
+
+                Logging = false;
             });
         }
 
@@ -64,25 +76,32 @@ namespace Classroom.ViewModels
         public bool Logging
         {
             get { return _logging; }
-            set { _logging = value; }
+            set { SetProperty(ref _logging, value); }
         }
 
         public ICommand LoginCommand { get; set; }
-
 
         private bool IsInputFieldsValid()
         {
             Err = string.Empty;
             if (string.IsNullOrEmpty(UserName))
             {
-                EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Publish("UserName");
+                EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Publish(new EventArgument()
+                {
+                    Source = Source.LoginViewModel,
+                    Value = Value.UserName
+                });
                 Err = "请填写用户名！";
                 return false;
             }
 
             if (string.IsNullOrEmpty(Pwd))
             {
-                EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Publish("Pwd");
+                EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Publish(new EventArgument()
+                {
+                    Source = Source.LoginViewModel,
+                    Value = Value.Password,
+                });
                 Err = "请填写密码！";
                 return false;
             }
@@ -90,15 +109,65 @@ namespace Classroom.ViewModels
             return true;
         }
 
-        
+        private void RegisterCallbacks()
+        {
+            IAuthServiceDotNetWrap authServiceDotNetWrap = CZoomSDKeDotNetWrap.Instance.GetAuthServiceWrap();
+
+            authServiceDotNetWrap.Add_CB_onAuthenticationReturn((authResult)=>
+            {
+                if (authResult == AuthResult.AUTHRET_SUCCESS)
+                {
+                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
+                    {
+                        Source = Source.LoginViewModel,
+                    });
+                }
+                else
+                {
+                    Err = authResult.ToString();
+                }
+            });
+
+            authServiceDotNetWrap.Add_CB_onLoginRet((loginStatus,accountInfo)=>
+            {
+                
+            });
+            authServiceDotNetWrap.Add_CB_onLogout(()=>
+            {
+
+            });
+        }
+
+        private bool SDKAuth()
+        {
+            AuthParam authParam = new AuthParam()
+            {
+                appKey = UserName,
+                appSecret = Pwd
+            };
+
+            SDKError error = SdkWrap.Instacne.SDKAuth(authParam);
+
+            if (error != SDKError.SDKERR_SUCCESS)
+            {
+                Err = error.ToString();
+                return false;
+            }
+
+            return true;
+        }
     }
 
-
+    
     public class LoginViewModel
     {
         public LoginViewModel()
         {
-            LoginModel = new LoginModel();
+            LoginModel = new LoginModel()
+            {
+                UserName = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
+                Pwd = "2HgRys821FEOeIij7GPRoL5H5xrgp5Ui6c1d"
+            };
         }
         public LoginModel LoginModel { get; set; }
     }

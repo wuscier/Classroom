@@ -22,26 +22,34 @@ namespace Classroom.Views
         }
 
 
-        private SubscriptionToken _subscriptionToken;
+        private SubscriptionToken _uiGotFocusToken;
+        private SubscriptionToken _windowCloseToken;
+
         private void SubscribeEvents()
         {
-            _subscriptionToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Subscribe((element_name) =>
+            _uiGotFocusToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Subscribe((argument) =>
              {
-                 switch (element_name)
+                 switch (argument.Value)
                  {
-                     case "UserName":
+                     case Value.UserName:
                          username.Focus();
                          break;
-                     case "Pwd":
+                     case Value.Password:
                          password.Focus();
                          break;
                  }
-             });
+             }, ThreadOption.UIThread, true, filter => { return filter.Source == Source.LoginViewModel; });
+
+            _windowCloseToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Subscribe((argument) =>
+            {
+                Close();
+            }, ThreadOption.UIThread, true, filter => { return filter.Source == Source.LoginViewModel; });
         }
 
         private void UnsubscribeEvents()
         {
-            EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Unsubscribe(_subscriptionToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Unsubscribe(_uiGotFocusToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Unsubscribe(_windowCloseToken);
         }
 
         protected override void OnClosed(EventArgs e)

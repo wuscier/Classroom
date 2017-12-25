@@ -28,5 +28,11 @@ namespace Classroom.sdk_wrap
 
             return err;
         }
+
+        public SDKError SDKAuth(AuthParam authParam)
+        {
+            SDKError err = CZoomSDKeDotNetWrap.Instance.GetAuthServiceWrap().SDKAuth(authParam);
+            return err;
+        }
     }
 }
