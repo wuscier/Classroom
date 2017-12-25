@@ -3,6 +3,9 @@ using Classroom.sdk_wrap;
 using Classroom.Services;
 using Prism.Commands;
 using Prism.Mvvm;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using ZOOM_SDK_DOTNET_WRAP;
 
@@ -12,24 +15,27 @@ namespace Classroom.ViewModels
     {
         public LoginModel()
         {
-            LoginCommand = new DelegateCommand(() =>
+            LoginCommand = new DelegateCommand(async () =>
             {
-                if (!IsInputFieldsValid())
-                {
-                    return;
-                }
+                await Task.Run(() =>
+                 {
+                     if (!IsInputFieldsValid())
+                     {
+                         return;
+                     }
 
-                Logging = true;
+                     Logging = true;
 
-                RegisterCallbacks();
+                     RegisterCallbacks();
 
-                if (!SDKAuth())
-                {
-                    Logging = false;
-                    return;
-                }
+                     if (!SDKAuth())
+                     {
+                         Logging = false;
+                         return;
+                     }
 
-                Logging = false;
+                     Logging = false;
+                 }).ConfigureAwait(false);
             });
         }
 

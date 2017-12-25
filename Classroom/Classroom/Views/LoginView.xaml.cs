@@ -42,7 +42,11 @@ namespace Classroom.Views
 
             _windowCloseToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Subscribe((argument) =>
             {
-                App.MainView = new MainView();
+                if (App.MainView == null)
+                {
+                    App.MainView = new MainView();
+                }
+
                 App.MainView.Show();
 
                 Close();

@@ -69,11 +69,11 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <CheckBox FontSize="18" Content="自动登录" HorizontalAlignment="Left" IsChecked="{Binding LoginModel.AutoLogin}" IsEnabled="{Binding LoginModel.Loggin,Converter={StaticResource ReverseBoolConverter}}"></CheckBox>
-                <CheckBox FontSize="18" Grid.Column="1" Content="记住密码" HorizontalAlignment="Right" IsChecked="{Binding LoginModel.RememberPwd}" IsEnabled="{Binding LoginModel.Login,Converter={StaticResource ReverseBoolConverter}}"></CheckBox>
+                <CheckBox FontSize="18" Content="自动登录" HorizontalAlignment="Left" IsChecked="{Binding LoginModel.AutoLogin}" IsEnabled="{Binding LoginModel.Logging,Converter={StaticResource ReverseBoolConverter}}"></CheckBox>
+                <CheckBox FontSize="18" Grid.Column="1" Content="记住密码" HorizontalAlignment="Right" IsChecked="{Binding LoginModel.RememberPwd}" IsEnabled="{Binding LoginModel.Logging,Converter={StaticResource ReverseBoolConverter}}"></CheckBox>
             </Grid>
 
-            <Button x:Name="login" Grid.Row="4" Grid.Column="2" FontSize="25" Height="45" Content="登  录" IsDefault="True" Command="{Binding LoginModel.LoginCommand}"></Button>
+            <Button x:Name="login" Grid.Row="4" Grid.Column="2" FontSize="25" Height="45" Content="登  录" IsDefault="True" Command="{Binding LoginModel.LoginCommand}" IsEnabled="{Binding LoginModel.Logging,Converter={StaticResource ReverseBoolConverter}}"></Button>
         </Grid>
 
         <TextBlock Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="Red" FontSize="18" Text="{Binding LoginModel.Err,Mode=OneWay}"></TextBlock>
