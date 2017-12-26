@@ -10,6 +10,33 @@ namespace Classroom.ViewModels
     {
         public MainViewModel()
         {
+            IsMainCardSelected = true;
+        }
+
+        private bool _isMainCardSelected;
+
+        public bool IsMainCardSelected
+        {
+            get { return _isMainCardSelected; }
+            set { _isMainCardSelected = value; }
+        }
+
+
+        private bool _isHistoryCardSelected;
+
+        public bool IsHistoryCardSelected
+        {
+            get { return _isHistoryCardSelected; }
+            set { _isHistoryCardSelected = value; }
+        }
+
+        private void SubscribeEvents()
+        {
+
+        }
+
+        private void UnsubscribeEvents()
+        {
 
         }
     }

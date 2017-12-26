@@ -60,7 +60,25 @@ namespace Classroom.Views
 
         private void new_class_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            MessageBox.Show("create_class!");
+
+        }
+
+        private void main_card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<MainCardSelectedEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MainViewModel,
+                Value = Value.MainCard,
+            });
+        }
+
+        private void history_card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<MainCardSelectedEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MainViewModel,
+                Value = Value.HistoryCard,
+            });
         }
     }
 }

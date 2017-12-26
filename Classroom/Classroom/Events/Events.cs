@@ -7,17 +7,21 @@ using System.Threading.Tasks;
 
 namespace Classroom.Events
 {
+
     public enum Target
     {
         LoginView,
+        LoginViewModel,
         MainView,
+        MainViewModel,
     }
 
     public enum Value
     {
         UserName,
         Password,
-
+        MainCard,
+        HistoryCard,
     }
 
     public class EventArgument
@@ -30,4 +34,6 @@ namespace Classroom.Events
     public class WindowCloseEvent : PubSubEvent<EventArgument> { }
     public class WindowShowEvent : PubSubEvent<EventArgument> { }
     public class WindowHideEvent : PubSubEvent<EventArgument> { }
+
+    public class MainCardSelectedEvent : PubSubEvent<EventArgument> { }
 }
