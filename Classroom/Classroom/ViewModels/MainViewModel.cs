@@ -1,12 +1,9 @@
 ﻿using Classroom.Events;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using Prism.Events;
 using Prism.Mvvm;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -35,6 +32,7 @@ namespace Classroom.ViewModels
         }
 
         private SubscriptionToken _cardSelectedToken;
+        private SubscriptionToken _startClassToken;
 
         private void SubscribeEvents()
         {
@@ -51,6 +49,37 @@ namespace Classroom.ViewModels
                         IsHistoryCardSelected = true;
                         break;
                 }
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MainViewModel; });
+
+
+            _startClassToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<StartClassEvent>().Subscribe((argument) =>
+            {
+                StartParam startParam = new StartParam()
+                {
+                    apiuserStart = new StartParam4APIUser()
+                    {
+                        userID = "704311",
+                        userToken = "t0zVp2Doi3PxKpIEkE3YH4iQbfDID8VaoNIl",
+                        userName = "big cash",
+                        meetingNumber = 3398415968,
+                    },
+                    userType = SDKUserType.SDK_UT_APIUSER,
+                };
+
+                SDKError error = SdkWrap.Instacne.Start(startParam);
+
+                if (error == SDKError.SDKERR_SUCCESS)
+                {
+                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowHideEvent>().Publish(new EventArgument()
+                    {
+                        Target = Target.MainView,
+                    });
+                }
+                else
+                {
+
+                }
+
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MainViewModel; });
         }
 

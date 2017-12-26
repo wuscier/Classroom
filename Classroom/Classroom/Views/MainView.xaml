@@ -50,7 +50,7 @@
         </StackPanel>
 
 
-        <materialDesign:Transitioner x:Name="transitioner" Grid.Row="1" Grid.Column="1" AutoApplyTransitionOrigins="True" SelectedIndex="1">
+        <materialDesign:Transitioner x:Name="transitioner" Grid.Row="1" Grid.Column="1" AutoApplyTransitionOrigins="True" SelectedIndex="0">
             <materialDesign:TransitionerSlide>
                 <Grid>
 

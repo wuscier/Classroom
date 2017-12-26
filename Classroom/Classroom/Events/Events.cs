@@ -1,9 +1,4 @@
 ﻿using Prism.Events;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Classroom.Events
 {
@@ -34,6 +29,17 @@ namespace Classroom.Events
     public class WindowCloseEvent : PubSubEvent<EventArgument> { }
     public class WindowShowEvent : PubSubEvent<EventArgument> { }
     public class WindowHideEvent : PubSubEvent<EventArgument> { }
-
     public class CardSelectedEvent : PubSubEvent<EventArgument> { }
+
+
+
+
+
+
+
+
+
+
+    public class StartClassEvent : PubSubEvent<EventArgument> { }
+
 }

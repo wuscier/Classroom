@@ -34,5 +34,12 @@ namespace Classroom.sdk_wrap
             SDKError err = CZoomSDKeDotNetWrap.Instance.GetAuthServiceWrap().SDKAuth(authParam);
             return err;
         }
+
+        public SDKError Start(StartParam startParam)
+        {
+            SDKError err = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().Start(startParam);
+
+            return err;
+        }
     }
 }

@@ -3,8 +3,6 @@ using Classroom.sdk_wrap;
 using Classroom.Services;
 using Prism.Commands;
 using Prism.Mvvm;
-using System;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using ZOOM_SDK_DOTNET_WRAP;
