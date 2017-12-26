@@ -35,5 +35,5 @@ namespace Classroom.Events
     public class WindowShowEvent : PubSubEvent<EventArgument> { }
     public class WindowHideEvent : PubSubEvent<EventArgument> { }
 
-    public class MainCardSelectedEvent : PubSubEvent<EventArgument> { }
+    public class CardSelectedEvent : PubSubEvent<EventArgument> { }
 }

@@ -65,7 +65,7 @@ namespace Classroom.Views
 
         private void main_card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EventAggregatorManager.Instance.EventAggregator.GetEvent<MainCardSelectedEvent>().Publish(new EventArgument()
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<CardSelectedEvent>().Publish(new EventArgument()
             {
                 Target = Target.MainViewModel,
                 Value = Value.MainCard,
@@ -74,7 +74,7 @@ namespace Classroom.Views
 
         private void history_card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EventAggregatorManager.Instance.EventAggregator.GetEvent<MainCardSelectedEvent>().Publish(new EventArgument()
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<CardSelectedEvent>().Publish(new EventArgument()
             {
                 Target = Target.MainViewModel,
                 Value = Value.HistoryCard,
