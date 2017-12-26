@@ -1,6 +1,7 @@
 ﻿using Classroom.Events;
 using Classroom.Services;
 using Classroom.ViewModels;
+using MaterialDesignThemes.Wpf.Transitions;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -70,6 +71,8 @@ namespace Classroom.Views
                 Target = Target.MainViewModel,
                 Value = Value.MainCard,
             });
+
+            transitioner.SelectedIndex = 0;
         }
 
         private void history_card_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -79,6 +82,8 @@ namespace Classroom.Views
                 Target = Target.MainViewModel,
                 Value = Value.HistoryCard,
             });
+
+            transitioner.SelectedIndex = 1;
         }
     }
 }
