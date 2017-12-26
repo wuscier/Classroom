@@ -75,7 +75,7 @@
                     </materialDesign:Card>
                     <materialDesign:Card x:Name="classlist" Grid.Column="2" Width="200" Height="300" VerticalAlignment="Center" Style="{StaticResource MyCardStyle}">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <materialDesign:PackIcon Kind="CalendarClock" Width="150" Height="150"/>
+                            <materialDesign:PackIcon Kind="CalendarClock" Width="150" Height="135"/>
                             <TextBlock Text="课表" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </materialDesign:Card>
