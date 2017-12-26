@@ -57,5 +57,10 @@ namespace Classroom.Views
         {
             UnsubscribeEvents();
         }
+
+        private void new_class_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MessageBox.Show("create_class!");
+        }
     }
 }

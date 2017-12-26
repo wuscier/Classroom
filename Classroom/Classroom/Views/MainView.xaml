@@ -4,12 +4,67 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Classroom.Views"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         Height="600" Width="1000" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
     <Window.Background>
         <ImageBrush ImageSource="../Images/main_cut.png"></ImageBrush>
     </Window.Background>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition Width="100"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Row="1">
+            <materialDesign:Card Opacity="0.4">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="Home" Width="50" Height="50" HorizontalAlignment="Center"></materialDesign:PackIcon>
+                    <TextBlock Text="主页" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 0 0 10"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card Opacity="0.4">
+                <StackPanel>
+                    <materialDesign:PackIcon Kind="ViewList" Width="50" Height="50" HorizontalAlignment="Center"></materialDesign:PackIcon>
+                    <TextBlock Text="记录" FontSize="30" FontWeight="Bold" HorizontalAlignment="Center" Margin="0 0 0 10"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+
+        </StackPanel>
+
+        <Grid Grid.Row="1" Grid.Column="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <materialDesign:Card x:Name="new_class" Width="200" Height="300" VerticalAlignment="Center" Opacity="0.4" MouseLeftButtonDown="new_class_MouseLeftButtonDown">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Video" Width="150" Height="150"/>
+                    <TextBlock Text="开课" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card x:Name="join_class" Grid.Column="1" Width="200" Height="300" VerticalAlignment="Center" Opacity="0.4">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="Plus" Width="150" Height="150"/>
+                    <TextBlock Text="加入" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+            <materialDesign:Card x:Name="classlist" Grid.Column="2" Width="200" Height="300" VerticalAlignment="Center" Opacity="0.4">
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <materialDesign:PackIcon Kind="CalendarClock" Width="150" Height="150"/>
+                    <TextBlock Text="课表" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+        </Grid>
     </Grid>
 </Window>
