@@ -1,8 +1,12 @@
 ﻿using Classroom.Events;
+using Classroom.Helpers;
 using Classroom.sdk_wrap;
 using Classroom.Services;
+using Classroom.Views;
 using Prism.Events;
 using Prism.Mvvm;
+using System;
+using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
@@ -13,10 +17,7 @@ namespace Classroom.ViewModels
         {
             SubscribeEvents();
 
-            RegisterCallbacks();
-
             IsMainCardSelected = true;
-
         }
 
         private bool _isMainCardSelected;
@@ -58,9 +59,13 @@ namespace Classroom.ViewModels
 
             _startClassToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<StartClassEvent>().Subscribe((argument) =>
             {
+                RegisterCallbacks();
+
                 CustomMeetingUI();
 
-                StartParam startParam = new StartParam()
+                StartHook();
+
+                SDKError error = SdkWrap.Instacne.Start(new StartParam()
                 {
                     apiuserStart = new StartParam4APIUser()
                     {
@@ -70,12 +75,13 @@ namespace Classroom.ViewModels
                         meetingNumber = 3398415968,
                     },
                     userType = SDKUserType.SDK_UT_APIUSER,
-                };
-
-                SDKError error = SdkWrap.Instacne.Start(startParam);
+                });
 
                 if (error == SDKError.SDKERR_SUCCESS)
                 {
+                    _meetingView = new MeetingView();
+                    _meetingView.Show();
+
                     EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowHideEvent>().Publish(new EventArgument()
                     {
                         Target = Target.MainView,
@@ -94,6 +100,8 @@ namespace Classroom.ViewModels
             EventAggregatorManager.Instance.EventAggregator.GetEvent<CardSelectedEvent>().Unsubscribe(_cardSelectedToken);
         }
 
+        private MeetingView _meetingView;
+        private bool _wndMsgHandled = false;
 
         private void RegisterCallbacks()
         {
@@ -101,7 +109,7 @@ namespace Classroom.ViewModels
 
             IMeetingParticipantsControllerDotNetWrap meetingParticipantsController = meetingServiceDotNetWrap.GetMeetingParticipantsController();
 
-            meetingServiceDotNetWrap.Add_CB_onMeetingStatusChanged((status,result)=>
+            meetingServiceDotNetWrap.Add_CB_onMeetingStatusChanged((status, result) =>
             {
 
             });
@@ -109,22 +117,44 @@ namespace Classroom.ViewModels
             {
 
             });
-            meetingParticipantsController.Add_CB_onLowOrRaiseHandStatusChanged((bLow, userId)=>
+            meetingParticipantsController.Add_CB_onLowOrRaiseHandStatusChanged((bLow, userId) =>
             {
 
             });
-            meetingParticipantsController.Add_CB_onUserJoin((userIds)=>
+            meetingParticipantsController.Add_CB_onUserJoin((userIds) =>
             {
             });
-            meetingParticipantsController.Add_CB_onUserLeft((userIds)=>
-            {
-
-            });
-            meetingParticipantsController.Add_CB_onUserNameChanged((userId,userName)=>
+            meetingParticipantsController.Add_CB_onUserLeft((userIds) =>
             {
 
             });
+            meetingParticipantsController.Add_CB_onUserNameChanged((userId, userName) =>
+            {
 
+            });
+
+            CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap().Add_CB_onUIActionNotify((type, msg) =>
+            {
+                if (type == UIHOOKHWNDTYPE.UIHOOKWNDTYPE_MAINWND)
+                {
+                    if (!_wndMsgHandled)
+                    {
+                        _wndMsgHandled = true;
+
+                        App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+
+                            Win32APIs.SetWindowLong(hwnds.firstViewHandle, -16, 369164288);
+                            Win32APIs.SetParent(hwnds.firstViewHandle, new WindowInteropHelper(_meetingView).Handle);
+
+                            _meetingView.SyncVideoUI();
+
+
+                        }));
+                    }
+                }
+            });
         }
 
         private void CustomMeetingUI()
@@ -133,6 +163,22 @@ namespace Classroom.ViewModels
             CMeetingConfigurationDotNetWrap.Instance.SetBottomFloatToolbarWndVisibility(false);
             CMeetingConfigurationDotNetWrap.Instance.EnableEnterAndExitFullScreenButtonOnMeetingUI(false);
             CMeetingConfigurationDotNetWrap.Instance.EnableLButtonDBClick4SwitchFullScreenMode(false);
+        }
+
+        private void StartHook()
+        {
+            _wndMsgHandled = false;
+
+            IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
+            iUIHook.MonitorWnd("ZPContentViewWndClass", true);
+            iUIHook.Start();
+        }
+
+        private void StopHook()
+        {
+            IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
+            //iUIHook.MonitorWnd("ZPContentViewWndClass", false);
+            //iUIHook.Stop();
         }
     }
 }

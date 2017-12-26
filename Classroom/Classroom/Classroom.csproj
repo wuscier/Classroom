@@ -77,12 +77,14 @@
     <Compile Include="Helpers\CardSelectedAssist.cs" />
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Helpers\ReverseConverter.cs" />
+    <Compile Include="Helpers\Win32APIs.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="sdk_wrap\ISdkWrap.cs" />
     <Compile Include="sdk_wrap\SdkWrap.cs" />
     <Compile Include="Services\EventAggregatorManager.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
+    <Compile Include="ViewModels\MeetingViewModel.cs" />
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -92,6 +94,9 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Views\MeetingView.xaml.cs">
+      <DependentUpon>MeetingView.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\My.Card.xaml">
       <SubType>Designer</SubType>
@@ -106,6 +111,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MeetingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
