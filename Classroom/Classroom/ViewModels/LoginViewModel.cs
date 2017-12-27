@@ -31,8 +31,6 @@ namespace Classroom.ViewModels
                          Logging = false;
                          return;
                      }
-
-                     Logging = false;
                  }).ConfigureAwait(false);
             });
         }
@@ -121,6 +119,7 @@ namespace Classroom.ViewModels
             {
                 if (authResult == AuthResult.AUTHRET_SUCCESS)
                 {
+                    Logging = false;
                     EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
                     {
                         Target = Target.LoginView,
