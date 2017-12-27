@@ -5,12 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Classroom.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helper="clr-namespace:Classroom.Helpers"
         mc:Ignorable="d"
-        Title="MeetingView" Height="600" Width="1000" WindowStartupLocation="CenterScreen"
+        Title="MeetingView" Height="600" MinHeight="600" Width="1000" MinWidth="1000" WindowStartupLocation="CenterScreen"
         SizeChanged="Window_SizeChanged" LocationChanged="Window_LocationChanged">
 
     <Window.Resources>
-        <ResourceDictionary Source="../Themes/My.Card.xaml"></ResourceDictionary>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/My.Card.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <helper:BoolToVisibilityConverter x:Key="Bool2VisibilityConverter"></helper:BoolToVisibilityConverter>
+
+        </ResourceDictionary>
     </Window.Resources>
 
     <Grid>
@@ -50,13 +58,45 @@
                 </StackPanel>
             </materialDesign:Card>
             
-            <materialDesign:Card x:Name="audio_settings" Grid.Column="1" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
-                <materialDesign:PopupBox StaysOpen="False" PlacementMode="TopAndAlignLeftEdges">
+            <materialDesign:Card Grid.Column="1" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
+                <materialDesign:PopupBox x:Name="audio_settings" StaysOpen="False" PlacementMode="TopAndAlignLeftEdges" Opened="audio_settings_Opened">
                     <StackPanel>
-                        <TextBlock Text="123456"></TextBlock>
-                        <TextBlock Text="123456"></TextBlock>
-                        <TextBlock Text="123456"></TextBlock>
-                        <TextBlock Text="123456"></TextBlock>
+                        <StackPanel>
+                            <TextBlock Margin="5 0 0 0" Text="选择麦克风" FontWeight="Bold"></TextBlock>
+                            <ListBox x:Name="mic_list" ItemsSource="{Binding UiStatusModel.Microphones}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid x:Name="mic_device" MouseLeftButtonDown="mic_device_MouseLeftButtonDown">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <materialDesign:PackIcon Kind="Check" Visibility="{Binding IsSelected,Converter={StaticResource Bool2VisibilityConverter}}"></materialDesign:PackIcon>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                        <StackPanel>
+                            <TextBlock Margin="5 0 0 0"  Text="选择扬声器" FontWeight="Bold"></TextBlock>
+                            <ListBox x:Name="speaker_list" ItemsSource="{Binding UiStatusModel.Speakers}">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid x:Name="speaker_device" MouseLeftButtonDown="speaker_device_MouseLeftButtonDown">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition></ColumnDefinition>
+                                                <ColumnDefinition></ColumnDefinition>
+                                            </Grid.ColumnDefinitions>
+
+                                            <materialDesign:PackIcon Kind="Check" Visibility="{Binding IsSelected,Converter={StaticResource Bool2VisibilityConverter}}"></materialDesign:PackIcon>
+                                            <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </materialDesign:Card>
@@ -70,13 +110,25 @@
                 </StackPanel>
             </materialDesign:Card>
 
-            <materialDesign:Card x:Name="video_settings" Grid.Column="3" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
-                <materialDesign:PopupBox StaysOpen="False" PlacementMode="TopAndAlignLeftEdges">
+            <materialDesign:Card  Grid.Column="3" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
+                <materialDesign:PopupBox x:Name="video_settings" StaysOpen="False" PlacementMode="TopAndAlignLeftEdges" Opened="video_settings_Opened">
                     <StackPanel>
-                        <TextBlock Text="123456"></TextBlock>
-                        <TextBlock Text="123456"></TextBlock>
-                        <TextBlock Text="123456"></TextBlock>
-                        <TextBlock Text="123456"></TextBlock>
+                        <TextBlock Margin="5 0 0 0"  Text="选择摄像头" FontWeight="Bold"></TextBlock>
+                        <ListBox x:Name="camera_list" ItemsSource="{Binding UiStatusModel.Cameras}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid x:Name="camera_device" MouseLeftButtonDown="camera_device_MouseLeftButtonDown">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition></ColumnDefinition>
+                                            <ColumnDefinition></ColumnDefinition>
+                                        </Grid.ColumnDefinitions>
+
+                                        <materialDesign:PackIcon Kind="Check" Visibility="{Binding IsSelected,Converter={StaticResource Bool2VisibilityConverter}}"></materialDesign:PackIcon>
+                                        <TextBlock Grid.Column="1" Text="{Binding Name}"></TextBlock>
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
                     </StackPanel>
                 </materialDesign:PopupBox>
             </materialDesign:Card>

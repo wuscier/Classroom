@@ -63,7 +63,7 @@ namespace Classroom.Views
             EventAggregatorManager.Instance.EventAggregator.GetEvent<CardSelectedEvent>().Publish(new EventArgument()
             {
                 Target = Target.MainViewModel,
-                Value = Value.MainCard,
+                Argument = new Argument() { Category = Category.MainCard, }
             });
 
             transitioner.SelectedIndex = 0;
@@ -74,7 +74,7 @@ namespace Classroom.Views
             EventAggregatorManager.Instance.EventAggregator.GetEvent<CardSelectedEvent>().Publish(new EventArgument()
             {
                 Target = Target.MainViewModel,
-                Value = Value.HistoryCard,
+                Argument = new Argument() { Category = Category.HistoryCard, }
             });
 
             transitioner.SelectedIndex = 1;

@@ -91,7 +91,7 @@ namespace Classroom.ViewModels
                 EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Publish(new EventArgument()
                 {
                     Target = Target.LoginView,
-                    Value = Value.UserName
+                    Argument = new Argument() { Category = Category.UserName, }
                 });
                 Err = "请填写用户名！";
                 return false;
@@ -102,7 +102,7 @@ namespace Classroom.ViewModels
                 EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Publish(new EventArgument()
                 {
                     Target = Target.LoginView,
-                    Value = Value.Password,
+                    Argument = new Argument() { Category = Category.Password, }
                 });
                 Err = "请填写密码！";
                 return false;

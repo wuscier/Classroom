@@ -13,18 +13,28 @@ namespace Classroom.Events
         MeetingViewModel,
     }
 
-    public enum Value
+    public class Argument
+    {
+        public Category Category { get; set; }
+        public object Value { get; set; }
+    }
+
+
+    public enum Category
     {
         UserName,
         Password,
         MainCard,
         HistoryCard,
+        Mic,
+        Speaker,
+        Camera,
     }
 
     public class EventArgument
     {
         public Target Target { get; set; }
-        public Value Value { get; set; }
+        public Argument Argument { get; set; }
     }
 
     public class UIGotFocusEvent : PubSubEvent<EventArgument> { }
@@ -33,16 +43,14 @@ namespace Classroom.Events
     public class WindowHideEvent : PubSubEvent<EventArgument> { }
     public class CardSelectedEvent : PubSubEvent<EventArgument> { }
 
-
-
-
-
-
-
-
-
-
     public class StartClassEvent : PubSubEvent<EventArgument> { }
     public class MicStatusChangeEvent : PubSubEvent<EventArgument> { }
     public class CameraStatusChangeEvent : PubSubEvent<EventArgument> { }
+
+
+    public class AudioSettingsOpenEvent : PubSubEvent<EventArgument> { }
+    public class VideoSettingsOpenEvent : PubSubEvent<EventArgument> { }
+
+
+    public class SelectedDeviceChangeEvent : PubSubEvent<EventArgument> { }
 }

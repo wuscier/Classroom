@@ -1,15 +1,24 @@
 ﻿using Classroom.Events;
+using Classroom.Models;
 using Classroom.sdk_wrap;
 using Classroom.Services;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;
 using Prism.Mvvm;
+using System.Collections.ObjectModel;
 using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
     public class UiStatusModel:BindableBase
     {
+        public UiStatusModel()
+        {
+            Microphones = new ObservableCollection<DeviceModel>();
+            Speakers = new ObservableCollection<DeviceModel>();
+            Cameras = new ObservableCollection<DeviceModel>();
+        }
+
         public const string MicOnText = "静音";
         public const string MicOffText = "解除静音";
 
@@ -49,8 +58,9 @@ namespace Classroom.ViewModels
             set { SetProperty(ref _cameraIcon, value); }
         }
 
-
-
+        public ObservableCollection<DeviceModel> Microphones { get; set; }
+        public ObservableCollection<DeviceModel> Speakers { get; set; }
+        public ObservableCollection<DeviceModel> Cameras { get; set; }
     }
 
     public class MeetingViewModel
@@ -73,6 +83,10 @@ namespace Classroom.ViewModels
 
         private SubscriptionToken _micToken;
         private SubscriptionToken _cameraToken;
+        private SubscriptionToken _audioSettingToken;
+        private SubscriptionToken _videoSettingToken;
+        private SubscriptionToken _deviceSelectedToken;
+
         private void SubscribeEvents()
         {
             _micToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<MicStatusChangeEvent>().Subscribe((argument) =>
@@ -113,12 +127,82 @@ namespace Classroom.ViewModels
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
 
+            _audioSettingToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<AudioSettingsOpenEvent>().Subscribe((argument) =>
+            {
+                UiStatusModel.Microphones.Clear();
+                UiStatusModel.Speakers.Clear();
+
+                IMicInfoDotNetWrap[] mics = CAudioSettingContextDotNetWrap.Instance.GetMicList();
+
+                if (mics?.Length > 0)
+                {
+                    foreach (IMicInfoDotNetWrap mic in mics)
+                    {
+                        UiStatusModel.Microphones.Add(new DeviceModel(mic.GetDeviceId(), mic.GetDeviceName(), mic.IsSelectedDevice()));
+                    }
+                }
+
+                ISpeakerInfoDotNetWrap[] speakers = CAudioSettingContextDotNetWrap.Instance.GetSpeakerList();
+
+                if (speakers?.Length > 0)
+                {
+                    foreach (ISpeakerInfoDotNetWrap speaker in speakers)
+                    {
+                        UiStatusModel.Speakers.Add(new DeviceModel(speaker.GetDeviceId(), speaker.GetDeviceName(), speaker.IsSelectedDevice()));
+                    }
+                }
+
+
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+
+            _videoSettingToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<VideoSettingsOpenEvent>().Subscribe((argument) =>
+            {
+                UiStatusModel.Cameras.Clear();
+
+                ICameraInfoDotNetWrap[] cameras = CVideoSettingContextDotNetWrap.Instance.GetCameraList();
+
+                if (cameras?.Length > 0)
+                {
+                    foreach (ICameraInfoDotNetWrap camera in cameras)
+                    {
+                        UiStatusModel.Cameras.Add(new DeviceModel(camera.GetDeviceId(), camera.GetDeviceName(), camera.IsSelectedDevice()));
+                    }
+                }
+
+
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+
+            _deviceSelectedToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Subscribe((argument) =>
+            {
+                DeviceModel device = argument.Argument.Value as DeviceModel;
+
+                if (device == null)
+                {
+                    return;
+                }
+
+                switch (argument.Argument.Category)
+                {
+                    case Category.Mic:
+                        CAudioSettingContextDotNetWrap.Instance.SelectMic(device.Id, device.Name);
+                        break;
+                    case Category.Speaker:
+                        CAudioSettingContextDotNetWrap.Instance.SelectSpeaker(device.Id, device.Name);
+                        break;
+                    case Category.Camera:
+                        CVideoSettingContextDotNetWrap.Instance.SelectCamera(device.Id);
+                        break;
+                }
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
         }
 
         public void UnsubscribeEvents()
         {
             EventAggregatorManager.Instance.EventAggregator.GetEvent<MicStatusChangeEvent>().Unsubscribe(_micToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<CameraStatusChangeEvent>().Unsubscribe(_cameraToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<AudioSettingsOpenEvent>().Unsubscribe(_audioSettingToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<VideoSettingsOpenEvent>().Unsubscribe(_videoSettingToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Unsubscribe(_deviceSelectedToken);
         }
     }
 }

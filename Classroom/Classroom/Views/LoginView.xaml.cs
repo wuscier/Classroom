@@ -29,12 +29,12 @@ namespace Classroom.Views
         {
             _uiGotFocusToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<UIGotFocusEvent>().Subscribe((argument) =>
              {
-                 switch (argument.Value)
+                 switch (argument.Argument.Category)
                  {
-                     case Value.UserName:
+                     case Category.UserName:
                          username.Focus();
                          break;
-                     case Value.Password:
+                     case Category.Password:
                          password.Focus();
                          break;
                  }

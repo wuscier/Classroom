@@ -43,13 +43,13 @@ namespace Classroom.ViewModels
         {
             _cardSelectedToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<CardSelectedEvent>().Subscribe((argument) =>
             {
-                switch (argument.Value)
+                switch (argument.Argument.Category)
                 {
-                    case Value.MainCard:
+                    case Category.MainCard:
                         IsMainCardSelected = true;
                         IsHistoryCardSelected = false;
                         break;
-                    case Value.HistoryCard:
+                    case Category.HistoryCard:
                         IsMainCardSelected = false;
                         IsHistoryCardSelected = true;
                         break;

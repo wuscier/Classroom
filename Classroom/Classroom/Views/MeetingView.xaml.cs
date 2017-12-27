@@ -1,5 +1,6 @@
 ﻿using Classroom.Events;
 using Classroom.Helpers;
+using Classroom.Models;
 using Classroom.Services;
 using Classroom.ViewModels;
 using System;
@@ -67,6 +68,70 @@ namespace Classroom.Views
             {
                 Target = Target.MeetingViewModel,
             });
+        }
+
+        private void audio_settings_Opened(object sender, RoutedEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<AudioSettingsOpenEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MeetingViewModel,
+            });
+        }
+
+        private void video_settings_Opened(object sender, RoutedEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<VideoSettingsOpenEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MeetingViewModel,
+            });
+        }
+
+        private void camera_device_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+
+            if (element?.DataContext != null)
+            {
+                DeviceModel device = element.DataContext as DeviceModel;
+
+                EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Publish(new EventArgument()
+                {
+                    Target = Target.MeetingViewModel,
+                    Argument = new Argument() { Category = Category.Camera, Value = device }
+                });
+            }
+        }
+
+        private void speaker_device_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+
+            if (element?.DataContext != null)
+            {
+                DeviceModel device = element.DataContext as DeviceModel;
+
+                EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Publish(new EventArgument()
+                {
+                    Target = Target.MeetingViewModel,
+                    Argument = new Argument() { Category = Category.Speaker, Value = device }
+                });
+            }
+        }
+
+        private void mic_device_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            FrameworkElement element = sender as FrameworkElement;
+
+            if (element?.DataContext != null)
+            {
+                DeviceModel device = element.DataContext as DeviceModel;
+
+                EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Publish(new EventArgument()
+                {
+                    Target = Target.MeetingViewModel,
+                    Argument = new Argument() { Category = Category.Mic, Value = device }
+                });
+            }
         }
     }
 }

@@ -74,10 +74,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Events\Events.cs" />
+    <Compile Include="Helpers\BoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\CardSelectedAssist.cs" />
     <Compile Include="Helpers\PasswordBoxHelper.cs" />
     <Compile Include="Helpers\ReverseConverter.cs" />
     <Compile Include="Helpers\Win32APIs.cs" />
+    <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="sdk_wrap\ISdkWrap.cs" />
     <Compile Include="sdk_wrap\SdkWrap.cs" />
