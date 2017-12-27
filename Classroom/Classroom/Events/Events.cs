@@ -58,4 +58,5 @@ namespace Classroom.Events
 
     public class SelectedDeviceChangeEvent : PubSubEvent<EventArgument> { }
     public class RecordStatusChangeEvent : PubSubEvent<EventArgument> { }
+    public class OpenShareDialogEvent : PubSubEvent<EventArgument> { }
 }

@@ -6,6 +6,7 @@ using Classroom.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.Views
@@ -19,6 +20,13 @@ namespace Classroom.Views
         {
             InitializeComponent();
             DataContext = new MeetingViewModel();
+            Loaded += MeetingView_Loaded;
+        }
+
+        private void MeetingView_Loaded(object sender, RoutedEventArgs e)
+        {
+            MeetingViewModel meetingViewModel = DataContext as MeetingViewModel;
+            meetingViewModel.MeetingViewHandle = new WindowInteropHelper(this).Handle;
         }
 
         public void SyncVideoUI()
@@ -132,6 +140,14 @@ namespace Classroom.Views
                     Argument = new Argument() { Category = Category.Mic, Value = device }
                 });
             }
+        }
+
+        private void share_screen_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MeetingViewModel,
+            });
         }
     }
 }

@@ -5,6 +5,7 @@ using Classroom.Services;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;
 using Prism.Mvvm;
+using System;
 using System.Collections.ObjectModel;
 using ZOOM_SDK_DOTNET_WRAP;
 
@@ -97,6 +98,8 @@ namespace Classroom.ViewModels
     {
         public UiStatusModel UiStatusModel { get; set; }
 
+        public IntPtr MeetingViewHandle { get; set; }
+
         public MeetingViewModel()
         {
             SubscribeEvents();
@@ -111,7 +114,10 @@ namespace Classroom.ViewModels
                 PauseResumeKind = PackIconKind.Pause.ToString(),
                 PauseResumeText = UiStatusModel.RecordPauseText,
             };
+
+            MeetingViewHandle = IntPtr.Zero;
         }
+
 
 
         private SubscriptionToken _micToken;
@@ -120,6 +126,7 @@ namespace Classroom.ViewModels
         private SubscriptionToken _videoSettingToken;
         private SubscriptionToken _deviceSelectedToken;
         private SubscriptionToken _recordToken;
+        private SubscriptionToken _shareToken;
 
         private void SubscribeEvents()
         {
@@ -255,7 +262,17 @@ namespace Classroom.ViewModels
 
                         break;
                 }
-            },ThreadOption.PublisherThread,true,filter=> { return filter.Target == Target.MeetingViewModel; });
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+
+            _shareToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Subscribe((argument) =>
+            {
+                //CMeetingShareControllerDotNetWrap.Instance.ShowShareOptionDialog();
+                //ZPSelAppWndClass
+
+
+
+                CMeetingShareControllerDotNetWrap.Instance.StartAppShare(new HWNDDotNet() { value = (uint)MeetingViewHandle.ToInt32() });
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
         }
 
         public void UnsubscribeEvents()
@@ -265,6 +282,7 @@ namespace Classroom.ViewModels
             EventAggregatorManager.Instance.EventAggregator.GetEvent<AudioSettingsOpenEvent>().Unsubscribe(_audioSettingToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<VideoSettingsOpenEvent>().Unsubscribe(_videoSettingToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Unsubscribe(_deviceSelectedToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Unsubscribe(_shareToken);
         }
     }
 }
