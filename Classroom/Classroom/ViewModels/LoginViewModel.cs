@@ -153,6 +153,7 @@ namespace Classroom.ViewModels
 
             if (error != SDKError.SDKERR_SUCCESS)
             {
+                Logging = false;
                 Err = error.ToString();
                 return false;
             }

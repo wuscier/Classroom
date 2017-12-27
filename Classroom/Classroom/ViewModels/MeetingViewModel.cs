@@ -244,6 +244,10 @@ namespace Classroom.ViewModels
 
                         UiStatusModel.IsRecording = true;
 
+                        //CRecordingSettingContextDotNetWrap.Instance.SetRecordingPath();
+
+                        //CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now,)
+
                         break;
                     case Category.RecordPause:
 

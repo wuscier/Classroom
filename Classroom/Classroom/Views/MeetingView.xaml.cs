@@ -5,6 +5,7 @@ using Classroom.Services;
 using Classroom.ViewModels;
 using System;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
@@ -31,7 +32,12 @@ namespace Classroom.Views
 
         public void SyncVideoUI()
         {
-           Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+            if (record_popup.IsOpen)
+            {
+                record_popup.IsOpen = false;
+            }
+
+            Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
 
             int w = (int)Math.Round(video_container.ActualWidth);
             int h = (int)Math.Round(video_container.ActualHeight);
@@ -148,6 +154,41 @@ namespace Classroom.Views
             {
                 Target = Target.MeetingViewModel,
             });
+        }
+
+        private void record_settings_Opened(object sender, RoutedEventArgs e)
+        {
+            record_popup.IsOpen = true;
+
+            save_record_path.Focus();
+
+            
+
+            IntPtr handle = ((HwndSource)PresentationSource.FromVisual(record_popup)).Handle;
+            //Win32APIs.SetForegroundWindow(handle);
+
+
+            //record_popup.Focus();
+            //record_path.Text = CRecordingSettingContextDotNetWrap.Instance.GetRecordingPath();
+        }
+
+        private void record_path_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
+            DialogResult result = folderBrowserDialog.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.Cancel)
+            {
+                return;
+            }
+
+            record_path.Text = folderBrowserDialog.SelectedPath.Trim();
+        }
+
+        private void save_record_path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            SDKError error = CRecordingSettingContextDotNetWrap.Instance.SetRecordingPath(record_path.Text);
+            record_popup.IsOpen = false;
         }
     }
 }
