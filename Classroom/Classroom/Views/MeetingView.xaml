@@ -43,14 +43,14 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <materialDesign:Card Width="100" Height="80" Style="{StaticResource MyCardStyle}">
+            <materialDesign:Card x:Name="microphone" Width="100" Height="80" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="microphone_MouseLeftButtonDown">
                 <StackPanel>
-                    <materialDesign:PackIcon Kind="Microphone" Width="60" Height="50" HorizontalAlignment="Center"/>
-                    <TextBlock Text="静音" FontSize="20"  FontWeight="Bold"  HorizontalAlignment="Center"></TextBlock>
+                    <materialDesign:PackIcon Kind="{Binding UiStatusModel.MicIcon,Mode=OneWay}" Width="60" Height="50" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding UiStatusModel.MicStatus,Mode=OneWay}" FontSize="20"  FontWeight="Bold"  HorizontalAlignment="Center"></TextBlock>
                 </StackPanel>
             </materialDesign:Card>
             
-            <materialDesign:Card Grid.Column="1" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
+            <materialDesign:Card x:Name="audio_settings" Grid.Column="1" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
                 <materialDesign:PopupBox StaysOpen="False" PlacementMode="TopAndAlignLeftEdges">
                     <StackPanel>
                         <TextBlock Text="123456"></TextBlock>
@@ -63,14 +63,14 @@
 
 
 
-            <materialDesign:Card Grid.Column="2" Width="100" Height="80" Style="{StaticResource MyCardStyle}">
+            <materialDesign:Card x:Name="camera" Grid.Column="2" Width="100" Height="80" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="camera_MouseLeftButtonDown">
                 <StackPanel>
-                    <materialDesign:PackIcon Kind="Video" Width="60" Height="50" HorizontalAlignment="Center"/>
-                    <TextBlock Text="停止视频" FontSize="20"  FontWeight="Bold"  HorizontalAlignment="Center"></TextBlock>
+                    <materialDesign:PackIcon Kind="{Binding UiStatusModel.CameraIcon,Mode=OneWay}" Width="60" Height="50" HorizontalAlignment="Center"/>
+                    <TextBlock Text="{Binding UiStatusModel.CameraStatus,Mode=OneWay}" FontSize="20"  FontWeight="Bold"  HorizontalAlignment="Center"></TextBlock>
                 </StackPanel>
             </materialDesign:Card>
 
-            <materialDesign:Card Grid.Column="3" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
+            <materialDesign:Card x:Name="video_settings" Grid.Column="3" Width="30" Height="80" Style="{StaticResource MyCardStyle}">
                 <materialDesign:PopupBox StaysOpen="False" PlacementMode="TopAndAlignLeftEdges">
                     <StackPanel>
                         <TextBlock Text="123456"></TextBlock>

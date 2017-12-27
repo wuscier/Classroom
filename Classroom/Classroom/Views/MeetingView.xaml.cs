@@ -3,18 +3,8 @@ using Classroom.Helpers;
 using Classroom.Services;
 using Classroom.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.Views
@@ -52,11 +42,30 @@ namespace Classroom.Views
 
         protected override void OnClosed(EventArgs e)
         {
+            MeetingViewModel meetingViewModel = DataContext as MeetingViewModel;
+            meetingViewModel?.UnsubscribeEvents();
+
             CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().Leave(LeaveMeetingCmd.LEAVE_MEETING);
 
             EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowShowEvent>().Publish(new EventArgument()
             {
                 Target = Target.MainView
+            });
+        }
+
+        private void microphone_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<MicStatusChangeEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MeetingViewModel,
+            });
+        }
+
+        private void camera_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<CameraStatusChangeEvent>().Publish(new EventArgument()
+            {
+                Target = Target.MeetingViewModel,
             });
         }
     }

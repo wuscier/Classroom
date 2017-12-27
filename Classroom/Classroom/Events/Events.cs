@@ -9,6 +9,8 @@ namespace Classroom.Events
         LoginViewModel,
         MainView,
         MainViewModel,
+        MeetingView,
+        MeetingViewModel,
     }
 
     public enum Value
@@ -41,5 +43,6 @@ namespace Classroom.Events
 
 
     public class StartClassEvent : PubSubEvent<EventArgument> { }
-
+    public class MicStatusChangeEvent : PubSubEvent<EventArgument> { }
+    public class CameraStatusChangeEvent : PubSubEvent<EventArgument> { }
 }
