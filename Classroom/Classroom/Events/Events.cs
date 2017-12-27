@@ -29,6 +29,10 @@ namespace Classroom.Events
         Mic,
         Speaker,
         Camera,
+        RecordStart,
+        RecordPause,
+        RecordResume,
+        RecordStop,
     }
 
     public class EventArgument
@@ -53,4 +57,5 @@ namespace Classroom.Events
 
 
     public class SelectedDeviceChangeEvent : PubSubEvent<EventArgument> { }
+    public class RecordStatusChangeEvent : PubSubEvent<EventArgument> { }
 }

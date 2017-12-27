@@ -22,4 +22,19 @@ namespace Classroom.Helpers
             throw new NotImplementedException();
         }
     }
+
+    public class BoolToVisibilityConverter2 : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            bool bValue = (bool)value;
+            return bValue ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
 }

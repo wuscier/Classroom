@@ -25,6 +25,9 @@ namespace Classroom.ViewModels
         public const string CameraOnText = "停止视频";
         public const string CameraOffText = "启动视频";
 
+        public const string RecordPauseText = "暂停录制";
+        public const string RecordResumeText = "恢复录制";
+
         private string _micStatus;
 
         public string MicStatus
@@ -41,7 +44,6 @@ namespace Classroom.ViewModels
             set { SetProperty(ref _micIcon, value); }
         }
 
-
         private string _cameraStatus;
 
         public string CameraStatus
@@ -57,6 +59,34 @@ namespace Classroom.ViewModels
             get { return _cameraIcon; }
             set { SetProperty(ref _cameraIcon, value); }
         }
+
+        private bool _isRecording;
+
+        public bool IsRecording
+        {
+            get { return _isRecording; }
+            set { SetProperty(ref _isRecording, value); }
+        }
+
+        private string _pauseResumeKind;
+
+        public string PauseResumeKind
+        {
+            get { return _pauseResumeKind; }
+            set { SetProperty(ref _pauseResumeKind, value); }
+        }
+
+
+        private string _pauseResumeText;
+
+        public string PauseResumeText
+        {
+            get { return _pauseResumeText; }
+            set { SetProperty(ref _pauseResumeText, value); }
+        }
+
+
+
 
         public ObservableCollection<DeviceModel> Microphones { get; set; }
         public ObservableCollection<DeviceModel> Speakers { get; set; }
@@ -77,6 +107,9 @@ namespace Classroom.ViewModels
                 MicIcon = PackIconKind.Microphone.ToString(),
                 CameraStatus = UiStatusModel.CameraOnText,
                 MicStatus = UiStatusModel.MicOnText,
+                IsRecording = false,
+                PauseResumeKind = PackIconKind.Pause.ToString(),
+                PauseResumeText = UiStatusModel.RecordPauseText,
             };
         }
 
@@ -86,6 +119,7 @@ namespace Classroom.ViewModels
         private SubscriptionToken _audioSettingToken;
         private SubscriptionToken _videoSettingToken;
         private SubscriptionToken _deviceSelectedToken;
+        private SubscriptionToken _recordToken;
 
         private void SubscribeEvents()
         {
@@ -194,6 +228,34 @@ namespace Classroom.ViewModels
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+
+            _recordToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<RecordStatusChangeEvent>().Subscribe((argument) =>
+            {
+                switch (argument.Argument.Category)
+                {
+                    case Category.RecordStart:
+
+                        UiStatusModel.IsRecording = true;
+
+                        break;
+                    case Category.RecordPause:
+
+                        UiStatusModel.PauseResumeKind = PackIconKind.Play.ToString();
+                        UiStatusModel.PauseResumeText = UiStatusModel.RecordResumeText;
+
+                        break;
+                    case Category.RecordResume:
+
+                        UiStatusModel.PauseResumeKind = PackIconKind.Pause.ToString();
+                        UiStatusModel.PauseResumeText = UiStatusModel.RecordPauseText;
+                        break;
+                    case Category.RecordStop:
+
+                        UiStatusModel.IsRecording = false;
+
+                        break;
+                }
+            },ThreadOption.PublisherThread,true,filter=> { return filter.Target == Target.MeetingViewModel; });
         }
 
         public void UnsubscribeEvents()
