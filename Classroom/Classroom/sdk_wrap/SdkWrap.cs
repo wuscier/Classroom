@@ -11,6 +11,8 @@ namespace Classroom.sdk_wrap
 
         public static readonly SdkWrap Instacne = new SdkWrap();
 
+        public uint UserId { get; set; }
+
         public SDKError Initialize()
         {
             InitParam param = new InitParam();

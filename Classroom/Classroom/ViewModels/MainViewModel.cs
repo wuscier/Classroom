@@ -65,20 +65,31 @@ namespace Classroom.ViewModels
 
                 StartHook();
 
-                SDKError error = SdkWrap.Instacne.Start(new StartParam()
+
+                StartParam startParam = new StartParam()
                 {
-                    apiuserStart = new StartParam4APIUser()
-                    {
-                        userID = "704311",
-                        userToken = "t0zVp2Doi3PxKpIEkE3YH4iQbfDID8VaoNIl",
-                        userName = "big cash",
-                        meetingNumber = 3398415968,
-                    },
                     userType = SDKUserType.SDK_UT_APIUSER,
-                });
+
+                };
+
+                StartParam4APIUser apiuserStart = new StartParam4APIUser()
+                {
+                    userID = "704311",
+                    userToken = "t0zVp2Doi3PxKpIEkE3YH4iQbfDID8VaoNIl",
+                    userName = "big cash",
+                    meetingNumber = 3398415968,
+                };
+
+                startParam.apiuserStart = apiuserStart;
+
+
+
+                SDKError error = SdkWrap.Instacne.Start(startParam);
 
                 if (error == SDKError.SDKERR_SUCCESS)
                 {
+                    SdkWrap.Instacne.UserId = uint.Parse(apiuserStart.userID);
+
                     _meetingView = new MeetingView();
                     _meetingView.Show();
 

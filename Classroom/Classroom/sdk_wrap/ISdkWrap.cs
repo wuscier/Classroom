@@ -4,6 +4,9 @@ namespace Classroom.sdk_wrap
 {
     public interface ISdkWrap
     {
+        uint UserId { get; set; }
+
+
         SDKError Initialize();
         SDKError CleanUp();
 

@@ -1,8 +1,10 @@
 ﻿using Classroom.Events;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;
 using Prism.Mvvm;
+using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -81,12 +83,12 @@ namespace Classroom.ViewModels
                         UiStatusModel.MicStatus = UiStatusModel.MicOffText;
                         UiStatusModel.MicIcon = PackIconKind.MicrophoneOff.ToString();
 
-
+                        SDKError muteAudioErr = CMeetingAudioControllerDotNetWrap.Instance.MuteAudio(16778240, true);
                         break;
                     case UiStatusModel.MicOffText:
                         UiStatusModel.MicStatus = UiStatusModel.MicOnText;
                         UiStatusModel.MicIcon = PackIconKind.Microphone.ToString();
-
+                        SDKError unmuteAudioErr = CMeetingAudioControllerDotNetWrap.Instance.UnMuteAudio(16778240);
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -99,12 +101,14 @@ namespace Classroom.ViewModels
                         UiStatusModel.CameraStatus = UiStatusModel.CameraOffText;
                         UiStatusModel.CameraIcon = PackIconKind.CameraOff.ToString();
 
+                        ZOOM_SDK_DOTNET_WRAP.CMeetingVideoControllerDotNetWrap.Instance.MuteVideo();
 
                         break;
                     case UiStatusModel.CameraOffText:
                         UiStatusModel.CameraStatus = UiStatusModel.CameraOnText;
                         UiStatusModel.CameraIcon = PackIconKind.Camera.ToString();
 
+                        ZOOM_SDK_DOTNET_WRAP.CMeetingVideoControllerDotNetWrap.Instance.UnmuteVideo();
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
