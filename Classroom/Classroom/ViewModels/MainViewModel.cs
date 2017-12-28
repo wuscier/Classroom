@@ -6,6 +6,7 @@ using Classroom.Views;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Windows;
 using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
 
@@ -117,6 +118,16 @@ namespace Classroom.ViewModels
         private void RegisterCallbacks()
         {
             IMeetingServiceDotNetWrap meetingServiceDotNetWrap = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap();
+
+            IMeetingVideoControllerDotNetWrap videoControllerDotNetWrap = meetingServiceDotNetWrap.GetMeetingVideoController();
+
+            videoControllerDotNetWrap.Add_CB_onUserVideoStatusChange((userId, videoStatus) =>
+            {
+                if (_meetingView.bottom_menu.Visibility != Visibility.Visible && videoStatus == VideoStatus.Video_ON)
+                {
+                    _meetingView.bottom_menu.Visibility = Visibility.Visible;
+                }
+            });
 
             IMeetingParticipantsControllerDotNetWrap meetingParticipantsController = meetingServiceDotNetWrap.GetMeetingParticipantsController();
 

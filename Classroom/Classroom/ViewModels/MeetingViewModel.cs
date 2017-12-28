@@ -1,6 +1,5 @@
 ﻿using Classroom.Events;
 using Classroom.Models;
-using Classroom.sdk_wrap;
 using Classroom.Services;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;

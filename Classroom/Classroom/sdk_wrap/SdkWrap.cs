@@ -16,8 +16,13 @@ namespace Classroom.sdk_wrap
         public SDKError Initialize()
         {
             InitParam param = new InitParam();
+
+            param.brand_name = "云教室";
+
             param.web_domain = "https://zoom.us";
             param.language_id = SDK_LANGUAGE_ID.LANGUAGE_Chinese_Simplified;
+
+            
 
             SDKError err = CZoomSDKeDotNetWrap.Instance.Initialize(param);
 

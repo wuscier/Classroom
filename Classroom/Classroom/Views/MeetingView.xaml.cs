@@ -5,7 +5,6 @@ using Classroom.Services;
 using Classroom.ViewModels;
 using System;
 using System.Windows;
-using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
@@ -22,6 +21,7 @@ namespace Classroom.Views
             InitializeComponent();
             DataContext = new MeetingViewModel();
             Loaded += MeetingView_Loaded;
+            bottom_menu.Visibility = Visibility.Collapsed;
         }
 
         private void MeetingView_Loaded(object sender, RoutedEventArgs e)
@@ -32,11 +32,6 @@ namespace Classroom.Views
 
         public void SyncVideoUI()
         {
-            if (record_popup.IsOpen)
-            {
-                record_popup.IsOpen = false;
-            }
-
             Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
 
             int w = (int)Math.Round(video_container.ActualWidth);
@@ -165,25 +160,6 @@ namespace Classroom.Views
             recordPathView.Left = toScreenPoint.X -350;
             recordPathView.Top = toScreenPoint.Y - 80;
             recordPathView.ShowDialog();
-        }
-
-        private void record_path_MouseDoubleClick(object sender, MouseButtonEventArgs e)
-        {
-            FolderBrowserDialog folderBrowserDialog = new FolderBrowserDialog();
-            DialogResult result = folderBrowserDialog.ShowDialog();
-
-            if (result == System.Windows.Forms.DialogResult.Cancel)
-            {
-                return;
-            }
-
-            record_path.Text = folderBrowserDialog.SelectedPath.Trim();
-        }
-
-        private void save_record_path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
-        {
-            SDKError error = CRecordingSettingContextDotNetWrap.Instance.SetRecordingPath(record_path.Text);
-            record_popup.IsOpen = false;
         }
     }
 }
