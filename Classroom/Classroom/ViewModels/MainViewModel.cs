@@ -89,15 +89,16 @@ namespace Classroom.ViewModels
 
                 if (error == SDKError.SDKERR_SUCCESS)
                 {
+                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowHideEvent>().Publish(new EventArgument()
+                    {
+                        Target = Target.MainView,
+                    });
+
                     SdkWrap.Instacne.UserId = uint.Parse(apiuserStart.userID);
 
                     _meetingView = new MeetingView();
                     _meetingView.Show();
 
-                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowHideEvent>().Publish(new EventArgument()
-                    {
-                        Target = Target.MainView,
-                    });
                 }
                 else
                 {
@@ -126,6 +127,13 @@ namespace Classroom.ViewModels
                 if (_meetingView.bottom_menu.Visibility != Visibility.Visible && videoStatus == VideoStatus.Video_ON)
                 {
                     _meetingView.bottom_menu.Visibility = Visibility.Visible;
+                    _meetingView.SyncVideoUI();
+                }
+
+                if (_meetingView.ProgressingView != null)
+                {
+                    _meetingView.ProgressingView.Close();
+                    _meetingView.ProgressingView = null;
                 }
             });
 

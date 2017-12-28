@@ -33,7 +33,8 @@
             <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
 
-        <Grid x:Name="video_container"></Grid>
+        <Grid x:Name="video_container">
+                    </Grid>
         <Grid x:Name="bottom_menu" Grid.Row="1">
             <Grid.Background>
                 <ImageBrush ImageSource="../Images/bottom.png"></ImageBrush>

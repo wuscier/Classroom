@@ -16,6 +16,8 @@ namespace Classroom.Views
     /// </summary>
     public partial class MeetingView : Window
     {
+        public ProgressingView ProgressingView;
+
         public MeetingView()
         {
             InitializeComponent();
@@ -26,6 +28,18 @@ namespace Classroom.Views
 
         private void MeetingView_Loaded(object sender, RoutedEventArgs e)
         {
+            Point containerPoint = video_container.PointToScreen(new Point() { X = 0, Y = 0 });
+
+            ProgressingView = new ProgressingView();
+
+            double left = (video_container.ActualWidth - ProgressingView.Width) / 2;
+            double right = (video_container.ActualHeight - ProgressingView.Height) / 2;
+
+            ProgressingView.Left = containerPoint.X + left;
+            ProgressingView.Top = containerPoint.Y + right;
+
+            ProgressingView.ShowDialog();
+
             MeetingViewModel meetingViewModel = DataContext as MeetingViewModel;
             meetingViewModel.MeetingViewHandle = new WindowInteropHelper(this).Handle;
         }
