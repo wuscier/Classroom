@@ -127,7 +127,7 @@ namespace Classroom.ViewModels
                 if (_meetingView.bottom_menu.Visibility != Visibility.Visible && videoStatus == VideoStatus.Video_ON)
                 {
                     _meetingView.bottom_menu.Visibility = Visibility.Visible;
-                    _meetingView.SyncVideoUI();
+                    _meetingView.Height += 1;
                 }
 
                 if (_meetingView.ProgressingView != null)
