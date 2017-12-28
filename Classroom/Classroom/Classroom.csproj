@@ -105,6 +105,9 @@
     <Compile Include="Views\MeetingView.xaml.cs">
       <DependentUpon>MeetingView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RecordPathView.xaml.cs">
+      <DependentUpon>RecordPathView.xaml</DependentUpon>
+    </Compile>
     <Page Include="Themes\My.Card.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MeetingView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RecordPathView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -158,18 +158,13 @@ namespace Classroom.Views
 
         private void record_settings_Opened(object sender, RoutedEventArgs e)
         {
-            record_popup.IsOpen = true;
+            RecordPathView recordPathView = new RecordPathView();
 
-            save_record_path.Focus();
+            Point toScreenPoint = record_settings.PointToScreen(new Point() { X = 0, Y = 0 });
 
-            
-
-            IntPtr handle = ((HwndSource)PresentationSource.FromVisual(record_popup)).Handle;
-            //Win32APIs.SetForegroundWindow(handle);
-
-
-            //record_popup.Focus();
-            //record_path.Text = CRecordingSettingContextDotNetWrap.Instance.GetRecordingPath();
+            recordPathView.Left = toScreenPoint.X -350;
+            recordPathView.Top = toScreenPoint.Y - 80;
+            recordPathView.ShowDialog();
         }
 
         private void record_path_MouseDoubleClick(object sender, MouseButtonEventArgs e)
