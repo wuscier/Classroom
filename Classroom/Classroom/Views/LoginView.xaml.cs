@@ -1,9 +1,11 @@
 ﻿using Classroom.Events;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using Classroom.ViewModels;
 using Prism.Events;
 using System;
 using System.Windows;
+using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.Views
 {
@@ -62,6 +64,20 @@ namespace Classroom.Views
         protected override void OnClosed(EventArgs e)
         {
             UnsubscribeEvents();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            SDKError err = SdkWrap.Instacne.SDKAuth(new AuthParam()
+            {
+                appKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
+                appSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
+            });
+
+            if (err != SDKError.SDKERR_SUCCESS)
+            {
+                MessageBox.Show(err.ToString());
+            }
         }
     }
 }

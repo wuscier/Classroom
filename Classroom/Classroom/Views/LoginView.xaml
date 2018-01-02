@@ -7,7 +7,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:helper="clr-namespace:Classroom.Helpers"
         mc:Ignorable="d"
-        Height="400" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=username}">
+        Height="400" Width="600" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" FocusManager.FocusedElement="{Binding ElementName=username}"
+        Loaded="Window_Loaded"
+        >
 
     <Window.Resources>
         <ResourceDictionary>

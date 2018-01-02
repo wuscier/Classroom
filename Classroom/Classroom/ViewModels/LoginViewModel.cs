@@ -26,11 +26,13 @@ namespace Classroom.ViewModels
 
                      RegisterCallbacks();
 
-                     if (!SDKAuth())
+                     if (!Login())
                      {
                          Logging = false;
                          return;
                      }
+
+
                  }).ConfigureAwait(false);
             });
         }
@@ -133,7 +135,19 @@ namespace Classroom.ViewModels
 
             authServiceDotNetWrap.Add_CB_onLoginRet((loginStatus,accountInfo)=>
             {
-                
+                if (loginStatus == LOGINSTATUS.LOGIN_SUCCESS)
+                {
+                    Logging = false;
+                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
+                    {
+                        Target = Target.LoginView,
+                    });
+                }
+                else
+                {
+                    Err = loginStatus.ToString();
+                }
+
             });
             authServiceDotNetWrap.Add_CB_onLogout(()=>
             {
@@ -141,15 +155,20 @@ namespace Classroom.ViewModels
             });
         }
 
-        private bool SDKAuth()
+        private bool Login()
         {
-            AuthParam authParam = new AuthParam()
+            LoginParam loginParam = new LoginParam()
             {
-                appKey = UserName,
-                appSecret = Pwd
+                loginType = LoginType.LoginType_Email,
+                emailLogin = new LoginParam4Email()
+                {
+                    bRememberMe = RememberPwd,
+                    password = Pwd,
+                    userName = UserName,
+                }
             };
 
-            SDKError error = SdkWrap.Instacne.SDKAuth(authParam);
+            SDKError error = SdkWrap.Instacne.Login(loginParam);
 
             if (error != SDKError.SDKERR_SUCCESS)
             {
@@ -169,8 +188,8 @@ namespace Classroom.ViewModels
         {
             LoginModel = new LoginModel()
             {
-                UserName = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
-                Pwd = "2HgRys821FEOeIij7GPRoL5H5xrgp5Ui6c1d"
+                UserName = "wuxu190718@outlook.com",
+                Pwd = "abc123.cn_"
             };
         }
         public LoginModel LoginModel { get; set; }

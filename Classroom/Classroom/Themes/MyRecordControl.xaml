@@ -43,7 +43,7 @@
         </materialDesign:Card>
 
 
-        <materialDesign:Card x:Name="pause_resume" Grid.RowSpan="2" Height="80" Width="100" Style="{StaticResource MyCardStyle}"
+        <!--<materialDesign:Card x:Name="pause_resume" Grid.RowSpan="2" Height="80" Width="100" Style="{StaticResource MyCardStyle}"
                              Visibility="{Binding UiStatusModel.IsRecording,Converter={StaticResource BoolToVisibilityConverter2}}"
                              MouseLeftButtonDown="pause_resume_MouseLeftButtonDown"
                              >
@@ -51,7 +51,7 @@
                 <materialDesign:PackIcon Kind="{Binding UiStatusModel.PauseResumeKind}" Width="60" Height="50" HorizontalAlignment="Center"/>
                 <TextBlock Text="{Binding UiStatusModel.PauseResumeText}" FontSize="20"  FontWeight="Bold"  HorizontalAlignment="Center"></TextBlock>
             </StackPanel>
-        </materialDesign:Card>
+        </materialDesign:Card>-->
 
         <materialDesign:Card x:Name="stop_record" Grid.Column="1" Grid.RowSpan="2" Height="80" Width="100" Style="{StaticResource MyCardStyle}"
                              Visibility="{Binding UiStatusModel.IsRecording,Converter={StaticResource BoolToVisibilityConverter2}}"

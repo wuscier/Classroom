@@ -69,19 +69,25 @@ namespace Classroom.ViewModels
 
                 StartParam startParam = new StartParam()
                 {
-                    userType = SDKUserType.SDK_UT_APIUSER,
+                    userType = SDKUserType.SDK_UT_NORMALUSER,
 
                 };
 
-                StartParam4APIUser apiuserStart = new StartParam4APIUser()
+                //StartParam4APIUser apiuserStart = new StartParam4APIUser()
+                //{
+                //    userID = "704311",
+                //    userToken = "Izi6atSDBiwtIqk3GQX9txjxjj8SZLIa6s7v",
+                //    userName = "SDK User",
+                //    meetingNumber = 3398415968,
+
+                //};
+
+                StartParam4NormalUser normalUser = new StartParam4NormalUser()
                 {
-                    userID = "704311",
-                    userToken = "t0zVp2Doi3PxKpIEkE3YH4iQbfDID8VaoNIl",
-                    userName = "big cash",
                     meetingNumber = 3398415968,
                 };
 
-                startParam.apiuserStart = apiuserStart;
+                startParam.apiuserStart = normalUser;
 
 
 
@@ -94,15 +100,13 @@ namespace Classroom.ViewModels
                         Target = Target.MainView,
                     });
 
-                    SdkWrap.Instacne.UserId = uint.Parse(apiuserStart.userID);
-
                     _meetingView = new MeetingView();
                     _meetingView.Show();
 
                 }
                 else
                 {
-
+                    MessageBox.Show(error.ToString());
                 }
 
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MainViewModel; });

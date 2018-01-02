@@ -10,6 +10,7 @@ namespace Classroom.sdk_wrap
         SDKError Initialize();
         SDKError CleanUp();
 
+        SDKError Login(LoginParam loginParam);
         SDKError SDKAuth(AuthParam authParam);
         SDKError Start(StartParam startParam);
     }

@@ -6,6 +6,8 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.Windows;
 using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
@@ -241,11 +243,21 @@ namespace Classroom.ViewModels
                 {
                     case Category.RecordStart:
 
-                        UiStatusModel.IsRecording = true;
-
                         //CRecordingSettingContextDotNetWrap.Instance.SetRecordingPath();
 
-                        //CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now,)
+                        string recordPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+
+                        recordPath = Path.Combine(recordPath, "zoom_record_files");
+
+                        SDKError errStartRecord = CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now.Date, recordPath);
+                        if (SDKError.SDKERR_SUCCESS == errStartRecord)
+                        {
+                            UiStatusModel.IsRecording = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show(errStartRecord.ToString());
+                        }
 
                         break;
                     case Category.RecordPause:
@@ -261,8 +273,16 @@ namespace Classroom.ViewModels
                         break;
                     case Category.RecordStop:
 
-                        UiStatusModel.IsRecording = false;
+                        SDKError errStopRecord = CMeetingRecordingControllerDotNetWrap.Instance.StopRecording(DateTime.Now.Date);
 
+                        if (SDKError.SDKERR_SUCCESS == errStopRecord)
+                        {
+                            UiStatusModel.IsRecording = false;
+                        }
+                        else
+                        {
+                            MessageBox.Show(errStopRecord.ToString());
+                        }
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });

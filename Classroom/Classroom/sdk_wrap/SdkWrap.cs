@@ -22,8 +22,6 @@ namespace Classroom.sdk_wrap
             param.web_domain = "https://zoom.us";
             param.language_id = SDK_LANGUAGE_ID.LANGUAGE_Chinese_Simplified;
 
-            
-
             SDKError err = CZoomSDKeDotNetWrap.Instance.Initialize(param);
 
             return err;
@@ -45,6 +43,13 @@ namespace Classroom.sdk_wrap
         public SDKError Start(StartParam startParam)
         {
             SDKError err = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().Start(startParam);
+
+            return err;
+        }
+
+        public SDKError Login(LoginParam loginParam)
+        {
+            SDKError err = CZoomSDKeDotNetWrap.Instance.GetAuthServiceWrap().Login(loginParam);
 
             return err;
         }
