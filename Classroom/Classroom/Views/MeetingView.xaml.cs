@@ -69,7 +69,7 @@ namespace Classroom.Views
             MeetingViewModel meetingViewModel = DataContext as MeetingViewModel;
             meetingViewModel?.UnsubscribeEvents();
 
-            CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().Leave(LeaveMeetingCmd.LEAVE_MEETING);
+            CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().Leave(LeaveMeetingCmd.END_MEETING);
 
             EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowShowEvent>().Publish(new EventArgument()
             {

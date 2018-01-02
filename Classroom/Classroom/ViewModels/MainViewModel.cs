@@ -87,7 +87,7 @@ namespace Classroom.ViewModels
                     meetingNumber = 3398415968,
                 };
 
-                startParam.apiuserStart = normalUser;
+                startParam.normaluserStart = normalUser;
 
 
 

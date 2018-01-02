@@ -88,8 +88,6 @@ namespace Classroom.ViewModels
         }
 
 
-
-
         public ObservableCollection<DeviceModel> Microphones { get; set; }
         public ObservableCollection<DeviceModel> Speakers { get; set; }
         public ObservableCollection<DeviceModel> Cameras { get; set; }
@@ -103,6 +101,8 @@ namespace Classroom.ViewModels
 
         public MeetingViewModel()
         {
+            RegisterCallbacks();
+
             SubscribeEvents();
 
             UiStatusModel = new UiStatusModel()
@@ -118,7 +118,6 @@ namespace Classroom.ViewModels
 
             MeetingViewHandle = IntPtr.Zero;
         }
-
 
 
         private SubscriptionToken _micToken;
@@ -250,11 +249,7 @@ namespace Classroom.ViewModels
                         recordPath = Path.Combine(recordPath, "zoom_record_files");
 
                         SDKError errStartRecord = CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now.Date, recordPath);
-                        if (SDKError.SDKERR_SUCCESS == errStartRecord)
-                        {
-                            UiStatusModel.IsRecording = true;
-                        }
-                        else
+                        if (SDKError.SDKERR_SUCCESS != errStartRecord)
                         {
                             MessageBox.Show(errStartRecord.ToString());
                         }
@@ -275,17 +270,13 @@ namespace Classroom.ViewModels
 
                         SDKError errStopRecord = CMeetingRecordingControllerDotNetWrap.Instance.StopRecording(DateTime.Now.Date);
 
-                        if (SDKError.SDKERR_SUCCESS == errStopRecord)
-                        {
-                            UiStatusModel.IsRecording = false;
-                        }
-                        else
+                        if (SDKError.SDKERR_SUCCESS != errStopRecord)
                         {
                             MessageBox.Show(errStopRecord.ToString());
                         }
                         break;
                 }
-            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+            }, ThreadOption.BackgroundThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
 
             _shareToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Subscribe((argument) =>
             {
@@ -296,6 +287,36 @@ namespace Classroom.ViewModels
 
                 CMeetingShareControllerDotNetWrap.Instance.StartAppShare(new HWNDDotNet() { value = (uint)MeetingViewHandle.ToInt32() });
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+        }
+
+        private void RegisterCallbacks()
+        {
+            CMeetingRecordingControllerDotNetWrap.Instance.Add_CB_onRecordingStatus(status =>
+            {
+                switch (status)
+                {
+                    case RecordingStatus.Recording_Start:
+                        UiStatusModel.IsRecording = true;
+                        break;
+                    case RecordingStatus.Recording_Stop:
+                        UiStatusModel.IsRecording = false;
+                        break;
+                    case RecordingStatus.Recording_DiskFull:
+                        break;
+                    default:
+                        break;
+                }
+            });
+
+            CMeetingRecordingControllerDotNetWrap.Instance.Add_CB_onRecording2MP4Processing(percentage =>
+            {
+                //
+            });
+
+            CMeetingRecordingControllerDotNetWrap.Instance.Add_CB_onRecording2MP4Done((succeeded, result, path) =>
+            {
+
+            });
         }
 
         public void UnsubscribeEvents()

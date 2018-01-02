@@ -15,6 +15,8 @@ namespace Classroom.ViewModels
         {
             LoginCommand = new DelegateCommand(async () =>
             {
+                Logging = true;
+
                 await Task.Run(() =>
                  {
                      if (!IsInputFieldsValid())
@@ -22,16 +24,9 @@ namespace Classroom.ViewModels
                          return;
                      }
 
-                     Logging = true;
-
                      RegisterCallbacks();
 
-                     if (!Login())
-                     {
-                         Logging = false;
-                         return;
-                     }
-
+                     SDKAuth();
 
                  }).ConfigureAwait(false);
             });
@@ -119,35 +114,40 @@ namespace Classroom.ViewModels
 
             authServiceDotNetWrap.Add_CB_onAuthenticationReturn((authResult)=>
             {
-                if (authResult == AuthResult.AUTHRET_SUCCESS)
+                if (authResult != AuthResult.AUTHRET_SUCCESS)
                 {
                     Logging = false;
-                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
-                    {
-                        Target = Target.LoginView,
-                    });
-                }
-                else
-                {
                     Err = authResult.ToString();
+                    return;
                 }
+
+                Login();
             });
 
             authServiceDotNetWrap.Add_CB_onLoginRet((loginStatus,accountInfo)=>
             {
-                if (loginStatus == LOGINSTATUS.LOGIN_SUCCESS)
-                {
-                    Logging = false;
-                    EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
-                    {
-                        Target = Target.LoginView,
-                    });
-                }
-                else
-                {
-                    Err = loginStatus.ToString();
-                }
 
+                switch (loginStatus)
+                {
+                    case LOGINSTATUS.LOGIN_IDLE:
+                        break;
+                    case LOGINSTATUS.LOGIN_PROCESSING:
+                        break;
+                    case LOGINSTATUS.LOGIN_SUCCESS:
+                        Logging = false;
+                        EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
+                        {
+                            Target = Target.LoginView,
+                        });
+
+                        break;
+                    case LOGINSTATUS.LOGIN_FAILED:
+                        Logging = false;
+                        Err = "登录失败！";
+                        break;
+                    default:
+                        break;
+                }
             });
             authServiceDotNetWrap.Add_CB_onLogout(()=>
             {
@@ -155,7 +155,7 @@ namespace Classroom.ViewModels
             });
         }
 
-        private bool Login()
+        private void Login()
         {
             LoginParam loginParam = new LoginParam()
             {
@@ -174,10 +174,22 @@ namespace Classroom.ViewModels
             {
                 Logging = false;
                 Err = error.ToString();
-                return false;
             }
+        }
 
-            return true;
+        private void SDKAuth()
+        {
+            SDKError err = SdkWrap.Instacne.SDKAuth(new AuthParam()
+            {
+                appKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
+                appSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
+            });
+
+            if (err != SDKError.SDKERR_SUCCESS)
+            {
+                Logging = false;
+                Err = err.ToString();
+            }
         }
     }
 

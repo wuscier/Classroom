@@ -65,19 +65,5 @@ namespace Classroom.Views
         {
             UnsubscribeEvents();
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            SDKError err = SdkWrap.Instacne.SDKAuth(new AuthParam()
-            {
-                appKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
-                appSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
-            });
-
-            if (err != SDKError.SDKERR_SUCCESS)
-            {
-                MessageBox.Show(err.ToString());
-            }
-        }
     }
 }
