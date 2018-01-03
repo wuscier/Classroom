@@ -11,6 +11,8 @@ namespace Classroom.Events
         MainViewModel,
         MeetingView,
         MeetingViewModel,
+        SharingOptionsView,
+        SharingOptionsViewModel,
     }
 
     public class Argument
@@ -26,6 +28,8 @@ namespace Classroom.Events
         Password,
         MainCard,
         HistoryCard,
+        DesktopCard,
+        DocCard,
         Mic,
         Speaker,
         Camera,
@@ -58,5 +62,8 @@ namespace Classroom.Events
 
     public class SelectedDeviceChangeEvent : PubSubEvent<EventArgument> { }
     public class RecordStatusChangeEvent : PubSubEvent<EventArgument> { }
-    public class OpenShareDialogEvent : PubSubEvent<EventArgument> { }
+
+
+    public class StartSharingEvent : PubSubEvent<EventArgument> { }
+
 }

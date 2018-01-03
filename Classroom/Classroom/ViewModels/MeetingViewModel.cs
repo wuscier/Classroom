@@ -126,7 +126,6 @@ namespace Classroom.ViewModels
         private SubscriptionToken _videoSettingToken;
         private SubscriptionToken _deviceSelectedToken;
         private SubscriptionToken _recordToken;
-        private SubscriptionToken _shareToken;
 
         private void SubscribeEvents()
         {
@@ -246,13 +245,20 @@ namespace Classroom.ViewModels
 
                         string recordPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
-                        recordPath = Path.Combine(recordPath, "zoom_record_files");
+                        //recordPath = Path.Combine(recordPath, "zoom_record_files");
 
-                        SDKError errStartRecord = CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now.Date, recordPath);
-                        if (SDKError.SDKERR_SUCCESS != errStartRecord)
-                        {
-                            MessageBox.Show(errStartRecord.ToString());
-                        }
+                        SDKError errStartRecord = CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now, recordPath);
+
+                        UiStatusModel.IsRecording = true;
+
+                        //if (SDKError.SDKERR_SUCCESS != errStartRecord)
+                        //{
+                        //    MessageBox.Show(errStartRecord.ToString());
+                        //}
+                        //else
+                        //{
+                        //    UiStatusModel.IsRecording = true;
+                        //}
 
                         break;
                     case Category.RecordPause:
@@ -268,25 +274,29 @@ namespace Classroom.ViewModels
                         break;
                     case Category.RecordStop:
 
-                        SDKError errStopRecord = CMeetingRecordingControllerDotNetWrap.Instance.StopRecording(DateTime.Now.Date);
+                        SDKError errStopRecord = CMeetingRecordingControllerDotNetWrap.Instance.StopRecording(DateTime.Now);
 
-                        if (SDKError.SDKERR_SUCCESS != errStopRecord)
-                        {
-                            MessageBox.Show(errStopRecord.ToString());
-                        }
+                        UiStatusModel.IsRecording = false;
+
+                        //if (SDKError.SDKERR_SUCCESS != errStopRecord)
+                        //{
+                        //    MessageBox.Show(errStopRecord.ToString());
+                        //}
+                        //else
+                        //{
+                        //    UiStatusModel.IsRecording = false;
+                        //}
                         break;
                 }
-            }, ThreadOption.BackgroundThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
-
-            _shareToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Subscribe((argument) =>
-            {
-                //CMeetingShareControllerDotNetWrap.Instance.ShowShareOptionDialog();
-                //ZPSelAppWndClass
-
-
-
-                CMeetingShareControllerDotNetWrap.Instance.StartAppShare(new HWNDDotNet() { value = (uint)MeetingViewHandle.ToInt32() });
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
+
+
+            //CMeetingShareControllerDotNetWrap.Instance.ShowShareOptionDialog();
+            //ZPSelAppWndClass
+
+
+
+            //CMeetingShareControllerDotNetWrap.Instance.StartAppShare(new HWNDDotNet() { value = (uint)MeetingViewHandle.ToInt32() });
         }
 
         private void RegisterCallbacks()
@@ -326,7 +336,6 @@ namespace Classroom.ViewModels
             EventAggregatorManager.Instance.EventAggregator.GetEvent<AudioSettingsOpenEvent>().Unsubscribe(_audioSettingToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<VideoSettingsOpenEvent>().Unsubscribe(_videoSettingToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<SelectedDeviceChangeEvent>().Unsubscribe(_deviceSelectedToken);
-            EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Unsubscribe(_shareToken);
         }
     }
 }

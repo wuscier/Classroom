@@ -16,6 +16,8 @@ namespace Classroom.Helpers
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern int SetForegroundWindow(IntPtr hWnd);
-        
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr GetDesktopWindow();
     }
 }

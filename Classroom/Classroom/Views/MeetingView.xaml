@@ -8,7 +8,7 @@
         xmlns:helper="clr-namespace:Classroom.Helpers"
         xmlns:themes="clr-namespace:Classroom.Themes"
         mc:Ignorable="d"
-        Title="MeetingView" Height="599" MinHeight="600" Width="1000" MinWidth="1000" WindowStartupLocation="CenterScreen"
+        Title="课堂号：" Height="599" MinHeight="600" Width="1000" MinWidth="1000" WindowStartupLocation="CenterScreen"
         SizeChanged="Window_SizeChanged" LocationChanged="Window_LocationChanged">
 
     <Window.Resources>

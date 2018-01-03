@@ -159,10 +159,9 @@ namespace Classroom.Views
 
         private void share_screen_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            EventAggregatorManager.Instance.EventAggregator.GetEvent<OpenShareDialogEvent>().Publish(new EventArgument()
-            {
-                Target = Target.MeetingViewModel,
-            });
+            SharingOptionsView sharingOptionsView = new SharingOptionsView();
+            sharingOptionsView.Owner = this;
+            sharingOptionsView.ShowDialog();
         }
 
         private void record_settings_Opened(object sender, RoutedEventArgs e)
