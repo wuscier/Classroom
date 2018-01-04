@@ -112,8 +112,14 @@
     <Compile Include="Views\RecordPathView.xaml.cs">
       <DependentUpon>RecordPathView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\SharingDocView.xaml.cs">
+      <DependentUpon>SharingDocView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\SharingOptionsView.xaml.cs">
       <DependentUpon>SharingOptionsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\WhiteboardView.xaml.cs">
+      <DependentUpon>WhiteboardView.xaml</DependentUpon>
     </Compile>
     <Page Include="Themes\My.Card.xaml">
       <SubType>Designer</SubType>
@@ -147,7 +153,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\SharingDocView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\SharingOptionsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\WhiteboardView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

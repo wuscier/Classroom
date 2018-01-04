@@ -81,6 +81,9 @@ namespace Classroom.ViewModels
             {
                 if (IsDesktopSelected)
                 {
+                    CMeetingConfigurationDotNetWrap.Instance.SetSharingToolbarVisibility(false);
+                    CMeetingUIControllerDotNetWrap.Instance.ShowSharingToolbar(false);
+
                     IntPtr desktopHandle = Win32APIs.GetDesktopWindow();
 
                     SDKError error = CMeetingShareControllerDotNetWrap.Instance.StartAppShare(new HWNDDotNet() { value = (uint)desktopHandle.ToInt32() });
