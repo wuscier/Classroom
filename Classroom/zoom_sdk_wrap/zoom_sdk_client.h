@@ -65,6 +65,10 @@ public:
 	ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam);
 	ZOOM_SDK_NAMESPACE::SDKError UninitSdk();
 
+	ZOOM_SDK_NAMESPACE::SDKError SDKAuth(ZOOM_SDK_NAMESPACE::AuthParam authParam);
+	ZOOM_SDK_NAMESPACE::SDKError Login(ZOOM_SDK_NAMESPACE::LoginParam loginParam);
+	ZOOM_SDK_NAMESPACE::SDKError Start(ZOOM_SDK_NAMESPACE::StartParam startParam);
+
 
 public:
 	//IMeetingServiceEvent

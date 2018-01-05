@@ -202,6 +202,21 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::UninitSdk()
 	return ZOOM_SDK_NAMESPACE::CleanUPSDK();
 }
 
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::SDKAuth(ZOOM_SDK_NAMESPACE::AuthParam authParam)
+{
+	return m_pAuthService->SDKAuth(authParam);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Login(ZOOM_SDK_NAMESPACE::LoginParam loginParam)
+{
+	return m_pAuthService->Login(loginParam);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Start(ZOOM_SDK_NAMESPACE::StartParam startParam)
+{
+	return m_pMeetingService->Start(startParam);
+}
+
 
 
 //IMeetingServiceEvent

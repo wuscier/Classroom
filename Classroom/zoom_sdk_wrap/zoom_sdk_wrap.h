@@ -12,4 +12,13 @@
 
 extern "C" {
 	ZOOMWRAP_API bool InitSdkWrap(func_callback callback);
+	ZOOMWRAP_API bool UninitSdkWrap();
+
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError UninitSdk();
+
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SDKAuth(ZOOM_SDK_NAMESPACE::AuthParam authParam);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError Login(ZOOM_SDK_NAMESPACE::LoginParam loginParam);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError Start(ZOOM_SDK_NAMESPACE::StartParam startParam);
+
 }
