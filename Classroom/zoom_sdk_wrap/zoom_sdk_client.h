@@ -60,9 +60,10 @@ public:
 
 
 public:
-	bool Init(func_callback cb);
-
-
+	bool InitSdkWrap(func_callback cb);
+	bool UninitSdkWrap();
+	ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam);
+	ZOOM_SDK_NAMESPACE::SDKError UninitSdk();
 
 
 public:

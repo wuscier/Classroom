@@ -11,5 +11,5 @@
 
 
 extern "C" {
-	ZOOMWRAP_API bool Init(func_callback callback);
+	ZOOMWRAP_API bool InitSdkWrap(func_callback callback);
 }

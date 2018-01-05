@@ -13,12 +13,28 @@ void zoom_sdk_client::InvokeCallback(int calbackId, void * data)
 
 zoom_sdk_client::zoom_sdk_client()
 {
+	m_bInited = false;
+
+	m_pMeetingService = NULL;
+	m_pAuthService = NULL;
+	m_pConfigurationService = NULL;
+	m_pSettingService = NULL;
+
+	m_pAudioCtrl = NULL;
+	m_pVideoCtrl = NULL;
+	m_pParticipantsCtrl = NULL;
+	m_pRecordingCtrl = NULL;
+	m_pShareCtrl = NULL;
+	m_pUICtrl = NULL;
+
+	m_pUIHooker = NULL;
+	m_pNetworkHelper = NULL;
 }
 
 
 zoom_sdk_client::~zoom_sdk_client()
 {
-
+	m_bInited = false;
 }
 
 zoom_sdk_client * zoom_sdk_client::Instance()
@@ -31,7 +47,7 @@ zoom_sdk_client * zoom_sdk_client::Instance()
 	return m_instance;
 }
 
-bool zoom_sdk_client::Init(func_callback cb)
+bool zoom_sdk_client::InitSdkWrap(func_callback cb)
 {
 	if (m_bInited)
 	{
@@ -153,20 +169,85 @@ bool zoom_sdk_client::Init(func_callback cb)
 	return true;
 }
 
+bool zoom_sdk_client::UninitSdkWrap()
+{
+	if (!m_bInited)
+	{
+		return true;
+	}
+
+	m_bInited = false;
+
+	if (ZOOM_SDK_NAMESPACE::DestroyMeetingService(m_pMeetingService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+		return false;
+
+	if (ZOOM_SDK_NAMESPACE::DestroySettingService(m_pSettingService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+		return false;
+
+	if (ZOOM_SDK_NAMESPACE::DestroyAuthService(m_pAuthService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+		return false;
+	if (ZOOM_SDK_NAMESPACE::DestroyNetworkConnectionHelper(m_pNetworkHelper) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+		return false;
+
+	return true;
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam)
+{
+	return InitSDK(initParam);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::UninitSdk()
+{
+	return ZOOM_SDK_NAMESPACE::CleanUPSDK();
+}
+
 
 
 //IMeetingServiceEvent
 void zoom_sdk_client::onMeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult)
 {
+	MeetingStatusResult meetingStatusResult;
+	meetingStatusResult.status = status;
+	meetingStatusResult.result = iResult;
+
+	InvokeCallback(MeetingStatusChanged, &meetingStatusResult);
+}
+void zoom_sdk_client::onMeetingStatisticsWarningNotification(ZOOM_SDK_NAMESPACE::StatisticsWarningType type)
+{
+	WarningResult warningResult;
+	warningResult.type = type;
+
+	InvokeCallback(MeetingStatisticsWarningNotification, &warningResult);
+}
+
+void zoom_sdk_client::onMeetingSecureKeyNotification(const char* key, int len, ZOOM_SDK_NAMESPACE::IMeetingExternalSecureKeyHandler* pHandler)
+{
 
 }
-void zoom_sdk_client::onMeetingStatisticsWarningNotification(ZOOM_SDK_NAMESPACE::StatisticsWarningType type){}
-void zoom_sdk_client::onMeetingSecureKeyNotification(const char* key, int len, ZOOM_SDK_NAMESPACE::IMeetingExternalSecureKeyHandler* pHandler){}
 
 //IAuthServiceEvent
-void zoom_sdk_client::onAuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret){}
-void zoom_sdk_client::onLoginRet(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo){}
-void zoom_sdk_client::onLogout(){}
+void zoom_sdk_client::onAuthenticationReturn(ZOOM_SDK_NAMESPACE::AuthResult ret)
+{
+	AuthenticationResult authenticationResult;
+	authenticationResult.result = ret;
+
+	InvokeCallback(AuthenticationReturn, &authenticationResult);
+}
+
+void zoom_sdk_client::onLoginRet(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_NAMESPACE::IAccountInfo* pAccountInfo)
+{
+	LoginResult loginResult;
+	loginResult.status = ret;
+	loginResult.accountInfo = pAccountInfo;
+
+	InvokeCallback(LoginRet, &loginResult);
+}
+
+void zoom_sdk_client::onLogout()
+{
+	InvokeCallback(Logout, NULL);
+}
 
 //IMeetingConfigurationEvent
 void zoom_sdk_client::onInputMeetingPasswordAndScreenNameNotification(ZOOM_SDK_NAMESPACE::IMeetingPasswordAndScreenNameHandler* pHandler){}
@@ -186,7 +267,10 @@ void zoom_sdk_client::onUserJoin(ZOOM_SDK_NAMESPACE::IList<unsigned int >* lstUs
 void zoom_sdk_client::onUserLeft(ZOOM_SDK_NAMESPACE::IList<unsigned int >* lstUserID, const wchar_t* strUserList){}
 void zoom_sdk_client::onHostChangeNotification(unsigned int userId){}
 void zoom_sdk_client::onLowOrRaiseHandStatusChanged(bool bLow, unsigned int userid){}
-void zoom_sdk_client::onUserNameChanged(unsigned int userId, const wchar_t* userName){}
+void zoom_sdk_client::onUserNameChanged(unsigned int userId, const wchar_t* userName)
+{
+
+}
 
 //IMeetingRecordingCtrlEvent
 void zoom_sdk_client::onRecording2MP4Done(bool bsuccess, int iResult, const wchar_t* szPath){}
@@ -205,7 +289,14 @@ void zoom_sdk_client::onStartShareBtnClicked(){}
 void zoom_sdk_client::onEndMeetingBtnClicked(){}
 
 //IUIHookerEvent
-void zoom_sdk_client::onUIActionNotify(ZOOM_SDK_NAMESPACE::UIHOOKHWNDTYPE type, MSG msg){}
+void zoom_sdk_client::onUIActionNotify(ZOOM_SDK_NAMESPACE::UIHOOKHWNDTYPE type, MSG msg)
+{
+	UINotifyResult uiNotifyResult;
+	uiNotifyResult.type = type;
+	uiNotifyResult.msg = msg;
+
+	InvokeCallback(UIActionNotify, &uiNotifyResult);
+}
 
 
 //INetworkConnectionHandler
