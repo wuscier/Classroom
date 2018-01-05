@@ -193,6 +193,9 @@ namespace Classroom.ViewModels
 
         private void CustomMeetingUI()
         {
+            CMeetingConfigurationDotNetWrap.Instance.SetSharingToolbarVisibility(false);
+            CMeetingUIControllerDotNetWrap.Instance.ShowSharingToolbar(false);
+
             //CMeetingUIControllerDotNetWrap.Instance.ShowSharingToolbar(false);
 
             CMeetingConfigurationDotNetWrap.Instance.HideMeetingInfoFromMeetingUITitle(true);

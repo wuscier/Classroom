@@ -19,5 +19,8 @@ namespace Classroom.Helpers
 
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr GetDesktopWindow();
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        public static extern int GetModuleHandleA(string name);
     }
 }
