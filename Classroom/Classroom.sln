@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zoom_sdk_dotnet_wrap_edu", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zoom_sdk_wrap", "zoom_sdk_wrap\zoom_sdk_wrap.vcxproj", "{FC06C84E-F9EC-444A-93E6-680E97240EAA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Classroom2", "Classroom2\Classroom2.csproj", "{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,18 @@ Global
 		{FC06C84E-F9EC-444A-93E6-680E97240EAA}.Release|x64.Build.0 = Release|x64
 		{FC06C84E-F9EC-444A-93E6-680E97240EAA}.Release|x86.ActiveCfg = Release|Win32
 		{FC06C84E-F9EC-444A-93E6-680E97240EAA}.Release|x86.Build.0 = Release|Win32
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Debug|x64.Build.0 = Debug|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Debug|x86.Build.0 = Debug|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Release|x64.ActiveCfg = Release|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Release|x64.Build.0 = Release|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Release|x86.ActiveCfg = Release|Any CPU
+		{E626D8C1-CA1F-4127-B2E3-2B7DF78A42B2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
