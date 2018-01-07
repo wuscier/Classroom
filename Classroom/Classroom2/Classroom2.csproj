@@ -85,6 +85,8 @@
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="sdk_wrap\ISdkWrap.cs" />
+    <Compile Include="sdk_wrap\SdkDef.cs" />
+    <Compile Include="sdk_wrap\SdkInterop.cs" />
     <Compile Include="sdk_wrap\SdkWrap.cs" />
     <Compile Include="Services\EventAggregatorManager.cs" />
     <Compile Include="Themes\MyRecordControl.xaml.cs">
