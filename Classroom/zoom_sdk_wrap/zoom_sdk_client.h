@@ -70,6 +70,26 @@ public:
 	ZOOM_SDK_NAMESPACE::SDKError Start(ZOOM_SDK_NAMESPACE::StartParam startParam);
 
 
+	ZOOM_SDK_NAMESPACE::SDKError MuteAudio(unsigned int userId, bool allowUnmuteBySelf);
+	ZOOM_SDK_NAMESPACE::SDKError UnMuteAudio(unsigned int userId);
+
+	ZOOM_SDK_NAMESPACE::SDKError MuteVideo();
+	ZOOM_SDK_NAMESPACE::SDKError UnMuteVideo();
+
+	void GetMicList(DeviceInfoResult* mics);
+	void GetSpeakerList(DeviceInfoResult* speakers);
+	void GetCameraList(DeviceInfoResult* cameras);
+
+	ZOOM_SDK_NAMESPACE::SDKError SelectMic(const wchar_t* deviceId, const wchar_t* deviceName);
+	ZOOM_SDK_NAMESPACE::SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);
+	ZOOM_SDK_NAMESPACE::SDKError SelectCamera(const wchar_t* deviceId);
+
+	ZOOM_SDK_NAMESPACE::SDKError StartRecording(unsigned long startTimestamp, wchar_t* recordPath);
+	ZOOM_SDK_NAMESPACE::SDKError StopRecording(unsigned long stopTimestamp);
+
+	ZOOM_SDK_NAMESPACE::SDKError GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle);
+
+
 public:
 	//IMeetingServiceEvent
 	virtual void onMeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult = 0);

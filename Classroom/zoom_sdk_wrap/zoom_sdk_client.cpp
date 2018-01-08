@@ -218,6 +218,101 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Start(ZOOM_SDK_NAMESPACE::StartPar
 }
 
 
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::MuteAudio(unsigned int userId, bool allowUnmuteBySelf) {
+	return m_pAudioCtrl->MuteAudio(userId, allowUnmuteBySelf);
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::UnMuteAudio(unsigned int userId) {
+	return m_pAudioCtrl->UnMuteAudio(userId);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::MuteVideo() {
+	return m_pVideoCtrl->MuteVideo();
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::UnMuteVideo() {
+	return m_pVideoCtrl->UnmuteVideo();
+}
+
+void zoom_sdk_client::GetMicList(DeviceInfoResult* mics) {
+
+	ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::IMicInfo*>* micList = m_pSettingService->GetAudioSettings()->GetMicList();
+	
+	mics = new DeviceInfoResult[micList->GetCount()];
+
+	for (size_t i = 0; i < micList->GetCount(); i++)
+	{
+		ZOOM_SDK_NAMESPACE::IMicInfo* mic = micList->GetItem(i);
+
+		(mics + i)->deviceId = mic->GetDeviceId();
+		(mics + i)->deviceName = mic->GetDeviceName();
+		(mics + i)->isSelected = mic->IsSelectedDevice();
+	}
+
+}
+void zoom_sdk_client::GetSpeakerList(DeviceInfoResult* speakers) {
+	ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::ISpeakerInfo*>* speakerList = m_pSettingService->GetAudioSettings()->GetSpeakerList();
+
+	speakers = new DeviceInfoResult[speakerList->GetCount()];
+
+	for (size_t i = 0; i < speakerList->GetCount(); i++)
+	{
+		ZOOM_SDK_NAMESPACE::ISpeakerInfo* speaker = speakerList->GetItem(i);
+
+		(speakers + i)->deviceId = speaker->GetDeviceId();
+		(speakers + i)->deviceName = speaker->GetDeviceName();
+		(speakers + i)->isSelected = speaker->IsSelectedDevice();
+	}
+
+}
+
+
+void zoom_sdk_client::GetCameraList(DeviceInfoResult* cameras) {
+	ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::ICameraInfo*>* cameraList = m_pSettingService->GetVideoSettings()->GetCameraList();
+
+	cameras = new DeviceInfoResult[cameraList->GetCount()];
+
+	for (size_t i = 0; i < cameraList->GetCount(); i++)
+	{
+		ZOOM_SDK_NAMESPACE::ICameraInfo* camera = cameraList->GetItem(i);
+
+		(cameras + i)->deviceId = camera->GetDeviceId();
+		(cameras + i)->deviceName = camera->GetDeviceName();
+		(cameras + i)->isSelected = camera->IsSelectedDevice();
+	}
+
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::SelectMic(const wchar_t* deviceId, const wchar_t* deviceName) {
+	return m_pSettingService->GetAudioSettings()->SelectMic(deviceId, deviceName);
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName) {
+	return m_pSettingService->GetAudioSettings()->SelectSpeaker(deviceId, deviceName);
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::SelectCamera(const wchar_t* deviceId) {
+	return m_pSettingService->GetVideoSettings()->SelectCamera(deviceId);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StartRecording(unsigned long startTimestamp, wchar_t* recordPath) {
+	time_t startTime = startTimestamp;
+	return m_pRecordingCtrl->StartRecording(startTime, recordPath);
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StopRecording(unsigned long stopTimestamp) {
+	time_t stopTime = stopTimestamp;
+	return m_pRecordingCtrl->StopRecording(stopTime);
+}
+
+
+
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle) {
+	HWND first, second;
+	ZOOM_SDK_NAMESPACE::SDKError err = m_pUICtrl->GetMeetingUIWnd(first, second);
+
+	*firstViewHandle = first;
+	*secondViewHandle = second;
+
+	return err;
+}
+
 
 //IMeetingServiceEvent
 void zoom_sdk_client::onMeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult)
@@ -254,7 +349,8 @@ void zoom_sdk_client::onLoginRet(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_N
 {
 	LoginResult loginResult;
 	loginResult.status = ret;
-	loginResult.accountInfo = pAccountInfo;
+	loginResult.displayName = pAccountInfo->GetDisplayName();
+	loginResult.loginType = pAccountInfo->GetLoginType();
 
 	InvokeCallback(LoginRet, &loginResult);
 }
@@ -274,7 +370,15 @@ void zoom_sdk_client::onUserAudioStatusChange(ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK
 void zoom_sdk_client::onUserActiveAudioChange(ZOOM_SDK_NAMESPACE::IList<unsigned int >* plstActiveAudio){}
 
 //IMeetingVideoCtrlEvent
-void zoom_sdk_client::onUserVideoStatusChange(unsigned int userId, ZOOM_SDK_NAMESPACE::VideoStatus status){}
+void zoom_sdk_client::onUserVideoStatusChange(unsigned int userId, ZOOM_SDK_NAMESPACE::VideoStatus status)
+{
+	VideoStatusResult videoStatusResult;
+	videoStatusResult.userId = userId;
+	videoStatusResult.status = status;
+
+	InvokeCallback(UserVideoStatusChange, &videoStatusResult);
+}
+
 void zoom_sdk_client::onSpotlightVideoChangeNotification(bool bSpotlight, unsigned int userid){}
 
 //IMeetingParticipantsCtrlEvent
@@ -308,7 +412,8 @@ void zoom_sdk_client::onUIActionNotify(ZOOM_SDK_NAMESPACE::UIHOOKHWNDTYPE type, 
 {
 	UINotifyResult uiNotifyResult;
 	uiNotifyResult.type = type;
-	uiNotifyResult.msg = msg;
+	uiNotifyResult.handle = msg.hwnd;
+	uiNotifyResult.messageId = msg.message;
 
 	InvokeCallback(UIActionNotify, &uiNotifyResult);
 }
