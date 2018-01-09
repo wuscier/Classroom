@@ -76,9 +76,9 @@ public:
 	ZOOM_SDK_NAMESPACE::SDKError MuteVideo();
 	ZOOM_SDK_NAMESPACE::SDKError UnMuteVideo();
 
-	void GetMicList(DeviceInfoResult* mics);
-	void GetSpeakerList(DeviceInfoResult* speakers);
-	void GetCameraList(DeviceInfoResult* cameras);
+	int GetMicList(DeviceInfoResult* mics);
+	int GetSpeakerList(DeviceInfoResult* speakers);
+	int GetCameraList(DeviceInfoResult* cameras);
 
 	ZOOM_SDK_NAMESPACE::SDKError SelectMic(const wchar_t* deviceId, const wchar_t* deviceName);
 	ZOOM_SDK_NAMESPACE::SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);

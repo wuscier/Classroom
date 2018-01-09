@@ -28,9 +28,9 @@ extern "C" {
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MuteVideo();
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError UnMuteVideo();
 
-	ZOOMWRAP_API void GetMicList(DeviceInfoResult* mics);
-	ZOOMWRAP_API void GetSpeakerList(DeviceInfoResult* speakers);
-	ZOOMWRAP_API void GetCameraList(DeviceInfoResult* cameras);
+	ZOOMWRAP_API int GetMicList(DeviceInfoResult* mics);
+	ZOOMWRAP_API int GetSpeakerList(DeviceInfoResult* speakers);
+	ZOOMWRAP_API int GetCameraList(DeviceInfoResult* cameras);
 
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectMic(const wchar_t* deviceId, const wchar_t* deviceName);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);

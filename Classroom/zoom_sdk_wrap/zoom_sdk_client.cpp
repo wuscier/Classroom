@@ -232,13 +232,13 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::UnMuteVideo() {
 	return m_pVideoCtrl->UnmuteVideo();
 }
 
-void zoom_sdk_client::GetMicList(DeviceInfoResult* mics) {
+int zoom_sdk_client::GetMicList(DeviceInfoResult* mics) {
 
 	ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::IMicInfo*>* micList = m_pSettingService->GetAudioSettings()->GetMicList();
-	
-	mics = new DeviceInfoResult[micList->GetCount()];
 
-	for (size_t i = 0; i < micList->GetCount(); i++)
+	int max = micList->GetCount() > 10 ? 10 : micList->GetCount();
+
+	for (size_t i = 0; i < max; i++)
 	{
 		ZOOM_SDK_NAMESPACE::IMicInfo* mic = micList->GetItem(i);
 
@@ -247,13 +247,15 @@ void zoom_sdk_client::GetMicList(DeviceInfoResult* mics) {
 		(mics + i)->isSelected = mic->IsSelectedDevice();
 	}
 
+	return max;
 }
-void zoom_sdk_client::GetSpeakerList(DeviceInfoResult* speakers) {
+
+int zoom_sdk_client::GetSpeakerList(DeviceInfoResult* speakers) {
 	ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::ISpeakerInfo*>* speakerList = m_pSettingService->GetAudioSettings()->GetSpeakerList();
 
-	speakers = new DeviceInfoResult[speakerList->GetCount()];
+	int max = speakerList->GetCount() > 10 ? 10 : speakerList->GetCount();
 
-	for (size_t i = 0; i < speakerList->GetCount(); i++)
+	for (size_t i = 0; i < max; i++)
 	{
 		ZOOM_SDK_NAMESPACE::ISpeakerInfo* speaker = speakerList->GetItem(i);
 
@@ -261,14 +263,14 @@ void zoom_sdk_client::GetSpeakerList(DeviceInfoResult* speakers) {
 		(speakers + i)->deviceName = speaker->GetDeviceName();
 		(speakers + i)->isSelected = speaker->IsSelectedDevice();
 	}
-
+	return max;
 }
 
 
-void zoom_sdk_client::GetCameraList(DeviceInfoResult* cameras) {
+int zoom_sdk_client::GetCameraList(DeviceInfoResult* cameras) {
 	ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::ICameraInfo*>* cameraList = m_pSettingService->GetVideoSettings()->GetCameraList();
 
-	cameras = new DeviceInfoResult[cameraList->GetCount()];
+	int max = cameraList->GetCount() > 10 ? 10 : cameraList->GetCount();
 
 	for (size_t i = 0; i < cameraList->GetCount(); i++)
 	{
@@ -278,7 +280,7 @@ void zoom_sdk_client::GetCameraList(DeviceInfoResult* cameras) {
 		(cameras + i)->deviceName = camera->GetDeviceName();
 		(cameras + i)->isSelected = camera->IsSelectedDevice();
 	}
-
+	return max;
 }
 
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::SelectMic(const wchar_t* deviceId, const wchar_t* deviceName) {
