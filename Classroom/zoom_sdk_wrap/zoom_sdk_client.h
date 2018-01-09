@@ -94,6 +94,8 @@ public:
 	ZOOM_SDK_NAMESPACE::SDKError Start();
 	ZOOM_SDK_NAMESPACE::SDKError Stop();
 
+	void CustomizeUI();
+
 
 public:
 	//IMeetingServiceEvent

@@ -329,6 +329,15 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Stop()
 	return m_pUIHooker->Stop();
 }
 
+void zoom_sdk_client::CustomizeUI() {
+	m_pConfigurationService->SetBottomFloatToolbarWndVisibility(false);
+	m_pConfigurationService->EnableLButtonDBClick4SwitchFullScreenMode(false);
+	m_pConfigurationService->EnableEnterAndExitFullScreenButtonOnMeetingUI(false);
+	m_pConfigurationService->HideMeetingInfoFromMeetingUITitle(true);
+
+	m_pConfigurationService->SetSharingToolbarVisibility(false);
+	m_pUICtrl->ShowSharingToolbar(false);
+}
 
 
 //IMeetingServiceEvent
