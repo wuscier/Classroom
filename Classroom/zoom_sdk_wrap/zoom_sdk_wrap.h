@@ -22,4 +22,27 @@ extern "C" {
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError Start(ZOOM_SDK_NAMESPACE::StartParam startParam);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle);
 
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MuteAudio(unsigned int userId, bool allowUnmuteBySelf);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError UnMuteAudio(unsigned int userId);
+
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MuteVideo();
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError UnMuteVideo();
+
+	ZOOMWRAP_API void GetMicList(DeviceInfoResult* mics);
+	ZOOMWRAP_API void GetSpeakerList(DeviceInfoResult* speakers);
+	ZOOMWRAP_API void GetCameraList(DeviceInfoResult* cameras);
+
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectMic(const wchar_t* deviceId, const wchar_t* deviceName);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectCamera(const wchar_t* deviceId);
+
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StartRecording(unsigned long startTimestamp, wchar_t* recordPath);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StopRecording(unsigned long stopTimestamp);
+
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MonitorWndMessage(unsigned int msgId, bool add);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MonitorWnd(const wchar_t* className, bool add);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StartMonitor();
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StopMonitor();
+
+
 }

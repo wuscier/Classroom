@@ -89,6 +89,11 @@ public:
 
 	ZOOM_SDK_NAMESPACE::SDKError GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle);
 
+	ZOOM_SDK_NAMESPACE::SDKError MonitorWndMessage(unsigned int msgId, bool add);
+	ZOOM_SDK_NAMESPACE::SDKError MonitorWnd(const wchar_t* className, bool add);
+	ZOOM_SDK_NAMESPACE::SDKError Start();
+	ZOOM_SDK_NAMESPACE::SDKError Stop();
+
 
 public:
 	//IMeetingServiceEvent

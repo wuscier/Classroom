@@ -300,9 +300,6 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StopRecording(unsigned long stopTi
 	return m_pRecordingCtrl->StopRecording(stopTime);
 }
 
-
-
-
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle) {
 	HWND first, second;
 	ZOOM_SDK_NAMESPACE::SDKError err = m_pUICtrl->GetMeetingUIWnd(first, second);
@@ -312,6 +309,24 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::GetMeetingUIWnd(HWND* firstViewHan
 
 	return err;
 }
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::MonitorWndMessage(unsigned int msgId, bool add)
+{
+	return m_pUIHooker->MonitorWndMessage(msgId, add);
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::MonitorWnd(const wchar_t* className, bool add)
+{
+	return m_pUIHooker->MonitorWnd(className, add);
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Start()
+{
+	return m_pUIHooker->Start();
+}
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Stop()
+{
+	return m_pUIHooker->Stop();
+}
+
 
 
 //IMeetingServiceEvent
