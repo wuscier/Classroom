@@ -5,7 +5,6 @@ using Prism.Commands;
 using Prism.Mvvm;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -110,65 +109,65 @@ namespace Classroom.ViewModels
 
         private void RegisterCallbacks()
         {
-            IAuthServiceDotNetWrap authServiceDotNetWrap = CZoomSDKeDotNetWrap.Instance.GetAuthServiceWrap();
 
-            authServiceDotNetWrap.Add_CB_onAuthenticationReturn((authResult)=>
-            {
-                if (authResult != AuthResult.AUTHRET_SUCCESS)
-                {
-                    Logging = false;
-                    Err = authResult.ToString();
-                    return;
-                }
+            SdkWrap.Instance.AuthenticationReturnEvent += ((authResult) =>
+             {
+                 if (authResult.Result != AuthResult.AUTHRET_SUCCESS)
+                 {
+                     Logging = false;
+                     Err = authResult.ToString();
+                     return;
+                 }
 
-                Login();
-            });
+                 Login();
+             });
 
-            authServiceDotNetWrap.Add_CB_onLoginRet((loginStatus,accountInfo)=>
-            {
+            SdkWrap.Instance.LoginRetEvent += ((loginResult) =>
+              {
 
-                switch (loginStatus)
-                {
-                    case LOGINSTATUS.LOGIN_IDLE:
-                        break;
-                    case LOGINSTATUS.LOGIN_PROCESSING:
-                        break;
-                    case LOGINSTATUS.LOGIN_SUCCESS:
-                        Logging = false;
-                        EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
-                        {
-                            Target = Target.LoginView,
-                        });
+                  switch (loginResult.Status)
+                  {
+                      case LoginStatus.LOGIN_IDLE:
+                          break;
+                      case LoginStatus.LOGIN_PROCESSING:
+                          break;
+                      case LoginStatus.LOGIN_SUCCESS:
+                          Logging = false;
+                          EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
+                          {
+                              Target = Target.LoginView,
+                          });
 
-                        break;
-                    case LOGINSTATUS.LOGIN_FAILED:
-                        Logging = false;
-                        Err = "登录失败！";
-                        break;
-                    default:
-                        break;
-                }
-            });
-            authServiceDotNetWrap.Add_CB_onLogout(()=>
-            {
+                          break;
+                      case LoginStatus.LOGIN_FAILED:
+                          Logging = false;
+                          Err = "登录失败！";
+                          break;
+                      default:
+                          break;
+                  }
+              });
 
-            });
+            SdkWrap.Instance.LogoutEvent += (() =>
+              {
+
+              });
         }
 
         private void Login()
         {
             LoginParam loginParam = new LoginParam()
             {
-                loginType = LoginType.LoginType_Email,
-                emailLogin = new LoginParam4Email()
+                LoginType = LoginType.LoginType_Email,
+                EmailLogin = new LoginParam4Email()
                 {
-                    bRememberMe = RememberPwd,
-                    password = Pwd,
-                    userName = UserName,
+                    RememberMe = RememberPwd,
+                    Password = Pwd,
+                    UserName = UserName,
                 }
             };
 
-            SDKError error = SdkWrap.Instacne.Login(loginParam);
+            SDKError error = SdkWrap.Instance.Login(loginParam);
 
             if (error != SDKError.SDKERR_SUCCESS)
             {
@@ -179,10 +178,10 @@ namespace Classroom.ViewModels
 
         private void SDKAuth()
         {
-            SDKError err = SdkWrap.Instacne.SDKAuth(new AuthParam()
+            SDKError err = SdkWrap.Instance.SDKAuth(new AuthParam()
             {
-                appKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
-                appSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
+                AppKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
+                AppSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
             });
 
             if (err != SDKError.SDKERR_SUCCESS)

@@ -66,9 +66,6 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="zoom_sdk_dotnet_wrap">
-      <HintPath>..\..\bin\zoom_sdk_dotnet_wrap.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

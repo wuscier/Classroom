@@ -6,8 +6,6 @@ using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows;
 using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels

@@ -5,12 +5,7 @@ using Microsoft.Win32;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -81,12 +76,7 @@ namespace Classroom.ViewModels
             {
                 if (IsDesktopSelected)
                 {
-                    CMeetingConfigurationDotNetWrap.Instance.SetSharingToolbarVisibility(false);
-                    CMeetingUIControllerDotNetWrap.Instance.ShowSharingToolbar(false);
 
-                    IntPtr desktopHandle = Win32APIs.GetDesktopWindow();
-
-                    SDKError error = CMeetingShareControllerDotNetWrap.Instance.StartAppShare(new HWNDDotNet() { value = (uint)desktopHandle.ToInt32() });
                 }
                 else if (IsDocSelected)
                 {

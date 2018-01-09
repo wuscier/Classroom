@@ -1,13 +1,13 @@
 ﻿using Classroom.Events;
 using Classroom.Helpers;
 using Classroom.Models;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using Classroom.ViewModels;
 using System;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.Views
 {
@@ -46,12 +46,13 @@ namespace Classroom.Views
 
         public void SyncVideoUI()
         {
-            Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+            IntPtr first = IntPtr.Zero, second = IntPtr.Zero;
+            SdkWrap.Instance.GetMeetingUIWnd(ref first, ref second);
 
             int w = (int)Math.Round(video_container.ActualWidth);
             int h = (int)Math.Round(video_container.ActualHeight);
 
-            Win32APIs.MoveWindow(hwnds.firstViewHandle, 0, 0, w, h, true);
+            Win32APIs.MoveWindow(first, 0, 0, w, h, true);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -69,7 +70,7 @@ namespace Classroom.Views
             MeetingViewModel meetingViewModel = DataContext as MeetingViewModel;
             meetingViewModel?.UnsubscribeEvents();
 
-            CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().Leave(LeaveMeetingCmd.END_MEETING);
+            SdkWrap.Instance.Leave(LeaveMeetingCmd.LEAVE_MEETING);
 
             EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowShowEvent>().Publish(new EventArgument()
             {

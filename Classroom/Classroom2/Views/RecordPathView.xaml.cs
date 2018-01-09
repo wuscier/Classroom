@@ -1,7 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Forms;
 using System.Windows.Input;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.Views
 {
@@ -18,7 +17,7 @@ namespace Classroom.Views
 
         private void save_record_path_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            SDKError error = CRecordingSettingContextDotNetWrap.Instance.SetRecordingPath(record_path.Text);
+            //SDKError error = CRecordingSettingContextDotNetWrap.Instance.SetRecordingPath(record_path.Text);
             Close();
         }
 

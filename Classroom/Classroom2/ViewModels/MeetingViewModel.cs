@@ -1,14 +1,14 @@
 ﻿using Classroom.Events;
 using Classroom.Models;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using MaterialDesignThemes.Wpf;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Windows;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -137,12 +137,12 @@ namespace Classroom.ViewModels
                         UiStatusModel.MicStatus = UiStatusModel.MicOffText;
                         UiStatusModel.MicIcon = PackIconKind.MicrophoneOff.ToString();
 
-                        SDKError muteAudioErr = CMeetingAudioControllerDotNetWrap.Instance.MuteAudio(16778240, true);
+                        SDKError muteAudioErr = SdkWrap.Instance.MuteAudio(16778240, true);
                         break;
                     case UiStatusModel.MicOffText:
                         UiStatusModel.MicStatus = UiStatusModel.MicOnText;
                         UiStatusModel.MicIcon = PackIconKind.Microphone.ToString();
-                        SDKError unmuteAudioErr = CMeetingAudioControllerDotNetWrap.Instance.UnMuteAudio(16778240);
+                        SDKError unmuteAudioErr = SdkWrap.Instance.UnMuteAudio(16778240);
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -155,14 +155,14 @@ namespace Classroom.ViewModels
                         UiStatusModel.CameraStatus = UiStatusModel.CameraOffText;
                         UiStatusModel.CameraIcon = PackIconKind.CameraOff.ToString();
 
-                        ZOOM_SDK_DOTNET_WRAP.CMeetingVideoControllerDotNetWrap.Instance.MuteVideo();
+                        SdkWrap.Instance.MuteVideo();
 
                         break;
                     case UiStatusModel.CameraOffText:
                         UiStatusModel.CameraStatus = UiStatusModel.CameraOnText;
                         UiStatusModel.CameraIcon = PackIconKind.Camera.ToString();
 
-                        ZOOM_SDK_DOTNET_WRAP.CMeetingVideoControllerDotNetWrap.Instance.UnmuteVideo();
+                        SdkWrap.Instance.UnmuteVideo();
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -172,23 +172,23 @@ namespace Classroom.ViewModels
                 UiStatusModel.Microphones.Clear();
                 UiStatusModel.Speakers.Clear();
 
-                IMicInfoDotNetWrap[] mics = CAudioSettingContextDotNetWrap.Instance.GetMicList();
+                IList<DeviceInfoResult> mics = SdkWrap.Instance.GetMicList();
 
-                if (mics?.Length > 0)
+                if (mics?.Count > 0)
                 {
-                    foreach (IMicInfoDotNetWrap mic in mics)
+                    foreach (DeviceInfoResult mic in mics)
                     {
-                        UiStatusModel.Microphones.Add(new DeviceModel(mic.GetDeviceId(), mic.GetDeviceName(), mic.IsSelectedDevice()));
+                        UiStatusModel.Microphones.Add(new DeviceModel(mic.DeviceId,mic.DeviceName,mic.IsSelected));
                     }
                 }
 
-                ISpeakerInfoDotNetWrap[] speakers = CAudioSettingContextDotNetWrap.Instance.GetSpeakerList();
+                IList<DeviceInfoResult> speakers = SdkWrap.Instance.GetSpeakerList();
 
-                if (speakers?.Length > 0)
+                if (speakers?.Count > 0)
                 {
-                    foreach (ISpeakerInfoDotNetWrap speaker in speakers)
+                    foreach (DeviceInfoResult speaker in speakers)
                     {
-                        UiStatusModel.Speakers.Add(new DeviceModel(speaker.GetDeviceId(), speaker.GetDeviceName(), speaker.IsSelectedDevice()));
+                        UiStatusModel.Speakers.Add(new DeviceModel(speaker.DeviceId, speaker.DeviceName, speaker.IsSelected));
                     }
                 }
 
@@ -199,13 +199,13 @@ namespace Classroom.ViewModels
             {
                 UiStatusModel.Cameras.Clear();
 
-                ICameraInfoDotNetWrap[] cameras = CVideoSettingContextDotNetWrap.Instance.GetCameraList();
+                IList<DeviceInfoResult> cameras = SdkWrap.Instance.GetCameraList();
 
-                if (cameras?.Length > 0)
+                if (cameras?.Count > 0)
                 {
-                    foreach (ICameraInfoDotNetWrap camera in cameras)
+                    foreach (DeviceInfoResult camera in cameras)
                     {
-                        UiStatusModel.Cameras.Add(new DeviceModel(camera.GetDeviceId(), camera.GetDeviceName(), camera.IsSelectedDevice()));
+                        UiStatusModel.Cameras.Add(new DeviceModel(camera.DeviceId, camera.DeviceName, camera.IsSelected));
                     }
                 }
 
@@ -224,13 +224,13 @@ namespace Classroom.ViewModels
                 switch (argument.Argument.Category)
                 {
                     case Category.Mic:
-                        CAudioSettingContextDotNetWrap.Instance.SelectMic(device.Id, device.Name);
+                        SdkWrap.Instance.SelectMic(device.Id, device.Name);
                         break;
                     case Category.Speaker:
-                        CAudioSettingContextDotNetWrap.Instance.SelectSpeaker(device.Id, device.Name);
+                        SdkWrap.Instance.SelectSpeaker(device.Id, device.Name);
                         break;
                     case Category.Camera:
-                        CVideoSettingContextDotNetWrap.Instance.SelectCamera(device.Id);
+                        SdkWrap.Instance.SelectCamera(device.Id);
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -247,7 +247,7 @@ namespace Classroom.ViewModels
 
                         //recordPath = Path.Combine(recordPath, "zoom_record_files");
 
-                        SDKError errStartRecord = CMeetingRecordingControllerDotNetWrap.Instance.StartRecording(DateTime.Now, recordPath);
+                        SDKError errStartRecord = SdkWrap.Instance.StartRecording(0, recordPath);
 
                         UiStatusModel.IsRecording = true;
 
@@ -274,7 +274,7 @@ namespace Classroom.ViewModels
                         break;
                     case Category.RecordStop:
 
-                        SDKError errStopRecord = CMeetingRecordingControllerDotNetWrap.Instance.StopRecording(DateTime.Now);
+                        SDKError errStopRecord = SdkWrap.Instance.StopRecording(0);
 
                         UiStatusModel.IsRecording = false;
 
@@ -301,29 +301,34 @@ namespace Classroom.ViewModels
 
         private void RegisterCallbacks()
         {
-            CMeetingRecordingControllerDotNetWrap.Instance.Add_CB_onRecordingStatus(status =>
-            {
-                switch (status)
-                {
-                    case RecordingStatus.Recording_Start:
-                        UiStatusModel.IsRecording = true;
-                        break;
-                    case RecordingStatus.Recording_Stop:
-                        UiStatusModel.IsRecording = false;
-                        break;
-                    case RecordingStatus.Recording_DiskFull:
-                        break;
-                    default:
-                        break;
-                }
-            });
+            SdkWrap.Instance.RecordingStatusEvent += (result =>
+              {
+                  switch (result.Status)
+                  {
+                      case RecordingStatus.Recording_Start:
+                          UiStatusModel.IsRecording = true;
+                          break;
+                      case RecordingStatus.Recording_Stop:
+                          UiStatusModel.IsRecording = false;
+                          break;
+                      case RecordingStatus.Recording_DiskFull:
+                          break;
+                      default:
+                          break;
+                  }
+              });
 
-            CMeetingRecordingControllerDotNetWrap.Instance.Add_CB_onRecording2MP4Processing(percentage =>
-            {
+            SdkWrap.Instance.Recording2MP4ProcessingEvent += (percentage =>
+              {
                 //
             });
 
-            CMeetingRecordingControllerDotNetWrap.Instance.Add_CB_onRecording2MP4Done((succeeded, result, path) =>
+            SdkWrap.Instance.Recording2MP4DoneEvent += ((result) =>
+              {
+
+              });
+
+            SdkWrap.Instance.RecordPriviligeChangedEvent += ((result) =>
             {
 
             });

@@ -8,7 +8,6 @@ using Prism.Mvvm;
 using System;
 using System.Windows;
 using System.Windows.Interop;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.ViewModels
 {
@@ -62,14 +61,14 @@ namespace Classroom.ViewModels
             {
                 RegisterCallbacks();
 
-                CustomMeetingUI();
+                SdkInterop.CustomizeUI();
 
                 StartHook();
 
 
                 StartParam startParam = new StartParam()
                 {
-                    userType = SDKUserType.SDK_UT_NORMALUSER,
+                    UserType = SDKUserType.SDK_UT_NORMALUSER,
 
                 };
 
@@ -84,14 +83,14 @@ namespace Classroom.ViewModels
 
                 StartParam4NormalUser normalUser = new StartParam4NormalUser()
                 {
-                    meetingNumber = 3398415968,
+                    MeetingNumber = 3398415968,
                 };
 
-                startParam.normaluserStart = normalUser;
+                startParam.NormalUserStart = normalUser;
 
 
 
-                SDKError error = SdkWrap.Instacne.Start(startParam);
+                SDKError error = SdkWrap.Instance.Start(startParam);
 
                 if (error == SDKError.SDKERR_SUCCESS)
                 {
@@ -122,54 +121,51 @@ namespace Classroom.ViewModels
 
         private void RegisterCallbacks()
         {
-            IMeetingServiceDotNetWrap meetingServiceDotNetWrap = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap();
 
-            IMeetingVideoControllerDotNetWrap videoControllerDotNetWrap = meetingServiceDotNetWrap.GetMeetingVideoController();
+            SdkWrap.Instance.UserVideoStatusChangeEvent += ((videoStatusResult) =>
+              {
+                  if (_meetingView.bottom_menu.Visibility != Visibility.Visible && videoStatusResult.VideoStatus == VideoStatus.Video_ON)
+                  {
+                      _meetingView.bottom_menu.Visibility = Visibility.Visible;
+                      _meetingView.Height += 1;
+                  }
 
-            videoControllerDotNetWrap.Add_CB_onUserVideoStatusChange((userId, videoStatus) =>
+                  if (_meetingView.ProgressingView != null)
+                  {
+                      _meetingView.ProgressingView.Close();
+                      _meetingView.ProgressingView = null;
+                  }
+              });
+
+            //IMeetingParticipantsControllerDotNetWrap meetingParticipantsController = meetingServiceDotNetWrap.GetMeetingParticipantsController();
+
+            //meetingServiceDotNetWrap.Add_CB_onMeetingStatusChanged((status, result) =>
+            //{
+
+            //});
+            //meetingParticipantsController.Add_CB_onHostChangeNotification((userId) =>
+            //{
+
+            //});
+            //meetingParticipantsController.Add_CB_onLowOrRaiseHandStatusChanged((bLow, userId) =>
+            //{
+
+            //});
+            //meetingParticipantsController.Add_CB_onUserJoin((userIds) =>
+            //{
+            //});
+            //meetingParticipantsController.Add_CB_onUserLeft((userIds) =>
+            //{
+
+            //});
+            //meetingParticipantsController.Add_CB_onUserNameChanged((userId, userName) =>
+            //{
+
+            //});
+
+            SdkWrap.Instance.UIActionNotifyEvent+=((uiNotifyResult) =>
             {
-                if (_meetingView.bottom_menu.Visibility != Visibility.Visible && videoStatus == VideoStatus.Video_ON)
-                {
-                    _meetingView.bottom_menu.Visibility = Visibility.Visible;
-                    _meetingView.Height += 1;
-                }
-
-                if (_meetingView.ProgressingView != null)
-                {
-                    _meetingView.ProgressingView.Close();
-                    _meetingView.ProgressingView = null;
-                }
-            });
-
-            IMeetingParticipantsControllerDotNetWrap meetingParticipantsController = meetingServiceDotNetWrap.GetMeetingParticipantsController();
-
-            meetingServiceDotNetWrap.Add_CB_onMeetingStatusChanged((status, result) =>
-            {
-
-            });
-            meetingParticipantsController.Add_CB_onHostChangeNotification((userId) =>
-            {
-
-            });
-            meetingParticipantsController.Add_CB_onLowOrRaiseHandStatusChanged((bLow, userId) =>
-            {
-
-            });
-            meetingParticipantsController.Add_CB_onUserJoin((userIds) =>
-            {
-            });
-            meetingParticipantsController.Add_CB_onUserLeft((userIds) =>
-            {
-
-            });
-            meetingParticipantsController.Add_CB_onUserNameChanged((userId, userName) =>
-            {
-
-            });
-
-            CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap().Add_CB_onUIActionNotify((type, msg) =>
-            {
-                if (type == UIHOOKHWNDTYPE.UIHOOKWNDTYPE_MAINWND)
+                if (uiNotifyResult.type == UIHOOKHWNDTYPE.UIHOOKWNDTYPE_MAINWND)
                 {
                     if (!_wndMsgHandled)
                     {
@@ -177,10 +173,10 @@ namespace Classroom.ViewModels
 
                         App.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+                            //Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
 
-                            Win32APIs.SetWindowLong(hwnds.firstViewHandle, -16, 369164288);
-                            Win32APIs.SetParent(hwnds.firstViewHandle, new WindowInteropHelper(_meetingView).Handle);
+                            //Win32APIs.SetWindowLong(hwnds.firstViewHandle, -16, 369164288);
+                            //Win32APIs.SetParent(hwnds.firstViewHandle, new WindowInteropHelper(_meetingView).Handle);
 
                             _meetingView.SyncVideoUI();
 
@@ -191,33 +187,16 @@ namespace Classroom.ViewModels
             });
         }
 
-        private void CustomMeetingUI()
-        {
-            CMeetingConfigurationDotNetWrap.Instance.SetSharingToolbarVisibility(false);
-            CMeetingUIControllerDotNetWrap.Instance.ShowSharingToolbar(false);
-
-            //CMeetingUIControllerDotNetWrap.Instance.ShowSharingToolbar(false);
-
-            CMeetingConfigurationDotNetWrap.Instance.HideMeetingInfoFromMeetingUITitle(true);
-            CMeetingConfigurationDotNetWrap.Instance.SetBottomFloatToolbarWndVisibility(false);
-            CMeetingConfigurationDotNetWrap.Instance.EnableEnterAndExitFullScreenButtonOnMeetingUI(false);
-            CMeetingConfigurationDotNetWrap.Instance.EnableLButtonDBClick4SwitchFullScreenMode(false);
-        }
-
         private void StartHook()
         {
             _wndMsgHandled = false;
 
-            IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
-            iUIHook.MonitorWnd("ZPContentViewWndClass", true);
-            iUIHook.Start();
+            SdkWrap.Instance.MonitorWnd("ZPContentViewWndClass", true);
+            SdkWrap.Instance.StartMonitor();
         }
 
         private void StopHook()
         {
-            IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
-            //iUIHook.MonitorWnd("ZPContentViewWndClass", false);
-            //iUIHook.Stop();
         }
     }
 }

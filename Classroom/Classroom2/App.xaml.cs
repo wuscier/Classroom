@@ -1,7 +1,6 @@
 ﻿using Classroom.sdk_wrap;
 using Classroom.Views;
 using System.Windows;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom
 {
@@ -14,7 +13,8 @@ namespace Classroom
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            SDKError err = SdkWrap.Instacne.Initialize();
+            SdkWrap.Instance.InitSdkWrap();
+            SDKError err = SdkWrap.Instance.InitSdk();
 
             if (err != SDKError.SDKERR_SUCCESS)
             {
@@ -24,7 +24,8 @@ namespace Classroom
 
         protected override void OnExit(ExitEventArgs e)
         {
-            SDKError err = SdkWrap.Instacne.CleanUp();
+            SdkWrap.Instance.UninitSdkWrap();
+            SDKError err = SdkWrap.Instance.UninitSdk();
 
             if (err != SDKError.SDKERR_SUCCESS)
             {

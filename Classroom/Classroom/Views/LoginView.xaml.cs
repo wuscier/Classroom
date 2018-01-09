@@ -1,11 +1,9 @@
 ﻿using Classroom.Events;
-using Classroom.sdk_wrap;
 using Classroom.Services;
 using Classroom.ViewModels;
 using Prism.Events;
 using System;
 using System.Windows;
-using ZOOM_SDK_DOTNET_WRAP;
 
 namespace Classroom.Views
 {
