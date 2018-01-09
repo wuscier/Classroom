@@ -392,10 +392,36 @@ void zoom_sdk_client::onUserNameChanged(unsigned int userId, const wchar_t* user
 }
 
 //IMeetingRecordingCtrlEvent
-void zoom_sdk_client::onRecording2MP4Done(bool bsuccess, int iResult, const wchar_t* szPath){}
-void zoom_sdk_client::onRecording2MP4Processing(int iPercentage){}
-void zoom_sdk_client::onRecordingStatus(ZOOM_SDK_NAMESPACE::RecordingStatus status){}
-void zoom_sdk_client::onRecordPriviligeChanged(bool bCanRec){}
+void zoom_sdk_client::onRecording2MP4Done(bool bsuccess, int iResult, const wchar_t* szPath)
+{
+	Recording2MP4DoneResult result;
+	result.isSucceeded = bsuccess;
+	result.result = iResult;
+	result.recordPath = szPath;
+
+	InvokeCallback(Recording2MP4Done, &result);
+}
+void zoom_sdk_client::onRecording2MP4Processing(int iPercentage)
+{
+	Recording2MP4PercentageResult result;
+	result.percentage = iPercentage;
+
+	InvokeCallback(Recording2MP4Processing, &result);
+}
+void zoom_sdk_client::onRecordingStatus(ZOOM_SDK_NAMESPACE::RecordingStatus status)
+{
+	RecordingStatusResult result;
+	result.status = status;
+
+	InvokeCallback(RecordingStatus, &result);
+}
+void zoom_sdk_client::onRecordPriviligeChanged(bool bCanRec)
+{
+	RecordPriviligeChangedResult result;
+	result.canRecord = bCanRec;
+
+	InvokeCallback(RecordPriviligeChanged, &result);
+}
 
 //IMeetingShareCtrlEvent
 void zoom_sdk_client::onSharingStatus(ZOOM_SDK_NAMESPACE::SharingStatus status, unsigned int userId){}

@@ -3,6 +3,7 @@
 #include "auth_service_interface.h"
 #include "meeting_service_interface.h"
 #include "meeting_service_components\meeting_video_interface.h"
+#include "meeting_service_components\meeting_recording_interface.h"
 #include "ui_hook_interface.h"
 
 typedef void(*func_callback)(int callback_id, void* data);
@@ -42,6 +43,24 @@ typedef struct _tagDeviceInfoResult {
 	const wchar_t* deviceName;
 	bool isSelected;
 }DeviceInfoResult;
+
+typedef struct _tagRecording2MP4DoneResult {
+	bool isSucceeded;
+	int result;
+	const wchar_t* recordPath;
+}Recording2MP4DoneResult;
+
+typedef struct _tagRecording2MP4PercentageResult {
+	int percentage;
+}Recording2MP4PercentageResult;
+
+typedef struct _tagRecordingStatusResult {
+	ZOOM_SDK_NAMESPACE::RecordingStatus status;
+}RecordingStatusResult;
+
+typedef struct _tagRecordPriviligeChangedResult {
+	bool canRecord;
+}RecordPriviligeChangedResult;
 
 
 enum CallbackID {
