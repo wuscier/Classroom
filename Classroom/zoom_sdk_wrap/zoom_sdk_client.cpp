@@ -238,7 +238,7 @@ int zoom_sdk_client::GetMicList(DeviceInfoResult* mics) {
 
 	int max = micList->GetCount() > 10 ? 10 : micList->GetCount();
 
-	for (size_t i = 0; i < max; i++)
+	for (int i = 0; i < max; i++)
 	{
 		ZOOM_SDK_NAMESPACE::IMicInfo* mic = micList->GetItem(i);
 
@@ -255,7 +255,7 @@ int zoom_sdk_client::GetSpeakerList(DeviceInfoResult* speakers) {
 
 	int max = speakerList->GetCount() > 10 ? 10 : speakerList->GetCount();
 
-	for (size_t i = 0; i < max; i++)
+	for (int i = 0; i < max; i++)
 	{
 		ZOOM_SDK_NAMESPACE::ISpeakerInfo* speaker = speakerList->GetItem(i);
 
@@ -272,7 +272,7 @@ int zoom_sdk_client::GetCameraList(DeviceInfoResult* cameras) {
 
 	int max = cameraList->GetCount() > 10 ? 10 : cameraList->GetCount();
 
-	for (size_t i = 0; i < cameraList->GetCount(); i++)
+	for (int i = 0; i < cameraList->GetCount(); i++)
 	{
 		ZOOM_SDK_NAMESPACE::ICameraInfo* camera = cameraList->GetItem(i);
 
@@ -324,6 +324,12 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Start()
 {
 	return m_pUIHooker->Start();
 }
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Leave(ZOOM_SDK_NAMESPACE::LeaveMeetingCmd leaveCmd) {
+	return m_pMeetingService->Leave(leaveCmd);
+}
+
+
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Stop()
 {
 	return m_pUIHooker->Stop();

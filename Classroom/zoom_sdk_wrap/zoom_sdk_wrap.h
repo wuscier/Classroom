@@ -20,6 +20,7 @@ extern "C" {
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SDKAuth(ZOOM_SDK_NAMESPACE::AuthParam authParam);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError Login(ZOOM_SDK_NAMESPACE::LoginParam loginParam);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError Start(ZOOM_SDK_NAMESPACE::StartParam startParam);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError Leave(ZOOM_SDK_NAMESPACE::LeaveMeetingCmd leaveCmd);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle);
 
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MuteAudio(unsigned int userId, bool allowUnmuteBySelf);
