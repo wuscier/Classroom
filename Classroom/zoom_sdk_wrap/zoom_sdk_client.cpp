@@ -13,7 +13,8 @@ void zoom_sdk_client::InvokeCallback(int calbackId, void * data)
 
 zoom_sdk_client::zoom_sdk_client()
 {
-	m_bInited = false;
+	m_bMeetingServiceInited = false;
+	m_bAuthServiceInited = false;
 
 	m_pMeetingService = NULL;
 	m_pAuthService = NULL;
@@ -34,7 +35,8 @@ zoom_sdk_client::zoom_sdk_client()
 
 zoom_sdk_client::~zoom_sdk_client()
 {
-	m_bInited = false;
+	m_bMeetingServiceInited = false;
+	m_bAuthServiceInited = false;
 }
 
 zoom_sdk_client * zoom_sdk_client::Instance()
@@ -47,14 +49,11 @@ zoom_sdk_client * zoom_sdk_client::Instance()
 	return m_instance;
 }
 
-bool zoom_sdk_client::InitSdkWrap(func_callback cb)
-{
-	if (m_bInited)
+bool zoom_sdk_client::InitMeetingService() {
+	if (m_bMeetingServiceInited)
 	{
 		return true;
 	}
-
-	m_cb = cb;
 
 	if (CreateMeetingService(&m_pMeetingService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
 	{
@@ -67,23 +66,6 @@ bool zoom_sdk_client::InitSdkWrap(func_callback cb)
 	}
 
 	if (m_pMeetingService->SetEvent(this) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
-	{
-		return false;
-	}
-
-
-	if (CreateAuthService(&m_pAuthService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
-	{
-		return false;
-	}
-	
-
-	if (m_pAuthService == NULL)
-	{
-		return false;
-	}
-
-	if (m_pAuthService->SetEvent(this) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
 	{
 		return false;
 	}
@@ -164,41 +146,60 @@ bool zoom_sdk_client::InitSdkWrap(func_callback cb)
 		m_pUICtrl->SetEvent(this);
 	}
 
-	m_bInited = true;
+	m_bMeetingServiceInited = true;
 
 	return true;
 }
 
-bool zoom_sdk_client::UninitSdkWrap()
-{
-	if (!m_bInited)
+bool zoom_sdk_client::InitAuthService() {
+	if (m_bAuthServiceInited)
 	{
 		return true;
 	}
 
-	m_bInited = false;
+	if (CreateAuthService(&m_pAuthService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+	{
+		return false;
+	}
 
-	if (ZOOM_SDK_NAMESPACE::DestroyMeetingService(m_pMeetingService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
-		return false;
 
-	if (ZOOM_SDK_NAMESPACE::DestroySettingService(m_pSettingService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+	if (m_pAuthService == NULL)
+	{
 		return false;
+	}
 
-	if (ZOOM_SDK_NAMESPACE::DestroyAuthService(m_pAuthService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+	if (m_pAuthService->SetEvent(this) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
+	{
 		return false;
-	if (ZOOM_SDK_NAMESPACE::DestroyNetworkConnectionHelper(m_pNetworkHelper) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
-		return false;
+	}
+
+	m_bAuthServiceInited = true;
 
 	return true;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam)
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam, func_callback cb)
 {
+	m_cb = cb;
 	return InitSDK(initParam);
 }
 
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::UninitSdk()
 {
+	if (m_bMeetingServiceInited)
+	{
+		ZOOM_SDK_NAMESPACE::DestroyMeetingService(m_pMeetingService);
+
+		ZOOM_SDK_NAMESPACE::DestroySettingService(m_pSettingService);
+
+		ZOOM_SDK_NAMESPACE::DestroyNetworkConnectionHelper(m_pNetworkHelper);
+	}
+
+	if (m_bAuthServiceInited)
+	{
+		ZOOM_SDK_NAMESPACE::DestroyAuthService(m_pAuthService);
+	}
+
 	return ZOOM_SDK_NAMESPACE::CleanUPSDK();
 }
 
@@ -381,8 +382,12 @@ void zoom_sdk_client::onLoginRet(ZOOM_SDK_NAMESPACE::LOGINSTATUS ret, ZOOM_SDK_N
 {
 	LoginResult loginResult;
 	loginResult.status = ret;
-	loginResult.displayName = pAccountInfo->GetDisplayName();
-	loginResult.loginType = pAccountInfo->GetLoginType();
+
+	if (pAccountInfo != nullptr)
+	{
+		loginResult.displayName = pAccountInfo->GetDisplayName();
+		loginResult.loginType = pAccountInfo->GetLoginType();
+	}
 
 	InvokeCallback(LoginRet, &loginResult);
 }

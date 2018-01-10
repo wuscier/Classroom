@@ -11,10 +11,10 @@
 
 
 extern "C" {
-	ZOOMWRAP_API bool InitSdkWrap(func_callback callback);
-	ZOOMWRAP_API bool UninitSdkWrap();
+	ZOOMWRAP_API bool InitMeetingService();
+	ZOOMWRAP_API bool InitAuthService();
 
-	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam, func_callback callback);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError UninitSdk();
 
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SDKAuth(ZOOM_SDK_NAMESPACE::AuthParam authParam);

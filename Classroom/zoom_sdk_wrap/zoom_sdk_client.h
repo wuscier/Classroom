@@ -31,12 +31,16 @@ class zoom_sdk_client:
 	public ZOOM_SDK_NAMESPACE::INetworkConnectionHandler
 {
 private:
-	bool m_bInited;
+	bool m_bMeetingServiceInited;
+	bool m_bAuthServiceInited;
+
 	static zoom_sdk_client* m_instance;
 	func_callback m_cb;
 
-	ZOOM_SDK_NAMESPACE::IMeetingService* m_pMeetingService;
 	ZOOM_SDK_NAMESPACE::IAuthService* m_pAuthService;
+
+
+	ZOOM_SDK_NAMESPACE::IMeetingService* m_pMeetingService;
 	ZOOM_SDK_NAMESPACE::IMeetingConfiguration* m_pConfigurationService;
 	ZOOM_SDK_NAMESPACE::ISettingService* m_pSettingService;
 
@@ -60,9 +64,11 @@ public:
 
 
 public:
-	bool InitSdkWrap(func_callback cb);
-	bool UninitSdkWrap();
-	ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam);
+
+	bool InitMeetingService();
+	bool InitAuthService();
+
+	ZOOM_SDK_NAMESPACE::SDKError InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam, func_callback cb);
 	ZOOM_SDK_NAMESPACE::SDKError UninitSdk();
 
 	ZOOM_SDK_NAMESPACE::SDKError SDKAuth(ZOOM_SDK_NAMESPACE::AuthParam authParam);
