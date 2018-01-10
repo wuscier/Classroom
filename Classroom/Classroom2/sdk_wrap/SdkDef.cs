@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace Classroom.sdk_wrap
 {
@@ -179,7 +180,7 @@ namespace Classroom.sdk_wrap
     }
 
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct AuthParam
     {
         [MarshalAs(UnmanagedType.LPWStr)]

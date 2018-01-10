@@ -137,12 +137,12 @@ namespace Classroom.ViewModels
                         UiStatusModel.MicStatus = UiStatusModel.MicOffText;
                         UiStatusModel.MicIcon = PackIconKind.MicrophoneOff.ToString();
 
-                        SDKError muteAudioErr = SdkWrap.Instance.MuteAudio(16778240, true);
+                        SDKError muteAudioErr = SdkInterop.MuteAudio(16778240, true);
                         break;
                     case UiStatusModel.MicOffText:
                         UiStatusModel.MicStatus = UiStatusModel.MicOnText;
                         UiStatusModel.MicIcon = PackIconKind.Microphone.ToString();
-                        SDKError unmuteAudioErr = SdkWrap.Instance.UnMuteAudio(16778240);
+                        SDKError unmuteAudioErr = SdkInterop.UnMuteAudio(16778240);
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -155,14 +155,14 @@ namespace Classroom.ViewModels
                         UiStatusModel.CameraStatus = UiStatusModel.CameraOffText;
                         UiStatusModel.CameraIcon = PackIconKind.CameraOff.ToString();
 
-                        SdkWrap.Instance.MuteVideo();
+                        SdkInterop.MuteVideo();
 
                         break;
                     case UiStatusModel.CameraOffText:
                         UiStatusModel.CameraStatus = UiStatusModel.CameraOnText;
                         UiStatusModel.CameraIcon = PackIconKind.Camera.ToString();
 
-                        SdkWrap.Instance.UnmuteVideo();
+                        SdkInterop.UnMuteVideo();
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -224,13 +224,13 @@ namespace Classroom.ViewModels
                 switch (argument.Argument.Category)
                 {
                     case Category.Mic:
-                        SdkWrap.Instance.SelectMic(device.Id, device.Name);
+                        SdkInterop.SelectMic(device.Id, device.Name);
                         break;
                     case Category.Speaker:
-                        SdkWrap.Instance.SelectSpeaker(device.Id, device.Name);
+                        SdkInterop.SelectSpeaker(device.Id, device.Name);
                         break;
                     case Category.Camera:
-                        SdkWrap.Instance.SelectCamera(device.Id);
+                        SdkInterop.SelectCamera(device.Id);
                         break;
                 }
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.MeetingViewModel; });
@@ -247,7 +247,7 @@ namespace Classroom.ViewModels
 
                         //recordPath = Path.Combine(recordPath, "zoom_record_files");
 
-                        SDKError errStartRecord = SdkWrap.Instance.StartRecording(0, recordPath);
+                        SDKError errStartRecord = SdkInterop.StartRecording(0, recordPath);
 
                         UiStatusModel.IsRecording = true;
 
@@ -274,7 +274,7 @@ namespace Classroom.ViewModels
                         break;
                     case Category.RecordStop:
 
-                        SDKError errStopRecord = SdkWrap.Instance.StopRecording(0);
+                        SDKError errStopRecord = SdkInterop.StopRecording(0);
 
                         UiStatusModel.IsRecording = false;
 

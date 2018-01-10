@@ -3,7 +3,9 @@ using Classroom.sdk_wrap;
 using Classroom.Services;
 using Prism.Commands;
 using Prism.Mvvm;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace Classroom.ViewModels
@@ -167,7 +169,7 @@ namespace Classroom.ViewModels
                 }
             };
 
-            SDKError error = SdkWrap.Instance.Login(loginParam);
+            SDKError error = SdkInterop.Login(loginParam);
 
             if (error != SDKError.SDKERR_SUCCESS)
             {
@@ -178,7 +180,13 @@ namespace Classroom.ViewModels
 
         private void SDKAuth()
         {
-            SDKError err = SdkWrap.Instance.SDKAuth(new AuthParam()
+            if (!SdkInterop.InitAuthService())
+            {
+                MessageBox.Show("初始化auth服务失败！");
+                return;
+            }
+
+            SDKError err = SdkInterop.SDKAuth(new AuthParam()
             {
                 AppKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
                 AppSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",

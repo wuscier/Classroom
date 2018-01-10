@@ -70,7 +70,7 @@ namespace Classroom.Views
             MeetingViewModel meetingViewModel = DataContext as MeetingViewModel;
             meetingViewModel?.UnsubscribeEvents();
 
-            SdkWrap.Instance.Leave(LeaveMeetingCmd.LEAVE_MEETING);
+            SdkInterop.Leave(LeaveMeetingCmd.LEAVE_MEETING);
 
             EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowShowEvent>().Publish(new EventArgument()
             {

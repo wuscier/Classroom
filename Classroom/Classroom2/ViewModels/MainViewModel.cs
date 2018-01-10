@@ -61,6 +61,12 @@ namespace Classroom.ViewModels
             {
                 RegisterCallbacks();
 
+                if (!SdkInterop.InitMeetingService())
+                {
+                    MessageBox.Show("初始化服务失败！");
+                    return;
+                }
+
                 SdkInterop.CustomizeUI();
 
                 StartHook();
@@ -90,7 +96,7 @@ namespace Classroom.ViewModels
 
 
 
-                SDKError error = SdkWrap.Instance.Start(startParam);
+                SDKError error = SdkInterop.Start(startParam);
 
                 if (error == SDKError.SDKERR_SUCCESS)
                 {
@@ -191,12 +197,13 @@ namespace Classroom.ViewModels
         {
             _wndMsgHandled = false;
 
-            SdkWrap.Instance.MonitorWnd("ZPContentViewWndClass", true);
-            SdkWrap.Instance.StartMonitor();
+            SdkInterop.MonitorWnd("ZPContentViewWndClass", true);
+            SdkInterop.StartMonitor();
         }
 
         private void StopHook()
         {
+
         }
     }
 }

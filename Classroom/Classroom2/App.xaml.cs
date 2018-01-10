@@ -13,7 +13,6 @@ namespace Classroom
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            SdkWrap.Instance.InitSdkWrap();
             SDKError err = SdkWrap.Instance.InitSdk();
 
             if (err != SDKError.SDKERR_SUCCESS)
@@ -24,8 +23,7 @@ namespace Classroom
 
         protected override void OnExit(ExitEventArgs e)
         {
-            SdkWrap.Instance.UninitSdkWrap();
-            SDKError err = SdkWrap.Instance.UninitSdk();
+            SDKError err = SdkInterop.UninitSdk();
 
             if (err != SDKError.SDKERR_SUCCESS)
             {

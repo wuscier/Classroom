@@ -8,19 +8,19 @@ namespace Classroom.sdk_wrap
         const string DLL_NAME = "sdk_wrap.dll";
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern bool InitSdkWrap(FuncCallback callback);
+        internal static extern bool InitMeetingService();
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern bool UninitSdkWrap();
+        internal static extern bool InitAuthService();
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern SDKError InitSdk(InitParam initParam);
+        internal static extern SDKError InitSdk(InitParam initParam, FuncCallback cb);
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDKError UninitSdk();
 
 
-        [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDKError SDKAuth(AuthParam authParam);
 
 

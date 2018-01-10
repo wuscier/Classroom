@@ -17,6 +17,7 @@ namespace Classroom.sdk_wrap
 
         public uint UserId { get; set; }
 
+
         public SDKError InitSdk()
         {
             InitParam param = new InitParam();
@@ -26,48 +27,12 @@ namespace Classroom.sdk_wrap
             param.WebDomain = "https://zoom.us";
             param.LanguageId = SDKLanguageId.LANGUAGE_Chinese_Simplified;
 
-            SDKError err = SdkInterop.InitSdk(param);
-
-            return err;
-        }
-
-        public SDKError UninitSdk()
-        {
-            SDKError err = SdkInterop.UninitSdk();
-
-            return err;
-        }
-
-        public SDKError SDKAuth(AuthParam authParam)
-        {
-            SDKError err = SdkInterop.SDKAuth(authParam);
-            return err;
-        }
-
-        public SDKError Start(StartParam startParam)
-        {
-            SDKError err = SdkInterop.Start(startParam);
-
-            return err;
-        }
-
-        public SDKError Login(LoginParam loginParam)
-        {
-            SDKError err = SdkInterop.Login(loginParam);
-
-            return err;
-        }
-
-        public bool InitSdkWrap()
-        {
             FUNCCALLBACK = Callback;
-            return SdkInterop.InitSdkWrap(FUNCCALLBACK);
+            SDKError err = SdkInterop.InitSdk(param, FUNCCALLBACK);
+
+            return err;
         }
 
-        public bool UninitSdkWrap()
-        {
-            return SdkInterop.UninitSdkWrap();
-        }
 
         public delegate void AuthenticationReturn(AuthenticationResult result);
         public event AuthenticationReturn AuthenticationReturnEvent;
@@ -257,26 +222,6 @@ namespace Classroom.sdk_wrap
             return err;
         }
 
-        public SDKError MuteAudio(uint userId, bool allowUnmuteBySelf)
-        {
-            return SdkInterop.MuteAudio(userId, allowUnmuteBySelf);
-        }
-
-        public SDKError UnMuteAudio(uint userId)
-        {
-            return SdkInterop.UnMuteAudio(userId);
-        }
-
-        public SDKError MuteVideo()
-        {
-            return SdkInterop.MuteVideo();
-        }
-
-        public SDKError UnmuteVideo()
-        {
-            return SdkInterop.UnMuteVideo();
-        }
-
         public IList<DeviceInfoResult> GetMicList()
         {
             IntPtr ptr = IntPtr.Zero;
@@ -378,56 +323,6 @@ namespace Classroom.sdk_wrap
             }
 
             return cameras;
-        }
-
-        public SDKError SelectMic(string id, string name)
-        {
-            return SdkInterop.SelectMic(id, name);
-        }
-
-        public SDKError SelectSpeaker(string id, string name)
-        {
-            return SdkInterop.SelectSpeaker(id, name);
-        }
-
-        public SDKError SelectCamera(string id)
-        {
-            return SdkInterop.SelectCamera(id);
-        }
-
-        public SDKError StartRecording(ulong startTime, string path)
-        {
-            return SdkInterop.StartRecording(startTime, path);
-        }
-
-        public SDKError StopRecording(ulong endTime)
-        {
-            return SdkInterop.StopRecording(endTime);
-        }
-
-        public SDKError MonitorWndMessage(uint msgId, bool add)
-        {
-            return SdkInterop.MonitorWndMessage(msgId, add);
-        }
-
-        public SDKError MonitorWnd(string className, bool add)
-        {
-            return SdkInterop.MonitorWnd(className, add);
-        }
-
-        public SDKError StartMonitor()
-        {
-            return SdkInterop.StartMonitor();
-        }
-
-        public SDKError StopMonitor()
-        {
-            return StopMonitor();
-        }
-
-        public SDKError Leave(LeaveMeetingCmd cmd)
-        {
-            return SdkInterop.Leave(cmd);
         }
     }
 
