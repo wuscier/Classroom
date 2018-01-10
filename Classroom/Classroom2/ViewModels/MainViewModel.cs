@@ -128,7 +128,7 @@ namespace Classroom.ViewModels
         private void RegisterCallbacks()
         {
 
-            SdkWrap.Instance.UserVideoStatusChangeEvent += ((videoStatusResult) =>
+            SdkWrap.Instance.UserVideoStatusChangeEvent = ((videoStatusResult) =>
               {
                   if (_meetingView.bottom_menu.Visibility != Visibility.Visible && videoStatusResult.VideoStatus == VideoStatus.Video_ON)
                   {
@@ -169,7 +169,7 @@ namespace Classroom.ViewModels
 
             //});
 
-            SdkWrap.Instance.UIActionNotifyEvent+=((uiNotifyResult) =>
+            SdkWrap.Instance.UIActionNotifyEvent=((uiNotifyResult) =>
             {
                 if (uiNotifyResult.type == UIHOOKHWNDTYPE.UIHOOKWNDTYPE_MAINWND)
                 {
@@ -179,14 +179,15 @@ namespace Classroom.ViewModels
 
                         App.Current.Dispatcher.BeginInvoke(new Action(() =>
                         {
-                            //Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+                            IntPtr first = IntPtr.Zero, second = IntPtr.Zero;
+                            SdkWrap.Instance.GetMeetingUIWnd(ref first, ref second);
 
-                            //Win32APIs.SetWindowLong(hwnds.firstViewHandle, -16, 369164288);
-                            //Win32APIs.SetParent(hwnds.firstViewHandle, new WindowInteropHelper(_meetingView).Handle);
+                            Win32APIs.SetWindowLong(first, -16, 369164288);
+                            Win32APIs.SetParent(first, new WindowInteropHelper(_meetingView).Handle);
 
                             _meetingView.SyncVideoUI();
 
-
+                            StopHook();
                         }));
                     }
                 }
@@ -203,7 +204,8 @@ namespace Classroom.ViewModels
 
         private void StopHook()
         {
-
+            SdkInterop.MonitorWnd("ZPContentViewWndClass", false);
+            SdkInterop.StopMonitor();
         }
     }
 }

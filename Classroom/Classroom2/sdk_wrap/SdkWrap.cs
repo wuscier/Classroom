@@ -35,36 +35,36 @@ namespace Classroom.sdk_wrap
 
 
         public delegate void AuthenticationReturn(AuthenticationResult result);
-        public event AuthenticationReturn AuthenticationReturnEvent;
+        public AuthenticationReturn AuthenticationReturnEvent;
 
         public delegate void LoginRet(LoginResult result);
-        public event LoginRet LoginRetEvent;
+        public LoginRet LoginRetEvent;
 
         public delegate void UIActionNotify(UINotifyResult result);
-        public event UIActionNotify UIActionNotifyEvent;
+        public UIActionNotify UIActionNotifyEvent;
 
-        public event Action LogoutEvent;
+        public Action LogoutEvent;
 
         public delegate void MeetingStatusChanged(MeetingStatusResult result);
-        public event MeetingStatusChanged MeetingStatusChangedEvent;
+        public MeetingStatusChanged MeetingStatusChangedEvent;
 
         public delegate void MeetingStatisticsWarningNotification(WarningResult result);
-        public event MeetingStatisticsWarningNotification WarningNotificationEvent;
+        public MeetingStatisticsWarningNotification WarningNotificationEvent;
 
         public delegate void UserVideoStatusChange(VideoStatusResult result);
-        public event UserVideoStatusChange UserVideoStatusChangeEvent;
+        public UserVideoStatusChange UserVideoStatusChangeEvent;
 
         public delegate void Recording2MP4Done(Recording2MP4DoneResult result);
-        public event Recording2MP4Done Recording2MP4DoneEvent;
+        public Recording2MP4Done Recording2MP4DoneEvent;
 
         public delegate void Recording2MP4Processing(Recording2MP4PercentageResult result);
-        public event Recording2MP4Processing Recording2MP4ProcessingEvent;
+        public Recording2MP4Processing Recording2MP4ProcessingEvent;
 
         public delegate void RecordingStatus(RecordingStatusResult result);
-        public event RecordingStatus RecordingStatusEvent;
+        public RecordingStatus RecordingStatusEvent;
 
         public delegate void RecordPriviligeChanged(RecordPriviligeChangedResult result);
-        public event RecordPriviligeChanged RecordPriviligeChangedEvent;
+        public RecordPriviligeChanged RecordPriviligeChangedEvent;
 
         public  void Callback(int callbackId, IntPtr data)
         {

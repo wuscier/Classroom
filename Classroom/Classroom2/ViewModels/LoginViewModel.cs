@@ -112,7 +112,7 @@ namespace Classroom.ViewModels
         private void RegisterCallbacks()
         {
 
-            SdkWrap.Instance.AuthenticationReturnEvent += ((authResult) =>
+            SdkWrap.Instance.AuthenticationReturnEvent = ((authResult) =>
              {
                  if (authResult.Result != AuthResult.AUTHRET_SUCCESS)
                  {
@@ -124,7 +124,7 @@ namespace Classroom.ViewModels
                  Login();
              });
 
-            SdkWrap.Instance.LoginRetEvent += ((loginResult) =>
+            SdkWrap.Instance.LoginRetEvent = ((loginResult) =>
               {
 
                   switch (loginResult.Status)
@@ -150,7 +150,7 @@ namespace Classroom.ViewModels
                   }
               });
 
-            SdkWrap.Instance.LogoutEvent += (() =>
+            SdkWrap.Instance.LogoutEvent = (() =>
               {
 
               });

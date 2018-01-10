@@ -70,6 +70,43 @@ bool zoom_sdk_client::InitMeetingService() {
 		return false;
 	}
 
+	m_pAudioCtrl = m_pMeetingService->GetMeetingAudioController();
+	if (m_pAudioCtrl)
+	{
+		m_pAudioCtrl->SetEvent(this);
+	}
+
+	m_pParticipantsCtrl = m_pMeetingService->GetMeetingParticipantsController();
+	if (m_pParticipantsCtrl)
+	{
+		m_pParticipantsCtrl->SetEvent(this);
+	}
+
+	m_pRecordingCtrl = m_pMeetingService->GetMeetingRecordingController();
+	if (m_pRecordingCtrl)
+	{
+		m_pRecordingCtrl->SetEvent(this);
+	}
+
+	m_pShareCtrl = m_pMeetingService->GetMeetingShareController();
+	if (m_pShareCtrl)
+	{
+		m_pShareCtrl->SetEvent(this);
+	}
+	
+	m_pVideoCtrl = m_pMeetingService->GetMeetingVideoController();
+	if (m_pVideoCtrl)
+	{
+		m_pVideoCtrl->SetEvent(this);
+	}
+
+	m_pConfigurationService = m_pMeetingService->GetMeetingConfiguration();
+	if (m_pConfigurationService)
+	{
+		m_pConfigurationService->SetEvent(this);
+	}
+
+
 	if (CreateSettingService(&m_pSettingService) != ZOOM_SDK_NAMESPACE::SDKERR_SUCCESS)
 	{
 		return false;
@@ -103,42 +140,6 @@ bool zoom_sdk_client::InitMeetingService() {
 	}
 
 	m_pUIHooker->SetEvent(this);
-
-	m_pAudioCtrl = m_pMeetingService->GetMeetingAudioController();
-	if (m_pAudioCtrl)
-	{
-		m_pAudioCtrl->SetEvent(this);
-	}
-
-	m_pVideoCtrl = m_pMeetingService->GetMeetingVideoController();
-	if (m_pVideoCtrl)
-	{
-		m_pVideoCtrl->SetEvent(this);
-	}
-
-	m_pConfigurationService = m_pMeetingService->GetMeetingConfiguration();
-	if (m_pConfigurationService)
-	{
-		m_pConfigurationService->SetEvent(this);
-	}
-
-	m_pParticipantsCtrl = m_pMeetingService->GetMeetingParticipantsController();
-	if (m_pParticipantsCtrl)
-	{
-		m_pParticipantsCtrl->SetEvent(this);
-	}
-
-	m_pRecordingCtrl = m_pMeetingService->GetMeetingRecordingController();
-	if (m_pRecordingCtrl)
-	{
-		m_pRecordingCtrl->SetEvent(this);
-	}
-
-	m_pShareCtrl = m_pMeetingService->GetMeetingShareController();
-	if (m_pShareCtrl)
-	{
-		m_pShareCtrl->SetEvent(this);
-	}
 
 	m_pUICtrl = m_pMeetingService->GetUIController();
 	if (m_pUICtrl)
@@ -403,8 +404,11 @@ void zoom_sdk_client::onAirPlayInstructionWndNotification(bool bShow, const wcha
 
 
 //IMeetingAudioCtrlEvent
+void zoom_sdk_client::onUserActiveAudioChange(unsigned int userId) {
+};
+
 void zoom_sdk_client::onUserAudioStatusChange(ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::IUserAudioStatus* >* lstAudioStatusChange, const wchar_t* strAudioStatusList){}
-void zoom_sdk_client::onUserActiveAudioChange(ZOOM_SDK_NAMESPACE::IList<unsigned int >* plstActiveAudio){}
+//void zoom_sdk_client::onUserActiveAudioChange(ZOOM_SDK_NAMESPACE::IList<unsigned int >* plstActiveAudio){}
 
 //IMeetingVideoCtrlEvent
 void zoom_sdk_client::onUserVideoStatusChange(unsigned int userId, ZOOM_SDK_NAMESPACE::VideoStatus status)
