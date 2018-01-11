@@ -35,14 +35,14 @@
 
             <materialDesign:Card x:Name="note_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="note_card_MouseLeftButtonDown">
                 <StackPanel Margin="8">
-                    <materialDesign:PackIcon Kind="LeadPencil" Width="30" Height="30" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="LeadPencil" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <TextBlock Text="注释" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"></TextBlock>
                 </StackPanel>
             </materialDesign:Card>
 
             <materialDesign:Card x:Name="thumbnail_card" Style="{StaticResource MyCardStyle}" Grid.Column="1" MouseLeftButtonDown="thumbnail_card_MouseLeftButtonDown">
                 <StackPanel Margin="8">
-                    <materialDesign:PackIcon Kind="ViewGrid" Width="30" Height="30" HorizontalAlignment="Center"/>
+                    <materialDesign:PackIcon Kind="ViewGrid" Width="40" Height="40" HorizontalAlignment="Center"/>
                     <TextBlock Text="缩略图" FontSize="16" FontWeight="Bold"></TextBlock>
                 </StackPanel>
             </materialDesign:Card>
@@ -82,10 +82,28 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <StackPanel x:Name="note_detail" Width="{Binding ElementName=note_card,Path=ActualWidth}">
-                <Button></Button>
-                <Button></Button>
-                <Button></Button>
+            <StackPanel x:Name="note_detail">
+
+                <materialDesign:Card x:Name="pen_card" Style="{StaticResource MyCardStyle}">
+                    <materialDesign:PackIcon Kind="LeadPencil" Width="40" Height="40" Margin="8"></materialDesign:PackIcon>
+                </materialDesign:Card>
+
+                <materialDesign:Card x:Name="eraser_card" Style="{StaticResource MyCardStyle}">
+                    <materialDesign:PackIcon Kind="Eraser" Width="40" Height="40" Margin="8"></materialDesign:PackIcon>
+                </materialDesign:Card>
+
+                <materialDesign:Card x:Name="thickness_card" Style="{StaticResource MyCardStyle}">
+                    <materialDesign:PackIcon Kind="FormatLineWeight" Width="40" Height="40" Margin="8"/>
+                </materialDesign:Card>
+
+                <materialDesign:Card x:Name="color_card" Style="{StaticResource MyCardStyle}">
+                    <materialDesign:PackIcon Kind="FormatColorFill" Width="40" Height="40" Margin="8"/>
+                </materialDesign:Card>
+
+                <materialDesign:Card x:Name="clear_card" Style="{StaticResource MyCardStyle}">
+                    <materialDesign:PackIcon Kind="Close" Width="40" Height="40" Margin="8"/>
+                </materialDesign:Card>
+
             </StackPanel>
 
             <ListBox x:Name="thumbnail_detail" Grid.Column="1" ItemsSource="{Binding Thumbnails}" SelectedItem="{Binding CurrentThumbnail}">
@@ -125,7 +143,7 @@
             </ListBox>
 
             <Grid Grid.Row="1" Grid.Column="2">
-                <Canvas Background="{Binding CurrentThumbnail.ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}"></Canvas>
+                <InkCanvas Background="{Binding CurrentThumbnail.ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}" Strokes="{Binding CurrentThumbnail.Strokes}"></InkCanvas>
             </Grid>
 
         </Grid>
