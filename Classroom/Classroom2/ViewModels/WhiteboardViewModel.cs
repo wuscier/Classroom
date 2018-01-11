@@ -1,4 +1,7 @@
-﻿using Prism.Mvvm;
+﻿using Classroom.Events;
+using Classroom.Services;
+using Prism.Events;
+using Prism.Mvvm;
 using System.Collections.ObjectModel;
 using System.Linq;
 
@@ -13,8 +16,13 @@ namespace Classroom.ViewModels
 
     public class WhiteboardViewModel : BindableBase
     {
+        private SubscriptionToken _nextToken;
+        private SubscriptionToken _previousToken;
+
         public WhiteboardViewModel()
         {
+            SubscribeEvents();
+
             Thumbnails = new ObservableCollection<Thumbnail>();
             PageNums = new ObservableCollection<int>();
 
@@ -27,6 +35,32 @@ namespace Classroom.ViewModels
                 CurrentThumbnail = Thumbnails[0];
                 CurrentPageNum = CurrentThumbnail.PageNum;
             }
+        }
+
+
+        private void SubscribeEvents()
+        {
+            _previousToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<PreviousPageEvent>().Subscribe((argument) =>
+             {
+                 if (CurrentPageNum - 1 > 0)
+                 {
+                     CurrentPageNum -= 1;
+                 }
+             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
+
+            _nextToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<NextPageEvent>().Subscribe((argument) =>
+             {
+                 if (CurrentPageNum + 1 <= Thumbnails.Count)
+                 {
+                     CurrentPageNum += 1;
+                 }
+             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
+        }
+
+        public void UnsubscribeEvents()
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<NextPageEvent>().Unsubscribe(_nextToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<PreviousPageEvent>().Unsubscribe(_previousToken);
         }
 
         private void InitThumbnails()

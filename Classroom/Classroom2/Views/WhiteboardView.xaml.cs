@@ -1,4 +1,7 @@
-﻿using Classroom.ViewModels;
+﻿using Classroom.Events;
+using Classroom.Services;
+using Classroom.ViewModels;
+using System;
 using System.Windows;
 
 namespace Classroom.Views
@@ -40,12 +43,25 @@ namespace Classroom.Views
 
         private void next_page_card_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<NextPageEvent>().Publish(new EventArgument()
+            {
+                Target = Target.WhiteboardViewModel,
+            });
         }
 
         private void previous_page_card_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<PreviousPageEvent>().Publish(new EventArgument()
+            {
+                Target = Target.WhiteboardViewModel,
+            });
+        }
 
+        protected override void OnClosed(EventArgs e)
+        {
+            WhiteboardViewModel whiteboardViewModel = DataContext as WhiteboardViewModel;
+
+            whiteboardViewModel.UnsubscribeEvents();
         }
     }
 }
