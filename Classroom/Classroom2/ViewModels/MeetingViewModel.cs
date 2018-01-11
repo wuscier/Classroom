@@ -6,7 +6,6 @@ using MaterialDesignThemes.Wpf;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 

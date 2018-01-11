@@ -1,5 +1,4 @@
 ﻿using Classroom.Events;
-using Classroom.Helpers;
 using Classroom.Services;
 using Microsoft.Win32;
 using Prism.Events;

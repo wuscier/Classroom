@@ -5,78 +5,130 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Classroom.Views"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:helper="clr-namespace:Classroom.Helpers"
         mc:Ignorable="d"
-        Title="WhiteboardView" Height="600" Width="800">
+        Height="600" Width="800">
 
 
     <Window.Resources>
-        <ResourceDictionary Source="../Themes/My.Card.xaml"></ResourceDictionary>
+
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../Themes/My.Card.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+            <helper:ThumbnailToBrushConverter x:Key="Thumbnail2BrushConverter"></helper:ThumbnailToBrushConverter>
+        </ResourceDictionary>
     </Window.Resources>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition Width="auto"></ColumnDefinition>
-            <ColumnDefinition></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-
-
-        <materialDesign:Card Style="{StaticResource MyCardStyle}">
-            <StackPanel Margin="8">
-                <materialDesign:PackIcon Kind="LeadPencil" Width="30" Height="30" HorizontalAlignment="Center"/>
-                <TextBlock Text="注释" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"></TextBlock>
-            </StackPanel>
-        </materialDesign:Card>
-
-        <materialDesign:Card Style="{StaticResource MyCardStyle}" Grid.Column="1">
-            <StackPanel Margin="8">
-                <materialDesign:PackIcon Kind="ViewGrid" Width="30" Height="30" HorizontalAlignment="Center"/>
-                <TextBlock Text="缩略图视图" FontSize="16" FontWeight="Bold"></TextBlock>
-            </StackPanel>
-        </materialDesign:Card>
-
-
-        <Grid Grid.Column="2">
+        <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="1" VerticalAlignment="Center">
+            <materialDesign:Card x:Name="note_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="note_card_MouseLeftButtonDown">
+                <StackPanel Margin="8">
+                    <materialDesign:PackIcon Kind="LeadPencil" Width="30" Height="30" HorizontalAlignment="Center"/>
+                    <TextBlock Text="注释" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+
+            <materialDesign:Card x:Name="thumbnail_card" Style="{StaticResource MyCardStyle}" Grid.Column="1" MouseLeftButtonDown="thumbnail_card_MouseLeftButtonDown">
+                <StackPanel Margin="8">
+                    <materialDesign:PackIcon Kind="ViewGrid" Width="30" Height="30" HorizontalAlignment="Center"/>
+                    <TextBlock Text="缩略图" FontSize="16" FontWeight="Bold"></TextBlock>
+                </StackPanel>
+            </materialDesign:Card>
+
+
+            <Grid Grid.Column="2">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition></ColumnDefinition>
-                    <ColumnDefinition></ColumnDefinition>
+                    <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
 
-                <materialDesign:PackIcon Kind="SkipPrevious" Width="30" Height="30" HorizontalAlignment="Right"></materialDesign:PackIcon>
-                <ComboBox Grid.Column="1" Width="100" Height="30" HorizontalAlignment="Center"></ComboBox>
-                <materialDesign:PackIcon Grid.Column="2" Kind="SkipNext" Width="30" Height="30" HorizontalAlignment="Left"></materialDesign:PackIcon>
+                <Grid Grid.Column="1" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                        <ColumnDefinition></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+
+                    <materialDesign:Card x:Name="previous_page_card" Style="{StaticResource MyCardStyle}" Margin="0 0 20 0" MouseLeftButtonDown="previous_page_card_MouseLeftButtonDown">
+                        <materialDesign:PackIcon Kind="SkipPrevious" Width="40" Height="40"></materialDesign:PackIcon>
+                    </materialDesign:Card>
+                    <ComboBox Grid.Column="1" Width="80" Height="40" HorizontalAlignment="Center" ItemsSource="{Binding PageNums}" FontSize="25" SelectedItem="{Binding CurrentPageNum}"></ComboBox>
+                    <materialDesign:Card x:Name="next_page_card" Grid.Column="2" Style="{StaticResource MyCardStyle}" Margin="20 0 0 0" MouseLeftButtonDown="next_page_card_MouseLeftButtonDown">
+                        <materialDesign:PackIcon Kind="SkipNext" Width="40" Height="40"></materialDesign:PackIcon>
+                    </materialDesign:Card>
+                </Grid>
+
             </Grid>
 
         </Grid>
-        
+        <Grid Grid.Row="1">
 
-        <StackPanel Grid.Row="1">
-            <Button></Button>
-            <Button></Button>
-            <Button></Button>
-        </StackPanel>
-
-        <ListBox Grid.Row="1" Grid.Column="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition Width="auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
             
-        </ListBox>
+            <StackPanel x:Name="note_detail" Width="{Binding ElementName=note_card,Path=ActualWidth}">
+                <Button></Button>
+                <Button></Button>
+                <Button></Button>
+            </StackPanel>
 
-        <Grid Grid.Row="1" Grid.Column="2">
-            <Canvas></Canvas>
+            <ListBox x:Name="thumbnail_detail" Grid.Column="1" ItemsSource="{Binding Thumbnails}" SelectedItem="{Binding CurrentThumbnail}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="auto"></RowDefinition>
+                                <RowDefinition Height="auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+
+                            <Canvas Background="{Binding ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}" Height="150" Width="120" Margin="0 3 0 0"></Canvas>
+                            <TextBlock Grid.Row="1" Text="{Binding PageNum}" FontWeight="Bold" FontSize="20"></TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                    </Border>
+
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Setter Property="Background" TargetName="border" Value="{DynamicResource PrimaryHueDarkBrush}"></Setter>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Canvas Background="{Binding CurrentThumbnail.ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}"></Canvas>
+            </Grid>
+
         </Grid>
-        
-
     </Grid>
-</Window>
+    
+    </Window>
