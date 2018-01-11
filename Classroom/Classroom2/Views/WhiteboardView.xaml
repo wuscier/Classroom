@@ -218,7 +218,7 @@
             </ListBox>
 
             <Grid Grid.Row="1" Grid.Column="2">
-                <InkCanvas Background="{Binding CurrentThumbnail.ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}" Strokes="{Binding CurrentThumbnail.Strokes}"></InkCanvas>
+                <InkCanvas x:Name="ink_canvas" Background="{Binding CurrentThumbnail.ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}" Strokes="{Binding CurrentThumbnail.Strokes}"></InkCanvas>
             </Grid>
 
         </Grid>

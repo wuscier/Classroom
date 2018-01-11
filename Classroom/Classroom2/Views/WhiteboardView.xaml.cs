@@ -88,6 +88,9 @@ namespace Classroom.Views
         {
             Border border = sender as Border;
             color_selected.Background = border.Background;
+
+            SolidColorBrush solidColorBrush = color_selected.Background as SolidColorBrush;
+            ink_canvas.DefaultDrawingAttributes.Color = solidColorBrush.Color;
         }
 
         private void thickness_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -95,6 +98,10 @@ namespace Classroom.Views
             StackPanel stackPanel = sender as StackPanel;
             TextBlock textBlock = stackPanel.Children[1] as TextBlock;
             thickness_number.Text = textBlock.Text;
+
+            int thickness = int.Parse(thickness_number.Text);
+            ink_canvas.DefaultDrawingAttributes.Height = thickness + 2;
+            ink_canvas.DefaultDrawingAttributes.Width = thickness + 2;
         }
     }
 }
