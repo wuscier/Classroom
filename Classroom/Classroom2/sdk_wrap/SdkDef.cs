@@ -314,14 +314,14 @@ namespace Classroom.sdk_wrap
     }
 
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct DeviceInfoResult
     {
         [MarshalAs(UnmanagedType.LPWStr)]
         public string DeviceId;
         [MarshalAs(UnmanagedType.LPWStr)]
         public string DeviceName;
-        public bool IsSelected;
+        public byte IsSelected;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]

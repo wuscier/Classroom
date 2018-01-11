@@ -186,8 +186,6 @@ namespace Classroom.ViewModels
                             Win32APIs.SetParent(first, new WindowInteropHelper(_meetingView).Handle);
 
                             _meetingView.SyncVideoUI();
-
-                            StopHook();
                         }));
                     }
                 }
@@ -204,8 +202,11 @@ namespace Classroom.ViewModels
 
         private void StopHook()
         {
-            SdkInterop.MonitorWnd("ZPContentViewWndClass", false);
-            SdkInterop.StopMonitor();
+            //SdkInterop.MonitorWnd("ZPContentViewWndClass", false);
+            if (SdkInterop.StopMonitor() != SDKError.SDKERR_SUCCESS)
+            {
+                MessageBox.Show("StopHook失败！");
+            }
         }
     }
 }

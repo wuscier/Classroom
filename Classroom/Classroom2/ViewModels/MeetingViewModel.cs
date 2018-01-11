@@ -178,7 +178,7 @@ namespace Classroom.ViewModels
                 {
                     foreach (DeviceInfoResult mic in mics)
                     {
-                        UiStatusModel.Microphones.Add(new DeviceModel(mic.DeviceId,mic.DeviceName,mic.IsSelected));
+                        UiStatusModel.Microphones.Add(new DeviceModel(mic.DeviceId,mic.DeviceName,mic.IsSelected==1));
                     }
                 }
 
@@ -188,7 +188,7 @@ namespace Classroom.ViewModels
                 {
                     foreach (DeviceInfoResult speaker in speakers)
                     {
-                        UiStatusModel.Speakers.Add(new DeviceModel(speaker.DeviceId, speaker.DeviceName, speaker.IsSelected));
+                        UiStatusModel.Speakers.Add(new DeviceModel(speaker.DeviceId, speaker.DeviceName, speaker.IsSelected == 1));
                     }
                 }
 
@@ -205,7 +205,7 @@ namespace Classroom.ViewModels
                 {
                     foreach (DeviceInfoResult camera in cameras)
                     {
-                        UiStatusModel.Cameras.Add(new DeviceModel(camera.DeviceId, camera.DeviceName, camera.IsSelected));
+                        UiStatusModel.Cameras.Add(new DeviceModel(camera.DeviceId, camera.DeviceName, camera.IsSelected == 1));
                     }
                 }
 
