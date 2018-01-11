@@ -84,20 +84,95 @@
             
             <StackPanel x:Name="note_detail">
 
-                <materialDesign:Card x:Name="pen_card" Style="{StaticResource MyCardStyle}">
+                <materialDesign:Card x:Name="pen_card" Style="{StaticResource MyCardStyle}" helper:CardSelectedAssist.IsCardSelected="{Binding IsPenSelected}" MouseLeftButtonDown="pen_card_MouseLeftButtonDown">
                     <materialDesign:PackIcon Kind="LeadPencil" Width="40" Height="40" Margin="8"></materialDesign:PackIcon>
                 </materialDesign:Card>
 
-                <materialDesign:Card x:Name="eraser_card" Style="{StaticResource MyCardStyle}">
+                <materialDesign:Card x:Name="eraser_card" Style="{StaticResource MyCardStyle}" helper:CardSelectedAssist.IsCardSelected="{Binding IsEraserSelected}" MouseLeftButtonDown="eraser_card_MouseLeftButtonDown">
                     <materialDesign:PackIcon Kind="Eraser" Width="40" Height="40" Margin="8"></materialDesign:PackIcon>
                 </materialDesign:Card>
 
                 <materialDesign:Card x:Name="thickness_card" Style="{StaticResource MyCardStyle}">
-                    <materialDesign:PackIcon Kind="FormatLineWeight" Width="40" Height="40" Margin="8"/>
+
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="thickness_number" Text="2" FontSize="30" FontWeight="Bold" HorizontalAlignment="Right"></TextBlock>
+                        <materialDesign:PopupBox x:Name="thickness_settings" PlacementMode="RightAndAlignMiddles" Grid.Column="1">
+                            <StackPanel Width="120" Height="130">
+                                <StackPanel Orientation="Horizontal" MouseLeftButtonDown="thickness_MouseLeftButtonDown">
+                                    <Rectangle Fill="Black" Height="1" Width="80" Margin="5"></Rectangle>
+                                    <TextBlock Text="1" FontSize="20"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" MouseLeftButtonDown="thickness_MouseLeftButtonDown">
+                                    <Rectangle Fill="Black" Height="2" Width="80" Margin="5"></Rectangle>
+                                    <TextBlock Text="2" FontSize="20"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" MouseLeftButtonDown="thickness_MouseLeftButtonDown">
+                                    <Rectangle Fill="Black" Height="3" Width="80" Margin="5"></Rectangle>
+                                    <TextBlock Text="3" FontSize="20"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" MouseLeftButtonDown="thickness_MouseLeftButtonDown">
+                                    <Rectangle Fill="Black" Height="4" Width="80" Margin="5"></Rectangle>
+                                    <TextBlock Text="4" FontSize="20"></TextBlock>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal" MouseLeftButtonDown="thickness_MouseLeftButtonDown">
+                                    <Rectangle Fill="Black" Height="5" Width="80" Margin="5"></Rectangle>
+                                    <TextBlock Text="5" FontSize="20"></TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
+
+                    </Grid>
+                    <!--<materialDesign:PackIcon Kind="FormatLineWeight" Width="30" Height="40"/>-->
+
                 </materialDesign:Card>
 
                 <materialDesign:Card x:Name="color_card" Style="{StaticResource MyCardStyle}">
-                    <materialDesign:PackIcon Kind="FormatColorFill" Width="40" Height="40" Margin="8"/>
+
+                    <Grid Margin="5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition></ColumnDefinition>
+                            <ColumnDefinition></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+
+                        <Border x:Name="color_selected" HorizontalAlignment="Right" Width="25" Height="25" Background="Red"></Border>
+                        <materialDesign:PopupBox x:Name="color_settings" PlacementMode="RightAndAlignMiddles" Grid.Column="1">
+                            <Grid Width="100" Height="100" Margin="5">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                    <ColumnDefinition></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+
+                                <Border Background="Red" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+                                <Border Background="Yellow" Grid.Column="1" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+                                <Border Background="Green" Grid.Column="2" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+
+                                <Border Background="Cyan" Grid.Row="1" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+                                <Border  Background="Purple" Grid.Row="1" Grid.Column="1" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+                                <Border  Background="Brown" Grid.Row="1" Grid.Column="2" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+
+                                <Border Background="Black"  Grid.Row="2" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+                                <Border  Background="Blue" Grid.Row="2" Grid.Column="1" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+                                <Border Background="Silver"  Grid.Row="2" Grid.Column="2" Margin="5" MouseLeftButtonDown="color_MouseLeftButtonDown"></Border>
+
+
+                            </Grid>
+                        </materialDesign:PopupBox>
+
+                    </Grid>
+                    <!--<materialDesign:PackIcon Kind="FormatColorFill" Width="30" Height="40"/>-->
+
                 </materialDesign:Card>
 
                 <materialDesign:Card x:Name="clear_card" Style="{StaticResource MyCardStyle}">

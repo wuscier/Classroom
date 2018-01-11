@@ -20,10 +20,14 @@ namespace Classroom.ViewModels
     {
         private SubscriptionToken _nextToken;
         private SubscriptionToken _previousToken;
+        private SubscriptionToken _penToken;
+        private SubscriptionToken _eraserToken;
 
         public WhiteboardViewModel()
         {
             SubscribeEvents();
+
+            IsPenSelected = true;
 
             Thumbnails = new ObservableCollection<Thumbnail>();
             PageNums = new ObservableCollection<int>();
@@ -57,12 +61,25 @@ namespace Classroom.ViewModels
                      CurrentPageNum += 1;
                  }
              }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
+
+            _penToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<PenSelectedEvent>().Subscribe((argument) =>
+            {
+                IsPenSelected = true;
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
+
+            _eraserToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<EraserSelectedEvent>().Subscribe((argument) =>
+            {
+                IsEraserSelected = true;
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
+
         }
 
         public void UnsubscribeEvents()
         {
             EventAggregatorManager.Instance.EventAggregator.GetEvent<NextPageEvent>().Unsubscribe(_nextToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<PreviousPageEvent>().Unsubscribe(_previousToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<PenSelectedEvent>().Unsubscribe(_penToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<EraserSelectedEvent>().Unsubscribe(_eraserToken);
         }
 
         private void InitThumbnails()
@@ -211,6 +228,39 @@ namespace Classroom.ViewModels
                 }
             }
         }
+
+
+        private bool _isPenSelected;
+
+        public bool IsPenSelected
+        {
+            get { return _isPenSelected; }
+            set
+            {
+                SetProperty(ref _isPenSelected, value);
+                if (value)
+                {
+                    IsEraserSelected = false;
+                }
+            }
+        }
+
+        private bool _isEraserSelected;
+
+        public bool IsEraserSelected
+        {
+            get { return _isEraserSelected; }
+            set {
+
+                SetProperty(ref _isEraserSelected, value);
+                if (value)
+                {
+                    IsPenSelected = false;
+                }
+            }
+        }
+
+
 
     }
 }
