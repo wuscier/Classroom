@@ -16,7 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/My.Card.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <!--<helper:ThumbnailToBrushConverter x:Key="Thumbnail2BrushConverter"></helper:ThumbnailToBrushConverter>-->
+            <helper:ThumbnailToBrushConverter x:Key="Thumbnail2BrushConverter"></helper:ThumbnailToBrushConverter>
         </ResourceDictionary>
     </Window.Resources>
 
