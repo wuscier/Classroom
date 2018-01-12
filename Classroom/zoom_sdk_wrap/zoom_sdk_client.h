@@ -101,6 +101,8 @@ public:
 	ZOOM_SDK_NAMESPACE::SDKError Start();
 	ZOOM_SDK_NAMESPACE::SDKError Stop();
 
+	ZOOM_SDK_NAMESPACE::SDKError ShareDesktop();
+
 	void CustomizeUI();
 
 

@@ -1,4 +1,5 @@
 ﻿using Classroom.Events;
+using Classroom.sdk_wrap;
 using Classroom.Services;
 using Microsoft.Win32;
 using Prism.Events;
@@ -75,7 +76,11 @@ namespace Classroom.ViewModels
             {
                 if (IsDesktopSelected)
                 {
-
+                    SDKError shareDesktopErr = SdkInterop.ShareDesktop();
+                    if (shareDesktopErr != SDKError.SDKERR_SUCCESS)
+                    {
+                        MessageBox.Show("共享桌面失败！");
+                    }
                 }
                 else if (IsDocSelected)
                 {

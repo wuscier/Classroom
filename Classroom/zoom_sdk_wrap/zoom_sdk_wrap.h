@@ -45,6 +45,8 @@ extern "C" {
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StartMonitor();
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StopMonitor();
 
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError ShareDesktop();
+
 	ZOOMWRAP_API void CustomizeUI();
 
 

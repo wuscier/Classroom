@@ -83,6 +83,10 @@ namespace Classroom.sdk_wrap
         internal static extern SDKError StopMonitor();
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDKError ShareDesktop();
+
+
+        [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern void CustomizeUI();
 
 

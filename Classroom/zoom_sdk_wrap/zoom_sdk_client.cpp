@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "zoom_sdk_client.h"
+#include <vector>
 
 zoom_sdk_client* zoom_sdk_client::m_instance = NULL;
 
@@ -336,6 +337,38 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Leave(ZOOM_SDK_NAMESPACE::LeaveMee
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Stop()
 {
 	return m_pUIHooker->Stop();
+}
+
+BOOL CALLBACK MyInfoEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMonitor, LPARAM dwData) {
+	MONITORINFOEX iMonitor;
+	iMonitor.cbSize = sizeof(MONITORINFOEX);
+	GetMonitorInfo(hMonitor, &iMonitor);
+
+	if (iMonitor.dwFlags == DISPLAY_DEVICE_MIRRORING_DRIVER)
+	{
+		return true;
+	}
+	else {
+		reinterpret_cast<std::vector<std::wstring>*>(dwData)->push_back(iMonitor.szDevice);
+		return true;
+	}
+}
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::ShareDesktop() {
+
+	std::vector<std::wstring> vecMonitors;
+	EnumDisplayMonitors(NULL, NULL, &MyInfoEnumProc, reinterpret_cast<LPARAM>(&vecMonitors));
+
+	std::wstring strMonitorId;
+	if (vecMonitors.size() <= 0)
+	{
+		strMonitorId = _T("");
+	}
+	else {
+		strMonitorId = vecMonitors[0];
+	}
+
+	return m_pShareCtrl->StartMonitorShare(strMonitorId.c_str());
 }
 
 void zoom_sdk_client::CustomizeUI() {
