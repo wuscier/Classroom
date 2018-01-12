@@ -1,4 +1,5 @@
 ﻿using Classroom.Events;
+using Classroom.Helpers;
 using Classroom.Models;
 using Classroom.sdk_wrap;
 using Classroom.Services;
@@ -8,6 +9,7 @@ using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Classroom.ViewModels
 {
@@ -244,9 +246,10 @@ namespace Classroom.ViewModels
 
                         string recordPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
 
-                        //recordPath = Path.Combine(recordPath, "zoom_record_files");
+                        recordPath = Path.Combine(recordPath, "zoom_record_files");
 
-                        SDKError errStartRecord = SdkInterop.StartRecording(0, recordPath);
+
+                        SDKError errStartRecord = SdkInterop.StartRecording(TimeHelper.GetCurrentTimeTotalSeconds(),recordPath);
 
                         UiStatusModel.IsRecording = true;
 
@@ -273,7 +276,7 @@ namespace Classroom.ViewModels
                         break;
                     case Category.RecordStop:
 
-                        SDKError errStopRecord = SdkInterop.StopRecording(0);
+                        SDKError errStopRecord = SdkInterop.StopRecording(TimeHelper.GetCurrentTimeTotalSeconds());
 
                         UiStatusModel.IsRecording = false;
 

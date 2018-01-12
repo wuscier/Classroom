@@ -79,6 +79,7 @@
     <Compile Include="Helpers\ReverseBoolToVisibilityConverter.cs" />
     <Compile Include="Helpers\ReverseConverter.cs" />
     <Compile Include="Helpers\ThumbnailToBrushConverter.cs" />
+    <Compile Include="Helpers\TimeHelper.cs" />
     <Compile Include="Helpers\Win32APIs.cs" />
     <Compile Include="Models\DeviceModel.cs" />
     <Compile Include="Models\UserModel.cs" />

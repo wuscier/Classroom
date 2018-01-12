@@ -295,11 +295,12 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::SelectCamera(const wchar_t* device
 	return m_pSettingService->GetVideoSettings()->SelectCamera(deviceId);
 }
 
-ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StartRecording(unsigned long startTimestamp, wchar_t* recordPath) {
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StartRecording(unsigned int startTimestamp, wchar_t* recordPath) {
 	time_t startTime = startTimestamp;
 	return m_pRecordingCtrl->StartRecording(startTime, recordPath);
 }
-ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StopRecording(unsigned long stopTimestamp) {
+
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::StopRecording(unsigned int stopTimestamp) {
 	time_t stopTime = stopTimestamp;
 	return m_pRecordingCtrl->StopRecording(stopTime);
 }

@@ -56,16 +56,19 @@ namespace Classroom.sdk_wrap
         internal static extern int GetSpeakerList(IntPtr speakers);
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern int GetCameraList(IntPtr cameras);
-        [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
 
-        internal static extern SDKError SelectMic(string id, string name);
+
+        [DllImport(DLL_NAME, CharSet = CharSet.Unicode, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDKError SelectMic(string id, [MarshalAs(UnmanagedType.LPWStr)]string name);
+
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDKError SelectSpeaker(string id, string name);
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDKError SelectCamera(string id);
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
-        internal static extern SDKError StartRecording(ulong startTime, string path);
+        internal static extern SDKError StartRecording(uint startTime, [MarshalAs(UnmanagedType.LPWStr)]string recordPath);
+
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDKError StopRecording(ulong endTime);
 

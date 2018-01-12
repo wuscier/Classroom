@@ -139,7 +139,7 @@ namespace Classroom.sdk_wrap
         public string UserToken;
         [MarshalAs(UnmanagedType.LPWStr)]
         public string UserName;
-        public ulong MeetingNumber;
+        public uint MeetingNumber;
         public IntPtr DirectShareAppWnd;
         [MarshalAs(UnmanagedType.LPWStr)]
         public string ParticipantId;
@@ -149,7 +149,7 @@ namespace Classroom.sdk_wrap
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct StartParam4NormalUser
     {
-        public ulong MeetingNumber;
+        public uint MeetingNumber;
         public IntPtr DirectShareAppWnd;
         [MarshalAs(UnmanagedType.LPWStr)]
         public string ParticipantId;
@@ -363,5 +363,4 @@ namespace Classroom.sdk_wrap
         LEAVE_MEETING,///< Leave meeting
         END_MEETING,///< End meeting
     };
-
 }

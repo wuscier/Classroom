@@ -37,8 +37,8 @@ extern "C" {
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError SelectCamera(const wchar_t* deviceId);
 
-	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StartRecording(unsigned long startTimestamp, wchar_t* recordPath);
-	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StopRecording(unsigned long stopTimestamp);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StartRecording(unsigned int startTime, wchar_t* recordPath);
+	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError StopRecording(unsigned int stopTimestamp);
 
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MonitorWndMessage(unsigned int msgId, bool add);
 	ZOOMWRAP_API ZOOM_SDK_NAMESPACE::SDKError MonitorWnd(const wchar_t* className, bool add);

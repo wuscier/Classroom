@@ -62,6 +62,12 @@ typedef struct _tagRecordPriviligeChangedResult {
 	bool canRecord;
 }RecordPriviligeChangedResult;
 
+typedef struct _tagStartRecordingParam {
+	unsigned int startTime;
+	wchar_t* recordPath;
+}StartRecordingParam;
+
+
 
 enum CallbackID {
 	AuthenticationReturn,

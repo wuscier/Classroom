@@ -91,8 +91,8 @@ public:
 	ZOOM_SDK_NAMESPACE::SDKError SelectSpeaker(const wchar_t* deviceId, const wchar_t* deviceName);
 	ZOOM_SDK_NAMESPACE::SDKError SelectCamera(const wchar_t* deviceId);
 
-	ZOOM_SDK_NAMESPACE::SDKError StartRecording(unsigned long startTimestamp, wchar_t* recordPath);
-	ZOOM_SDK_NAMESPACE::SDKError StopRecording(unsigned long stopTimestamp);
+	ZOOM_SDK_NAMESPACE::SDKError StartRecording(unsigned int startTime, wchar_t* recordPath);
+	ZOOM_SDK_NAMESPACE::SDKError StopRecording(unsigned int stopTimestamp);
 
 	ZOOM_SDK_NAMESPACE::SDKError GetMeetingUIWnd(HWND* firstViewHandle, HWND* secondViewHandle);
 
