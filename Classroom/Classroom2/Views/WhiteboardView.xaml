@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:helper="clr-namespace:Classroom.Helpers"
         mc:Ignorable="d"
-        Height="600" Width="800">
+        Height="800" Width="1000">
 
 
     <Window.Resources>
@@ -16,7 +16,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="../Themes/My.Card.xaml"></ResourceDictionary>
             </ResourceDictionary.MergedDictionaries>
-            <helper:ThumbnailToBrushConverter x:Key="Thumbnail2BrushConverter"></helper:ThumbnailToBrushConverter>
+            <!--<helper:ThumbnailToBrushConverter x:Key="Thumbnail2BrushConverter"></helper:ThumbnailToBrushConverter>-->
         </ResourceDictionary>
     </Window.Resources>
 
@@ -32,6 +32,8 @@
                 <ColumnDefinition Width="auto"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
+
+
 
             <materialDesign:Card x:Name="note_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="note_card_MouseLeftButtonDown">
                 <StackPanel Margin="8">
@@ -70,7 +72,7 @@
                         <materialDesign:PackIcon Kind="SkipNext" Width="40" Height="40"></materialDesign:PackIcon>
                     </materialDesign:Card>
                 </Grid>
-
+                
             </Grid>
 
         </Grid>
@@ -218,7 +220,12 @@
             </ListBox>
 
             <Grid Grid.Row="1" Grid.Column="2">
-                <InkCanvas x:Name="ink_canvas" Background="{Binding CurrentThumbnail.ThumbnailUri,Converter={StaticResource Thumbnail2BrushConverter}}" Strokes="{Binding CurrentThumbnail.Strokes}"></InkCanvas>
+                <ScrollViewer VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" >
+                    <Grid>
+                        <Image Source="{Binding CurrentThumbnail.ThumbnailUri}"></Image>
+                        <InkCanvas x:Name="ink_canvas" Background="Transparent" Strokes="{Binding CurrentThumbnail.Strokes}"></InkCanvas>
+                    </Grid>
+                </ScrollViewer>
             </Grid>
 
         </Grid>
