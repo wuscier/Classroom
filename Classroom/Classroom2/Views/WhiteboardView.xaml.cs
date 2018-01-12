@@ -17,6 +17,10 @@ namespace Classroom.Views
         {
             InitializeComponent();
             DataContext = new WhiteboardViewModel();
+
+            ink_canvas.DefaultDrawingAttributes.Color = Colors.Red;
+            ink_canvas.DefaultDrawingAttributes.Width = 3;
+            ink_canvas.DefaultDrawingAttributes.Height = 3;
         }
 
         private void note_card_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -68,6 +72,7 @@ namespace Classroom.Views
 
         private void pen_card_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            ink_canvas.EditingMode = InkCanvasEditingMode.Ink;
             EventAggregatorManager.Instance.EventAggregator.GetEvent<PenSelectedEvent>().Publish(new EventArgument()
             {
                 Target = Target.WhiteboardViewModel,
@@ -77,6 +82,7 @@ namespace Classroom.Views
 
         private void eraser_card_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
+            ink_canvas.EditingMode = InkCanvasEditingMode.EraseByStroke;
             EventAggregatorManager.Instance.EventAggregator.GetEvent<EraserSelectedEvent>().Publish(new EventArgument()
             {
                 Target = Target.WhiteboardViewModel,
@@ -102,6 +108,14 @@ namespace Classroom.Views
             int thickness = int.Parse(thickness_number.Text);
             ink_canvas.DefaultDrawingAttributes.Height = thickness + 2;
             ink_canvas.DefaultDrawingAttributes.Width = thickness + 2;
+        }
+
+        private void clear_card_MouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<StrokesClearedEvent>().Publish(new EventArgument()
+            {
+                Target = Target.WhiteboardViewModel,
+            });
         }
     }
 }

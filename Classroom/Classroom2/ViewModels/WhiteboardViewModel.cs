@@ -22,6 +22,7 @@ namespace Classroom.ViewModels
         private SubscriptionToken _previousToken;
         private SubscriptionToken _penToken;
         private SubscriptionToken _eraserToken;
+        private SubscriptionToken _clearToken;
 
         public WhiteboardViewModel()
         {
@@ -72,6 +73,10 @@ namespace Classroom.ViewModels
                 IsEraserSelected = true;
             }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
 
+            _clearToken = EventAggregatorManager.Instance.EventAggregator.GetEvent<StrokesClearedEvent>().Subscribe((argument) =>
+            {
+                CurrentThumbnail.Strokes.Clear();
+            }, ThreadOption.PublisherThread, true, filter => { return filter.Target == Target.WhiteboardViewModel; });
         }
 
         public void UnsubscribeEvents()
@@ -80,6 +85,7 @@ namespace Classroom.ViewModels
             EventAggregatorManager.Instance.EventAggregator.GetEvent<PreviousPageEvent>().Unsubscribe(_previousToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<PenSelectedEvent>().Unsubscribe(_penToken);
             EventAggregatorManager.Instance.EventAggregator.GetEvent<EraserSelectedEvent>().Unsubscribe(_eraserToken);
+            EventAggregatorManager.Instance.EventAggregator.GetEvent<StrokesClearedEvent>().Unsubscribe(_clearToken);
         }
 
         private void InitThumbnails()

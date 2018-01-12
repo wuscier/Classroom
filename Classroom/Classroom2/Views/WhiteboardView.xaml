@@ -100,7 +100,7 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock x:Name="thickness_number" Text="2" FontSize="30" FontWeight="Bold" HorizontalAlignment="Right"></TextBlock>
+                        <TextBlock x:Name="thickness_number" Text="1" FontSize="30" FontWeight="Bold" HorizontalAlignment="Right"></TextBlock>
                         <materialDesign:PopupBox x:Name="thickness_settings" PlacementMode="RightAndAlignMiddles" Grid.Column="1">
                             <StackPanel Width="120" Height="130">
                                 <StackPanel Orientation="Horizontal" MouseLeftButtonDown="thickness_MouseLeftButtonDown">
@@ -175,7 +175,7 @@
 
                 </materialDesign:Card>
 
-                <materialDesign:Card x:Name="clear_card" Style="{StaticResource MyCardStyle}">
+                <materialDesign:Card x:Name="clear_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="clear_card_MouseLeftButtonDown">
                     <materialDesign:PackIcon Kind="Close" Width="40" Height="40" Margin="8"/>
                 </materialDesign:Card>
 

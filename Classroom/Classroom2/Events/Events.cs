@@ -75,4 +75,6 @@ namespace Classroom.Events
     public class PenSelectedEvent : PubSubEvent<EventArgument> { }
     public class EraserSelectedEvent : PubSubEvent<EventArgument> { }
 
+    public class StrokesClearedEvent : PubSubEvent<EventArgument> { }
+
 }
