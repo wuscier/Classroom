@@ -22,5 +22,9 @@ namespace Classroom.Helpers
 
         [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
         public static extern int GetModuleHandleA(string name);
+
+        [DllImport("kernel32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr LoadLibrary(string path);
+
     }
 }

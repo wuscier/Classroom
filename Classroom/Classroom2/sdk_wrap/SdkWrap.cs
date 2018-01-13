@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Classroom.Helpers;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Runtime.InteropServices;
 
 namespace Classroom.sdk_wrap
@@ -26,6 +28,11 @@ namespace Classroom.sdk_wrap
 
             param.WebDomain = "https://zoom.us";
             param.LanguageId = SDKLanguageId.LANGUAGE_Chinese_Simplified;
+
+            string sdkWrapPath = Path.Combine(Environment.CurrentDirectory, "sdk_wrap.dll");
+            IntPtr loadSdkWrapResult = Win32APIs.LoadLibrary(sdkWrapPath);
+
+            param.ResourceInstance = loadSdkWrapResult;
 
             FUNCCALLBACK = Callback;
             SDKError err = SdkInterop.InitSdk(param, FUNCCALLBACK);

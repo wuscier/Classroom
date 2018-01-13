@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "zoom_sdk_client.h"
 #include <vector>
+#include "resource.h"
 
 zoom_sdk_client* zoom_sdk_client::m_instance = NULL;
 
@@ -183,6 +184,11 @@ bool zoom_sdk_client::InitAuthService() {
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::InitSdk(ZOOM_SDK_NAMESPACE::InitParam initParam, func_callback cb)
 {
 	m_cb = cb;
+
+	//initParam.hResInstance = GetModuleHandleA(NULL);
+	initParam.uiWindowIconSmallID = IDI_ICON_LOGO_SMALL;
+	initParam.uiWindowIconSmallID = IDI_ICON_LOGO_BIG;
+
 	return InitSDK(initParam);
 }
 

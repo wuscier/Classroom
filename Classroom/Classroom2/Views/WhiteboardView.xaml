@@ -34,20 +34,24 @@
             </Grid.ColumnDefinitions>
 
 
+            <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Background="Beige">
+                <materialDesign:Card x:Name="note_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="note_card_MouseLeftButtonDown" Width="{Binding ElementName=note_detail,Path=ActualWidth}">
+                    <StackPanel Margin="8">
+                        <materialDesign:PackIcon Kind="LeadPencil" Width="40" Height="40" HorizontalAlignment="Center"/>
+                        <TextBlock Text="注释" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"></TextBlock>
+                    </StackPanel>
+                </materialDesign:Card>
 
-            <materialDesign:Card x:Name="note_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="note_card_MouseLeftButtonDown">
-                <StackPanel Margin="8">
-                    <materialDesign:PackIcon Kind="LeadPencil" Width="40" Height="40" HorizontalAlignment="Center"/>
-                    <TextBlock Text="注释" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16"></TextBlock>
-                </StackPanel>
-            </materialDesign:Card>
+                <materialDesign:Card x:Name="thumbnail_card" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="thumbnail_card_MouseLeftButtonDown" Width="{Binding ElementName=note_detail,Path=ActualWidth}">
+                    <StackPanel Margin="8">
+                        <materialDesign:PackIcon Kind="ViewGrid" Width="40" Height="40" HorizontalAlignment="Center"/>
+                        <TextBlock Text="缩略图" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold"></TextBlock>
+                    </StackPanel>
+                </materialDesign:Card>
 
-            <materialDesign:Card x:Name="thumbnail_card" Style="{StaticResource MyCardStyle}" Grid.Column="1" MouseLeftButtonDown="thumbnail_card_MouseLeftButtonDown">
-                <StackPanel Margin="8">
-                    <materialDesign:PackIcon Kind="ViewGrid" Width="40" Height="40" HorizontalAlignment="Center"/>
-                    <TextBlock Text="缩略图" FontSize="16" FontWeight="Bold"></TextBlock>
-                </StackPanel>
-            </materialDesign:Card>
+            </StackPanel>
+            
+
 
 
             <Grid Grid.Column="2">
@@ -84,7 +88,7 @@
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
             
-            <StackPanel x:Name="note_detail">
+            <StackPanel x:Name="note_detail" VerticalAlignment="Center">
 
                 <materialDesign:Card x:Name="pen_card" Style="{StaticResource MyCardStyle}" helper:CardSelectedAssist.IsCardSelected="{Binding IsPenSelected}" MouseLeftButtonDown="pen_card_MouseLeftButtonDown">
                     <materialDesign:PackIcon Kind="LeadPencil" Width="40" Height="40" Margin="8"></materialDesign:PackIcon>
@@ -141,7 +145,7 @@
                             <ColumnDefinition></ColumnDefinition>
                         </Grid.ColumnDefinitions>
 
-                        <Border x:Name="color_selected" HorizontalAlignment="Right" Width="25" Height="25" Background="Red"></Border>
+                        <Border x:Name="color_selected" HorizontalAlignment="Right" Width="25" Height="25" Background="Red" Margin="3 5"></Border>
                         <materialDesign:PopupBox x:Name="color_settings" PlacementMode="RightAndAlignMiddles" Grid.Column="1">
                             <Grid Width="100" Height="100" Margin="5">
                                 <Grid.RowDefinitions>

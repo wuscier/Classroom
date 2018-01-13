@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo.ico</ApplicationIcon>
+    <ApplicationIcon>cloud_classroom_small.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <NoWin32Manifest>true</NoWin32Manifest>
@@ -229,6 +229,13 @@
     <Resource Include="Images\7.png" />
     <Resource Include="Images\8.png" />
     <Resource Include="Images\9.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\cloud_classroom_big.ico" />
+    <Resource Include="Images\cloud_classroom_small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="cloud_classroom_small.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
