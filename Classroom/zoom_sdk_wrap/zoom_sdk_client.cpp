@@ -226,6 +226,10 @@ ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Start(ZOOM_SDK_NAMESPACE::StartPar
 	return m_pMeetingService->Start(startParam);
 }
 
+ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::Join(ZOOM_SDK_NAMESPACE::JoinParam joinParam) {
+	return m_pMeetingService->Join(joinParam);
+}
+
 
 ZOOM_SDK_NAMESPACE::SDKError zoom_sdk_client::MuteAudio(unsigned int userId, bool allowUnmuteBySelf) {
 	return m_pAudioCtrl->MuteAudio(userId, allowUnmuteBySelf);

@@ -159,6 +159,14 @@ namespace Classroom.sdk_wrap
     }
 
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct JoinParam
+    {
+        public SDKUserType usertype;
+        public JoinParam4APIUser apiuserJoin;
+        public JoinParam4NormalUser normaluserJoin;
+    }
+
 
 
 
@@ -203,6 +211,41 @@ namespace Classroom.sdk_wrap
         public StartParam4APIUser ApiUserStart;
         public StartParam4NormalUser NormalUserStart;
     }
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct JoinParam4APIUser
+    {
+        public ulong meetingNumber;///< Meeting's number
+        public string userName;///< User Name in meeting
+        public string psw;///< Meeting's password
+        IntPtr hDirectShareAppWnd;///< share application directly
+        public string toke4enfrocelogin;///< enforce login when join meeting
+        public string participantId;///< for meeting participant report list, need web backend enable.
+        public string webinarToken;///< webinar token.
+        public bool isDirectShareDesktop;///< share desktop directly
+        public bool isVideoOff;
+        public bool isAudioOff;
+    }
+
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct JoinParam4NormalUser
+    {
+        public ulong meetingNumber;///< Meeting's number
+        public string userName;///< User Name in meeting
+        public string psw;///< Meeting's password
+        IntPtr hDirectShareAppWnd;///< share application directly
+        public string participantId;///< for meeting participant report list, need web backend enable.
+        public string webinarToken;///< webinar token.
+        public bool isVideoOff;
+        public bool isAudioOff;
+        public bool isDirectShareDesktop;///< share desktop directly
+    }
+
+
+
+
+
 
 
     public enum AuthResult

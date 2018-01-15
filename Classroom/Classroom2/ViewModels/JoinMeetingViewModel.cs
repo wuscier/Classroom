@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Windows;
 using Classroom.Events;
 using Classroom.sdk_wrap;
 using Classroom.Services;
+using Classroom.Views;
 using Prism.Events;
 using Prism.Mvvm;
 
@@ -30,7 +32,27 @@ namespace Classroom.ViewModels
                 uint uint_meeting_number;
                 if (uint.TryParse(MeetingNumber, out uint_meeting_number))
                 {
-                    //SdkInterop.
+                    JoinParam joinParam = new JoinParam()
+                    {
+                        usertype = SDKUserType.SDK_UT_NORMALUSER,
+                        normaluserJoin = new JoinParam4NormalUser()
+                        {
+                            meetingNumber = uint_meeting_number,
+                            
+                        }
+                    };
+
+                    SDKError joinError = SdkInterop.Join(joinParam);
+
+                    if (joinError == SDKError.SDKERR_SUCCESS)
+                    {
+                        MeetingView meetingView = new MeetingView();
+                        meetingView.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show(joinError.ToString());
+                    }
                 }
                 else
                 {

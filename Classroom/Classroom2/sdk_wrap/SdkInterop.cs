@@ -32,6 +32,9 @@ namespace Classroom.sdk_wrap
         internal static extern SDKError Start(StartParam startParam);
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
+        internal static extern SDKError Join(JoinParam startParam);
+
+        [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
         internal static extern SDKError Leave(LeaveMeetingCmd cmd);
 
         [DllImport(DLL_NAME, CharSet = CharSet.Ansi, CallingConvention = CallingConvention.Cdecl)]
