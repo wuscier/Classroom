@@ -92,11 +92,15 @@
     <Compile Include="Themes\MyRecordControl.xaml.cs">
       <DependentUpon>MyRecordControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\JoinMeetingViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\MeetingViewModel.cs" />
     <Compile Include="ViewModels\SharingOptionsViewModel.cs" />
     <Compile Include="ViewModels\WhiteboardViewModel.cs" />
+    <Compile Include="Views\JoinMeetingView.xaml.cs">
+      <DependentUpon>JoinMeetingView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\LoginView.xaml.cs">
       <DependentUpon>LoginView.xaml</DependentUpon>
     </Compile>
@@ -134,6 +138,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Themes\MyRecordControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JoinMeetingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

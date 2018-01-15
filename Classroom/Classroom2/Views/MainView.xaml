@@ -67,7 +67,7 @@
                             <TextBlock Text="开课" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card x:Name="join_class" Grid.Column="1" Width="200" Height="300" VerticalAlignment="Center" Style="{StaticResource MyCardStyle}">
+                    <materialDesign:Card x:Name="join_class" Grid.Column="1" Width="200" Height="300" VerticalAlignment="Center" Style="{StaticResource MyCardStyle}" MouseLeftButtonDown="join_class_MouseLeftButtonDown">
                         <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
                             <materialDesign:PackIcon Kind="Plus" Width="150" Height="150"/>
                             <TextBlock Text="加入" FontSize="40" FontWeight="Bold" HorizontalAlignment="Center"></TextBlock>
