@@ -14,6 +14,7 @@ namespace Classroom.ViewModels
 
         public JoinMeetingViewModel()
         {
+            MeetingNumber = "286683782";
             SubscribeEvents();
         }
 
@@ -34,11 +35,10 @@ namespace Classroom.ViewModels
                 {
                     JoinParam joinParam = new JoinParam()
                     {
-                        usertype = SDKUserType.SDK_UT_NORMALUSER,
-                        normaluserJoin = new JoinParam4NormalUser()
+                        usertype = SDKUserType.SDK_UT_APIUSER,
+                        apiuserJoin = new JoinParam4APIUser()
                         {
                             meetingNumber = uint_meeting_number,
-                            
                         }
                     };
 

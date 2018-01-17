@@ -167,6 +167,13 @@ namespace Classroom.sdk_wrap
         public JoinParam4NormalUser normaluserJoin;
     }
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct JoinParamStruct
+    {
+        public JoinParam4APIUser apiuserJoin;
+        public JoinParam4NormalUser normaluserJoin;
+    }
+
 
 
 
@@ -215,38 +222,41 @@ namespace Classroom.sdk_wrap
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct JoinParam4APIUser
     {
-        public ulong meetingNumber;///< Meeting's number
+        public uint meetingNumber;///< Meeting's number
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string userName;///< User Name in meeting
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string psw;///< Meeting's password
-        IntPtr hDirectShareAppWnd;///< share application directly
+        public IntPtr hDirectShareAppWnd;///< share application directly
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string toke4enfrocelogin;///< enforce login when join meeting
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string participantId;///< for meeting participant report list, need web backend enable.
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string webinarToken;///< webinar token.
-        public bool isDirectShareDesktop;///< share desktop directly
-        public bool isVideoOff;
-        public bool isAudioOff;
+        public byte isDirectShareDesktop;///< share desktop directly
+        public byte isVideoOff;
+        public byte isAudioOff;
     }
 
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct JoinParam4NormalUser
     {
-        public ulong meetingNumber;///< Meeting's number
+        public uint meetingNumber;///< Meeting's number
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string userName;///< User Name in meeting
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string psw;///< Meeting's password
-        IntPtr hDirectShareAppWnd;///< share application directly
+        public IntPtr hDirectShareAppWnd;///< share application directly
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string participantId;///< for meeting participant report list, need web backend enable.
+        [MarshalAs(UnmanagedType.LPWStr)]
         public string webinarToken;///< webinar token.
-        public bool isVideoOff;
-        public bool isAudioOff;
-        public bool isDirectShareDesktop;///< share desktop directly
+        public byte isVideoOff;
+        public byte isAudioOff;
+        public byte isDirectShareDesktop;///< share desktop directly
     }
-
-
-
-
-
-
 
     public enum AuthResult
     {

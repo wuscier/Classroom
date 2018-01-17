@@ -187,8 +187,10 @@ namespace Classroom.ViewModels
 
             SDKError err = SdkInterop.SDKAuth(new AuthParam()
             {
-                AppKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
-                AppSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
+                //AppKey = "miUWGGznzyA9NvGE0mWaHxqH5K62jbQGf9Vi",
+                //AppSecret = "ktwJENTTfWGOlBOyvCOc81x5Ax4DFCU2lhCO",
+                AppKey = "p3TojubkBYyntp8m4rVevr0yYmH1HVW9yPiR",
+                AppSecret = "JLuhz1VkcWGVSUESJj19biBi7NZcbVWENRXe",
             });
 
             if (err != SDKError.SDKERR_SUCCESS)

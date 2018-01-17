@@ -16,6 +16,12 @@ typedef struct _tagLoginResult {
 	ZOOM_SDK_NAMESPACE::LOGINSTATUS status;
 	const wchar_t* displayName;
 	ZOOM_SDK_NAMESPACE::LoginType loginType;
+
+	_tagLoginResult() {
+		displayName = _T("");
+		loginType = ZOOM_SDK_NAMESPACE::LoginType::LoginType_Unknown;
+	}
+
 }LoginResult;
 
 typedef struct _tagMeetingStatusReslut {
