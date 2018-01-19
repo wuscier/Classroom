@@ -24,6 +24,7 @@ namespace Classroom
 
         protected override void OnExit(ExitEventArgs e)
         {
+            
             SDKError err = SdkWrap.Instacne.CleanUp();
 
             if (err != SDKError.SDKERR_SUCCESS)

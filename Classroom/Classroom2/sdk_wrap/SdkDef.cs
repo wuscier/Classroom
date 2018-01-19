@@ -130,6 +130,15 @@ namespace Classroom.sdk_wrap
     };
 
 
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
+    public struct StartParam
+    {
+        public SDKUserType UserType;
+        public StartParam4APIUser ApiUserStart;
+        public StartParam4NormalUser NormalUserStart;
+    }
+
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     public struct StartParam4APIUser
     {
@@ -157,23 +166,6 @@ namespace Classroom.sdk_wrap
         public bool IsAudioOff;
         public bool IsDirectShareDesktop;
     }
-
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct JoinParam
-    {
-        public SDKUserType usertype;
-        public JoinParam4APIUser apiuserJoin;
-        public JoinParam4NormalUser normaluserJoin;
-    }
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct JoinParamStruct
-    {
-        public JoinParam4APIUser apiuserJoin;
-        public JoinParam4NormalUser normaluserJoin;
-    }
-
 
 
 
@@ -211,18 +203,28 @@ namespace Classroom.sdk_wrap
         public LoginParam4SSO SsoLogin;
     }
 
+
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
-    public struct StartParam
+    public struct JoinParam
     {
-        public SDKUserType UserType;
-        public StartParam4APIUser ApiUserStart;
-        public StartParam4NormalUser NormalUserStart;
+        public SDKUserType usertype;
+        public JoinParamStruct JoinParamStruct;
     }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    public struct JoinParamStruct
+    {
+        public JoinParam4APIUser apiuserJoin;
+        public JoinParam4NormalUser normaluserJoin;
+    }
+
+
+
+
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct JoinParam4APIUser
     {
-        public uint meetingNumber;///< Meeting's number
+        public ulong meetingNumber;///< Meeting's number
         [MarshalAs(UnmanagedType.LPWStr)]
         public string userName;///< User Name in meeting
         [MarshalAs(UnmanagedType.LPWStr)]
@@ -235,15 +237,25 @@ namespace Classroom.sdk_wrap
         [MarshalAs(UnmanagedType.LPWStr)]
         public string webinarToken;///< webinar token.
         public byte isDirectShareDesktop;///< share desktop directly
+        //public byte dumy11;
+        //public byte dumy12;
+        //public byte dumy13;
         public byte isVideoOff;
+        //public byte dumy21;
+        //public byte dumy22;
+        //public byte dumy23;
+
         public byte isAudioOff;
+        //public byte dumy31;
+        //public byte dumy32;
+        //public byte dumy33;
     }
 
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
+    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     public struct JoinParam4NormalUser
     {
-        public uint meetingNumber;///< Meeting's number
+        public ulong meetingNumber;///< Meeting's number
         [MarshalAs(UnmanagedType.LPWStr)]
         public string userName;///< User Name in meeting
         [MarshalAs(UnmanagedType.LPWStr)]
@@ -254,8 +266,17 @@ namespace Classroom.sdk_wrap
         [MarshalAs(UnmanagedType.LPWStr)]
         public string webinarToken;///< webinar token.
         public byte isVideoOff;
+        //public byte dumy11;
+        //public byte dumy12;
+        //public byte dumy13;
         public byte isAudioOff;
+        //public byte dumy21;
+        //public byte dumy22;
+        //public byte dumy23;
         public byte isDirectShareDesktop;///< share desktop directly
+        //public byte dumy31;
+        //public byte dumy32;
+        //public byte dumy33;
     }
 
     public enum AuthResult

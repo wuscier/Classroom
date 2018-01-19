@@ -30,16 +30,61 @@ namespace Classroom.ViewModels
                     return;
                 }
 
-                uint uint_meeting_number;
-                if (uint.TryParse(MeetingNumber, out uint_meeting_number))
+                ulong uint_meeting_number;
+                if (ulong.TryParse(MeetingNumber, out uint_meeting_number))
                 {
                     JoinParam joinParam = new JoinParam()
                     {
                         usertype = SDKUserType.SDK_UT_APIUSER,
-                        apiuserJoin = new JoinParam4APIUser()
+                        JoinParamStruct = new JoinParamStruct()
                         {
-                            meetingNumber = uint_meeting_number,
-                        }
+                            apiuserJoin = new JoinParam4APIUser()
+                            {
+                                meetingNumber = uint_meeting_number,
+                                hDirectShareAppWnd = IntPtr.Zero,
+                                isAudioOff = 0,
+                                isDirectShareDesktop = 0,
+                                isVideoOff = 0,
+                                participantId = string.Empty,
+                                psw = string.Empty,
+                                toke4enfrocelogin = string.Empty,
+                                userName = "吴叙吴叙",
+                                webinarToken = string.Empty,
+                                //dumy11 = 0,
+                                //dumy12 = 0,
+                                //dumy13 = 0,
+                                //dumy21 = 0,
+                                //dumy22 = 0,
+                                //dumy23 = 0,
+                                //dumy31 = 0,
+                                //dumy32 = 0,
+                                //dumy33 =0,
+                            },
+
+                            normaluserJoin = new JoinParam4NormalUser()
+                            {
+                                meetingNumber = uint_meeting_number,
+                                hDirectShareAppWnd = IntPtr.Zero,
+                                isAudioOff = 0,
+                                isDirectShareDesktop = 0,
+                                isVideoOff = 0,
+                                participantId = string.Empty,
+                                psw = string.Empty,
+                                userName = "wuxuwuxu",
+                                webinarToken = string.Empty,
+                                //dumy11 = 0,
+                                //dumy12 = 0,
+                                //dumy13 = 0,
+                                //dumy21 = 0,
+                                //dumy22 = 0,
+                                //dumy23 = 0,
+                                //dumy31 = 0,
+                                //dumy32 = 0,
+                                //dumy33 = 0,
+
+                            }
+
+                        },
                     };
 
                     SDKError joinError = SdkInterop.Join(joinParam);
