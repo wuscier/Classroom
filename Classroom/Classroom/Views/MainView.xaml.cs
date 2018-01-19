@@ -79,5 +79,12 @@ namespace Classroom.Views
 
             transitioner.SelectedIndex = 1;
         }
+
+        private void join_class_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            JoinMeetingView joinMeetingView = new JoinMeetingView();
+            joinMeetingView.Owner = this;
+            joinMeetingView.ShowDialog();
+        }
     }
 }

@@ -13,6 +13,10 @@ namespace Classroom.Events
         MeetingViewModel,
         SharingOptionsView,
         SharingOptionsViewModel,
+        WhiteboardView,
+        WhiteboardViewModel,
+        JoinMeetingView,
+        JoinMeetingViewModel,
     }
 
     public class Argument
@@ -65,5 +69,16 @@ namespace Classroom.Events
 
 
     public class StartSharingEvent : PubSubEvent<EventArgument> { }
+
+    public class NextPageEvent : PubSubEvent<EventArgument> { }
+
+    public class PreviousPageEvent : PubSubEvent<EventArgument> { }
+
+    public class PenSelectedEvent : PubSubEvent<EventArgument> { }
+    public class EraserSelectedEvent : PubSubEvent<EventArgument> { }
+
+    public class StrokesClearedEvent : PubSubEvent<EventArgument> { }
+
+    public class JoinMeetingEvent : PubSubEvent<EventArgument> { }
 
 }
