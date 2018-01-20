@@ -18,9 +18,35 @@ namespace Classroom.ViewModels
     {
         public Main2ViewModel()
         {
+
             SubscribeEvents();
 
+            InitData();
+
             IsMainCardSelected = true;
+        }
+
+        private void InitData()
+        {
+            CourseList = new ObservableCollection<CourseModel>();
+            CourseList.Add(new CourseModel()
+            {
+                Duration = "8:00 - 9:00",
+                Name = "语文",
+                TeacherName = "马云",
+            });
+            CourseList.Add(new CourseModel()
+            {
+                Duration = "11:00 - 12:00",
+                Name = "数学",
+                TeacherName = "刘强东",
+            });
+            CourseList.Add(new CourseModel()
+            {
+                Duration = "14:00 - 15:00",
+                Name = "生物",
+                TeacherName = "李海波",
+            });
         }
 
         private bool _isMainCardSelected;
