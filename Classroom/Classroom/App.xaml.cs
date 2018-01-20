@@ -10,7 +10,7 @@ namespace Classroom
     /// </summary>
     public partial class App : Application
     {
-        public static MainView MainView;
+        public static Main2View MainView;
 
         protected override void OnStartup(StartupEventArgs e)
         {

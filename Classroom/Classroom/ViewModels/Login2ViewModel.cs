@@ -14,12 +14,12 @@ namespace Classroom.ViewModels
     {
         public LoginModel()
         {
-            LoginCommand = new DelegateCommand(async () =>
+            LoginCommand = new DelegateCommand(/*async*/ () =>
             {
                 Logging = true;
 
-                await Task.Run(() =>
-                {
+                //await Task.Run(() =>
+                //{
                     //if (!IsInputFieldsValid())
                     //{
                     //    return;
@@ -29,7 +29,7 @@ namespace Classroom.ViewModels
 
                     SDKAuth();
 
-                }).ConfigureAwait(false);
+                //}).ConfigureAwait(false);
             });
         }
 

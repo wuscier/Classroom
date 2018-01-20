@@ -44,7 +44,7 @@ namespace Classroom.Views
             {
                 if (App.MainView == null)
                 {
-                    App.MainView = new MainView();
+                    App.MainView = new Main2View();
                 }
 
                 App.MainView.Show();
