@@ -1,4 +1,5 @@
-﻿using Classroom.sdk_wrap;
+﻿using Classroom.Models;
+using Classroom.sdk_wrap;
 using Classroom.Views;
 using System.Windows;
 using ZOOM_SDK_DOTNET_WRAP;
@@ -11,6 +12,7 @@ namespace Classroom
     public partial class App : Application
     {
         public static Main2View MainView;
+        public static UserModel UserModel;
 
         protected override void OnStartup(StartupEventArgs e)
         {

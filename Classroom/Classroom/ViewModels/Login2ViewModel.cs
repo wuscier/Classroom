@@ -1,4 +1,5 @@
 ﻿using Classroom.Events;
+using Classroom.Models;
 using Classroom.sdk_wrap;
 using Classroom.Services;
 using Prism.Commands;
@@ -122,6 +123,11 @@ namespace Classroom.ViewModels
                     return;
                 }
 
+                App.UserModel = new UserModel()
+                {
+                    UserName = UserName,
+                };
+
                 EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
                 {
                     Target = Target.LoginView,
@@ -131,35 +137,35 @@ namespace Classroom.ViewModels
                 //Login();
             });
 
-            authServiceDotNetWrap.Add_CB_onLoginRet((loginStatus, accountInfo) =>
-            {
+            //authServiceDotNetWrap.Add_CB_onLoginRet((loginStatus, accountInfo) =>
+            //{
 
-                switch (loginStatus)
-                {
-                    case LOGINSTATUS.LOGIN_IDLE:
-                        break;
-                    case LOGINSTATUS.LOGIN_PROCESSING:
-                        break;
-                    case LOGINSTATUS.LOGIN_SUCCESS:
-                        Logging = false;
-                        EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
-                        {
-                            Target = Target.LoginView,
-                        });
+            //    switch (loginStatus)
+            //    {
+            //        case LOGINSTATUS.LOGIN_IDLE:
+            //            break;
+            //        case LOGINSTATUS.LOGIN_PROCESSING:
+            //            break;
+            //        case LOGINSTATUS.LOGIN_SUCCESS:
+            //            Logging = false;
+            //            EventAggregatorManager.Instance.EventAggregator.GetEvent<WindowCloseEvent>().Publish(new EventArgument()
+            //            {
+            //                Target = Target.LoginView,
+            //            });
 
-                        break;
-                    case LOGINSTATUS.LOGIN_FAILED:
-                        Logging = false;
-                        Err = "登录失败！";
-                        break;
-                    default:
-                        break;
-                }
-            });
-            authServiceDotNetWrap.Add_CB_onLogout(() =>
-            {
+            //            break;
+            //        case LOGINSTATUS.LOGIN_FAILED:
+            //            Logging = false;
+            //            Err = "登录失败！";
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //});
+            //authServiceDotNetWrap.Add_CB_onLogout(() =>
+            //{
 
-            });
+            //});
         }
 
         private void Login()
@@ -210,6 +216,7 @@ namespace Classroom.ViewModels
         {
             LoginModel = new LoginModel()
             {
+                UserName = "justlucky@126.com",
                 //UserName = "wuxu190718@outlook.com",
                 //Pwd = "abc123.cn_"
             };
