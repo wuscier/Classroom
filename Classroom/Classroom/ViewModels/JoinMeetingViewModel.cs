@@ -1,7 +1,5 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using Classroom.Events;
-using Classroom.sdk_wrap;
 using Classroom.Services;
 using Classroom.Views;
 using Prism.Events;
