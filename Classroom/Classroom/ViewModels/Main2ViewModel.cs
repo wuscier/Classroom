@@ -1,11 +1,13 @@
 ﻿using Classroom.Events;
 using Classroom.Helpers;
+using Classroom.Models;
 using Classroom.sdk_wrap;
 using Classroom.Services;
 using Classroom.Views;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
@@ -36,6 +38,9 @@ namespace Classroom.ViewModels
             get { return _isHistoryCardSelected; }
             set { SetProperty(ref _isHistoryCardSelected, value); }
         }
+
+
+        public ObservableCollection<CourseModel> CourseList { get; set; }
 
         private SubscriptionToken _cardSelectedToken;
         private SubscriptionToken _startClassToken;
