@@ -4,11 +4,13 @@ using Classroom.Models;
 using Classroom.sdk_wrap;
 using Classroom.Services;
 using Classroom.Views;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Interop;
 using ZOOM_SDK_DOTNET_WRAP;
 
@@ -28,24 +30,34 @@ namespace Classroom.ViewModels
 
         private void InitData()
         {
+            JoinCommand = new DelegateCommand<CourseModel>((course) =>
+            {
+
+            });
+
             CourseList = new ObservableCollection<CourseModel>();
             CourseList.Add(new CourseModel()
             {
                 Duration = "8:00 - 9:00",
                 Name = "语文",
                 TeacherName = "马云",
+                JoinCommand = JoinCommand,
             });
             CourseList.Add(new CourseModel()
             {
                 Duration = "11:00 - 12:00",
                 Name = "数学",
                 TeacherName = "刘强东",
+                JoinCommand = JoinCommand,
+
             });
             CourseList.Add(new CourseModel()
             {
                 Duration = "14:00 - 15:00",
                 Name = "生物",
                 TeacherName = "李海波",
+                JoinCommand = JoinCommand,
+
             });
         }
 
@@ -67,6 +79,8 @@ namespace Classroom.ViewModels
 
 
         public ObservableCollection<CourseModel> CourseList { get; set; }
+
+        public ICommand JoinCommand { get; set; }
 
         private SubscriptionToken _cardSelectedToken;
         private SubscriptionToken _startClassToken;
