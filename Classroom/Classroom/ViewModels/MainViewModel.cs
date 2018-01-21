@@ -167,28 +167,28 @@ namespace Classroom.ViewModels
 
             });
 
-            CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap().Add_CB_onUIActionNotify((type, msg) =>
-            {
-                if (type == UIHOOKHWNDTYPE.UIHOOKWNDTYPE_MAINWND)
-                {
-                    if (!_wndMsgHandled)
-                    {
-                        _wndMsgHandled = true;
+            //CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap().Add_CB_onUIActionNotify((type, msg) =>
+            //{
+            //    if (type == UIHOOKHWNDTYPE.UIHOOKWNDTYPE_MAINWND)
+            //    {
+            //        if (!_wndMsgHandled)
+            //        {
+            //            _wndMsgHandled = true;
 
-                        App.Current.Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+            //            App.Current.Dispatcher.BeginInvoke(new Action(() =>
+            //            {
+            //                Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
 
-                            Win32APIs.SetWindowLong(hwnds.firstViewHandle, -16, 369164288);
-                            Win32APIs.SetParent(hwnds.firstViewHandle, new WindowInteropHelper(_meetingView).Handle);
+            //                Win32APIs.SetWindowLong(hwnds.firstViewHandle, -16, 369164288);
+            //                Win32APIs.SetParent(hwnds.firstViewHandle, new WindowInteropHelper(_meetingView).Handle);
 
-                            _meetingView.SyncVideoUI();
+            //                _meetingView.SyncVideoUI();
 
 
-                        }));
-                    }
-                }
-            });
+            //            }));
+            //        }
+            //    }
+            //});
         }
 
         private void CustomMeetingUI()
@@ -208,14 +208,14 @@ namespace Classroom.ViewModels
         {
             _wndMsgHandled = false;
 
-            IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
-            iUIHook.MonitorWnd("ZPContentViewWndClass", true);
-            iUIHook.Start();
+            //IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
+            //iUIHook.MonitorWnd("ZPContentViewWndClass", true);
+            //iUIHook.Start();
         }
 
         private void StopHook()
         {
-            IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
+            //IUIHookControllerDotNetWrap iUIHook = CZoomSDKeDotNetWrap.Instance.GetUIHookControllerWrap();
             //iUIHook.MonitorWnd("ZPContentViewWndClass", false);
             //iUIHook.Stop();
         }

@@ -46,12 +46,12 @@ namespace Classroom.Views
 
         public void SyncVideoUI()
         {
-            Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
+            //Hwnds hwnds = CZoomSDKeDotNetWrap.Instance.GetMeetingServiceWrap().GetUIController().GetMeetingUIWnds();
 
-            int w = (int)Math.Round(video_container.ActualWidth);
-            int h = (int)Math.Round(video_container.ActualHeight);
+            //int w = (int)Math.Round(video_container.ActualWidth);
+            //int h = (int)Math.Round(video_container.ActualHeight);
 
-            Win32APIs.MoveWindow(hwnds.firstViewHandle, 0, 0, w, h, true);
+            //Win32APIs.MoveWindow(hwnds.firstViewHandle, 0, 0, w, h, true);
         }
 
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)

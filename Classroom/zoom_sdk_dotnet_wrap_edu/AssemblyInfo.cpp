@@ -16,7 +16,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyConfigurationAttribute(L"")];
 [assembly:AssemblyCompanyAttribute(L"")];
 [assembly:AssemblyProductAttribute(L"zoom_sdk_dotnet_wrap_edu")];
-[assembly:AssemblyCopyrightAttribute(L"Copyright (c)  2017")];
+[assembly:AssemblyCopyrightAttribute(L"Copyright (c)  2018")];
 [assembly:AssemblyTrademarkAttribute(L"")];
 [assembly:AssemblyCultureAttribute(L"")];
 

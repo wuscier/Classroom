@@ -20,7 +20,7 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{FEF31475-FFC3-4F2D-86EA-2DD66E3E6C5A}</ProjectGuid>
+    <ProjectGuid>{7683F42D-56A8-477D-A5DE-6E3889B7867B}</ProjectGuid>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Keyword>ManagedCProj</Keyword>
     <RootNamespace>zoom_sdk_dotnet_wrap_edu</RootNamespace>
@@ -37,7 +37,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CLRSupport>true</CLRSupport>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -76,7 +76,6 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../../bin/</OutDir>
-    <IntDir />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
@@ -90,12 +89,11 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>WIN32;NDEBUG;CSHARP_WRAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>Use</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
-      <OutputFile>../../bin/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -138,16 +136,6 @@
   <ItemGroup>
     <ClInclude Include="resource.h" />
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="ui_hook_dotnet_wrap.h" />
-    <ClInclude Include="wrap\common_include.h" />
-    <ClInclude Include="wrap\embedded_browser_wrap.h" />
-    <ClInclude Include="wrap\macro_define.h" />
-    <ClInclude Include="wrap\sdk_loader.h" />
-    <ClInclude Include="wrap\sdk_wrap.h" />
-    <ClInclude Include="wrap\ui_hook_wrap.h" />
-    <ClInclude Include="zoom_sdk_dotnet_wrap_def.h" />
-    <ClInclude Include="zoom_sdk_dotnet_wrap_edu.h" />
-    <ClInclude Include="zoom_sdk_dotnet_wrap_util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AssemblyInfo.cpp" />
@@ -157,12 +145,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ui_hook_dotnet_wrap.cpp" />
-    <ClCompile Include="wrap\embedded_browser_wrap.cpp" />
-    <ClCompile Include="wrap\sdk_loader.cpp" />
-    <ClCompile Include="wrap\sdk_wrap.cpp" />
-    <ClCompile Include="wrap\ui_hook_wrap.cpp" />
-    <ClCompile Include="zoom_sdk_dotnet_wrap_edu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />

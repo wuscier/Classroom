@@ -15,66 +15,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="zoom_sdk_dotnet_wrap_edu.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="Stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="ui_hook_dotnet_wrap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="zoom_sdk_dotnet_wrap_def.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="zoom_sdk_dotnet_wrap_util.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap\ui_hook_wrap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap\common_include.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap\macro_define.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap\sdk_loader.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap\sdk_wrap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="wrap\embedded_browser_wrap.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="zoom_sdk_dotnet_wrap_edu.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="AssemblyInfo.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Stdafx.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="ui_hook_dotnet_wrap.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="wrap\ui_hook_wrap.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="wrap\sdk_loader.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="wrap\sdk_wrap.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="wrap\embedded_browser_wrap.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
