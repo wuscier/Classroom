@@ -2,6 +2,7 @@
 #include "meeting_ui_ctrl_dotnet_wrap.h"
 #include "zoom_sdk_dotnet_wrap_util.h"
 #include "wrap/sdk_wrap.h"
+#include <iostream>
 namespace ZOOM_SDK_DOTNET_WRAP {
 
 	//translate event
@@ -147,26 +148,33 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 
 	SDKError CMeetingUIControllerDotNetWrap::GetMeetingUIWnd(HWNDDotNet^ hFirstView, HWNDDotNet^ hSecondView)
 	{
+		
 		HWND hFirstView_c(NULL), hSecondView_c(NULL);
 		SDKError err = (SDKError)ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().
 			GetUIController().GetMeetingUIWnd(hFirstView_c, hSecondView_c);
-		
+
 		Convert_HWND(hFirstView_c, hFirstView);
 		Convert_HWND(hSecondView_c, hSecondView);
+
 		return err;
 	}
 
-	Hwnds CMeetingUIControllerDotNetWrap::GetMeetingUIWnds() {
+	UInt32 CMeetingUIControllerDotNetWrap::GetFirstViewHwnd() {
 		HWND hFirstView_c(NULL), hSecondView_c(NULL);
 		SDKError err = (SDKError)ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().
 			GetUIController().GetMeetingUIWnd(hFirstView_c, hSecondView_c);
 
-		Hwnds hwnds;
-		hwnds.firstViewHandle = (IntPtr)hFirstView_c;
-		hwnds.secondViewHandle = (IntPtr)hSecondView_c;
-
-		return hwnds;
+		return (UInt32)hFirstView_c;
 	}
+
+	UInt32 CMeetingUIControllerDotNetWrap::GetSecondViewHwnd() {
+		HWND hFirstView_c(NULL), hSecondView_c(NULL);
+		SDKError err = (SDKError)ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().
+			GetUIController().GetMeetingUIWnd(hFirstView_c, hSecondView_c);
+
+		return (UInt32)hSecondView_c;
+	}
+
 
 	SDKError CMeetingUIControllerDotNetWrap::ShowJoinAudioDlg()
 	{

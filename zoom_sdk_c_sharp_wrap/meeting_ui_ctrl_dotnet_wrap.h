@@ -70,7 +70,6 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		SDKError ShowParticipantsListWnd(bool bShow, HWNDDotNet^ hParticipantsListWnd);
 		SDKError ShowBottomFloatToolbarWnd(bool bShow);
 		SDKError GetMeetingUIWnd(HWNDDotNet^ hFirstView, HWNDDotNet^ hSecondView);
-		Hwnds GetMeetingUIWnds();
 		SDKError ShowJoinAudioDlg();
 		SDKError HideJoinAudioDlg();
 		SDKError GetWallViewPageInfo(VideoWallPageInfoParam^ videoWallPageInfoParam);
@@ -80,6 +79,8 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		SDKError SwitchMinimizeUIMode4FristScreenMeetingUIWnd(SDKMinimizeUIMode mode);
 		SDKError GetCurrentSplitScreenModeInfo(SplitScreenInfo^ info);
 		SDKError SwitchSplitScreenMode(bool bSplit);
+		virtual UInt32 GetFirstViewHwnd();
+		virtual UInt32 GetSecondViewHwnd();
 
 		void Add_CB_onInviteBtnClicked(onInviteBtnClicked^ cb);
 		void Add_CB_onStartShareBtnClicked(onStartShareBtnClicked^ cb);
@@ -108,7 +109,6 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		virtual SDKError ShowParticipantsListWnd(bool bShow, HWNDDotNet^ hParticipantsListWnd);
 		virtual SDKError ShowBottomFloatToolbarWnd(bool bShow);
 		virtual SDKError GetMeetingUIWnd(HWNDDotNet^ hFirstView, HWNDDotNet^ hSecondView);
-		virtual Hwnds GetMeetingUIWnds();
 		virtual SDKError ShowJoinAudioDlg();
 		virtual SDKError HideJoinAudioDlg();
 		virtual SDKError GetWallViewPageInfo(VideoWallPageInfoParam^ videoWallPageInfoParam);
@@ -118,6 +118,8 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		virtual SDKError SwitchMinimizeUIMode4FristScreenMeetingUIWnd(SDKMinimizeUIMode mode);
 		virtual SDKError GetCurrentSplitScreenModeInfo(SplitScreenInfo^ info);
 		virtual SDKError SwitchSplitScreenMode(bool bSplit);
+		virtual UInt32 GetFirstViewHwnd();
+		virtual UInt32 GetSecondViewHwnd();
 
 		virtual void Add_CB_onInviteBtnClicked(onInviteBtnClicked^ cb)
 		{

@@ -1,6 +1,6 @@
 #pragma once
 #ifdef _NEED_STDAFX_
-#include "StdAfx.h"
+#include "Stdafx.h"
 #endif
 #include <windows.h>
 #if (defined JS_WRAP)

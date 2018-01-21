@@ -66,7 +66,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;CSHARP_WRAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -103,9 +103,7 @@
   <ItemGroup>
     <ClInclude Include="auth_service_wrap.h" />
     <ClInclude Include="calender_service_wrap.h" />
-    <ClInclude Include="common_include.h" />
     <ClInclude Include="embedded_browser_wrap.h" />
-    <ClInclude Include="macro_define.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_annotation_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_audio_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_breakout_rooms_wrap.h" />

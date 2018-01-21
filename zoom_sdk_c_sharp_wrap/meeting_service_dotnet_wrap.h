@@ -16,6 +16,7 @@ using namespace System::Windows;
 #include "meeting_phone_helper_donet_wrap.h"
 #include "meeting_breakout_rooms_dotnet_wrap.h"
 #include "meeting_participants_ctrl_donet_wrap.h"
+#include "meeting_ui_hook_dotnet_wrap.h"
 
 namespace ZOOM_SDK_DOTNET_WRAP {
 	public enum class MeetingStatus : int
@@ -226,6 +227,7 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		IMeetingShareControllerDotNetWrap^ GetMeetingShareController();
 		IMeetingAudioControllerDotNetWrap^ GetMeetingAudioController();
 		IMeetingRecordingControllerDotNetWrap^ GetMeetingRecordingController();
+		IMeetingUIHookDotNetWrap^ GetMeetingUIHookController();
 		IMeetingChatControllerDotNetWrap^ GetMeetingChatController();
 		IMeetingWaitingRoomControllerDotNetWrap^ GetMeetingWaitingRoomController();
 		IMeetingH323HelperDotNetWrap^ GetH323Helper();
@@ -271,6 +273,7 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		virtual IMeetingShareControllerDotNetWrap^ GetMeetingShareController();
 		virtual IMeetingAudioControllerDotNetWrap^ GetMeetingAudioController();
 		virtual IMeetingRecordingControllerDotNetWrap^ GetMeetingRecordingController();
+		virtual IMeetingUIHookDotNetWrap^ GetMeetingUIHookController();
 		virtual IMeetingChatControllerDotNetWrap^ GetMeetingChatController();
 		virtual IMeetingWaitingRoomControllerDotNetWrap^ GetMeetingWaitingRoomController();
 		virtual IMeetingH323HelperDotNetWrap^ GetH323Helper();

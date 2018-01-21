@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "zoom_sdk_dotnet_wrap", "zoom_sdk_c_sharp_wrap.vcxproj", "{7B5A8DA1-8C98-40FD-B243-DC7A17011D33}"
 EndProject
@@ -31,8 +31,8 @@ Global
 		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|x64.ActiveCfg = Debug|Any CPU
 		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|x64.Build.0 = Debug|Any CPU
-		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|x86.Build.0 = Debug|Any CPU
+		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|x86.ActiveCfg = Debug|x86
+		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Debug|x86.Build.0 = Debug|x86
 		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6FF20719-D6FB-4833-8BB7-1CA27462C537}.Release|x64.ActiveCfg = Release|Any CPU
@@ -42,5 +42,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {71CA5C54-B0F8-4652-83DE-6D1F83E454FD}
 	EndGlobalSection
 EndGlobal

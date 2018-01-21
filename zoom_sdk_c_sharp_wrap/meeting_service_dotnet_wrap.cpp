@@ -449,6 +449,16 @@ namespace ZOOM_SDK_DOTNET_WRAP {
 		return CMeetingRecordingControllerDotNetWrap::Instance;
 	}
 
+	IMeetingUIHookDotNetWrap ^ CMeetingServiceDotNetWrap::GetMeetingUIHookController()
+	{
+		if (CMeetingUIHookDotNetWrap::Instance)
+		{
+			CMeetingUIHookDotNetWrap::Instance->BindEvent();
+		}
+
+		return CMeetingUIHookDotNetWrap::Instance;
+	}
+
 	IMeetingChatControllerDotNetWrap^ CMeetingServiceDotNetWrap::GetMeetingChatController()
 	{
 		if (CMeetingChatControllerDotNetWrap::Instance)

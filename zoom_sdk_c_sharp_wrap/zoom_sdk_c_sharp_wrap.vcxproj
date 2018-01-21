@@ -75,6 +75,8 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>../bin/</OutDir>
+    <IntDir />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -91,11 +93,12 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PreprocessorDefinitions>WIN32;_DEBUG;CSHARP_WRAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <AdditionalDependencies />
+      <OutputFile>../bin/$(TargetName)$(TargetExt)</OutputFile>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -113,7 +116,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;CSHARP_WRAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
@@ -152,12 +155,12 @@
     <ClInclude Include="meeting_service_dotnet_wrap.h" />
     <ClInclude Include="meeting_sharing_dotnet_wrap.h" />
     <ClInclude Include="meeting_ui_ctrl_dotnet_wrap.h" />
+    <ClInclude Include="meeting_ui_hook_dotnet_wrap.h" />
     <ClInclude Include="meeting_video_dotnet_wrap.h" />
     <ClInclude Include="meeting_waiting_room_dotnet_wrap.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="setting_service_dotnet_wrap.h" />
     <ClInclude Include="Stdafx.h" />
-    <ClInclude Include="ui_hook_dotnet_wrap.h" />
     <ClInclude Include="wrap\auth_service_wrap.h" />
     <ClInclude Include="wrap\calender_service_wrap.h" />
     <ClInclude Include="wrap\common_include.h" />
@@ -204,6 +207,7 @@
     <ClCompile Include="meeting_service_dotnet_wrap.cpp" />
     <ClCompile Include="meeting_sharing_dotnet_wrap.cpp" />
     <ClCompile Include="meeting_ui_ctrl_dotnet_wrap.cpp" />
+    <ClCompile Include="meeting_ui_hook_dotnet_wrap.cpp" />
     <ClCompile Include="meeting_video_dotnet_wrap.cpp" />
     <ClCompile Include="meeting_waiting_room_dotnet_wrap.cpp" />
     <ClCompile Include="setting_service_dotnet_wrap.cpp" />
@@ -213,7 +217,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ui_hook_dotnet_wrap.cpp" />
     <ClCompile Include="wrap\auth_service_wrap.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
     </ClCompile>
